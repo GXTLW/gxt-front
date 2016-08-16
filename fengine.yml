@@ -1,0 +1,9 @@
+port:
+  8080
+base:
+  /statics
+layout:
+  /layout/default.html
+data:
+  name:
+    国信通

@@ -1,0 +1,7 @@
+.ui-list {
+  width: 100%;
+}
+.ui-list-item {
+  line-height: 2.5;
+}
+.ui-list-item > .ui-item-profile

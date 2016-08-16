@@ -1,0 +1,54 @@
+@import "/assets/css/default/modules/panel.css";
+@import "/assets/css/default/modules/slider.css";
+@import "/assets/css/default/modules/list.css";
+@import "/assets/css/default/modules/tabs.css";
+.ui-main {
+  font-size: 0;
+  -webkit-text-size-adjust: none;
+}
+.ui-main-left,
+.ui-main-right {
+  font-size: 12px;
+  display: inline-block;
+  *display: inline; *zoom: 1;
+  vertical-align: top;
+  margin: 20px 0;
+}
+.ui-main-left {
+  width: 860px;
+}
+.ui-main-left .ui-tabs + .ui-tabs,
+.ui-main-left .ui-tabs + .ui-panel,
+.ui-main-left .ui-panel + .ui-panel,
+.ui-main-left .ui-panel + .ui-tabs,
+.ui-main-right .ui-tabs + .ui-tabs,
+.ui-main-right .ui-tabs + .ui-panel,
+.ui-main-right .ui-panel + .ui-panel,
+.ui-main-right .ui-panel + .ui-tabs {
+  margin-top: 20px;
+}
+.ui-main-right {
+  width: 320px;
+  margin-left: 20px;
+}
+.ui-banner {
+  width: 100%;
+  height: 470px;
+  overflow: hidden;
+  position: relative;
+  z-index: 0;
+}
+.ui-banner-center {
+  position: absolute;
+  left: 50%; height: 470px;
+}
+.ui-banner-center-offset {
+  width: 1920px;
+  height: 100%;
+  position: relative;
+  top: 0; left: -50%;
+  overflow: hidden;
+}
+.ui-slider > li {
+  width: 1920px;
+}

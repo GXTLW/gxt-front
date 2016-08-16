@@ -1,0 +1,14 @@
+.ui-beauty-radio {
+  border-radius: 8px;
+  background: url(../images/radio.png) no-repeat center;
+}
+.ui-beauty-radio.ui-beauty-choice-checked {
+  background: url(../images/radio-checked.png) no-repeat center;
+}
+.ui-beauty-radio.ui-beauty-choice-disabled {
+  cursor: not-allowed;
+  background: url(../images/radio-disabled.png) no-repeat center;
+}
+.ui-beauty-radio.ui-beauty-choice-checked.ui-beauty-choice-disabled {
+  background: url(../images/radio-checked-disabled.png) no-repeat center;
+}

@@ -1,0 +1,13 @@
+.ui-beauty-checkbox {
+  background: url(../images/checkbox.png) no-repeat center;
+}
+.ui-beauty-checkbox.ui-beauty-choice-checked {
+  background: url(../images/checkbox-checked.png) no-repeat center;
+}
+.ui-beauty-checkbox.ui-beauty-choice-disabled {
+  cursor: not-allowed;
+  background: url(../images/checkbox-disabled.png) no-repeat center;
+}
+.ui-beauty-checkbox.ui-beauty-choice-checked.ui-beauty-choice-disabled {
+  background: url(../images/checkbox-checked-disabled.png) no-repeat center;
+}

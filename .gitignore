@@ -35,3 +35,10 @@ jspm_packages
 
 # Optional REPL history
 .node_repl_history
+
+# Optional webstrom setting directory
+.idea/
+
+# Gulp build directory
+assets/style
+assets/script

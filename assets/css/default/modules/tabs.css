@@ -1,0 +1,40 @@
+.ui-tabs {
+  font-size: 13px;
+  background-color: #fff;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+  box-shadow: 0 0 6px rgba(0, 0, 0, .15);
+}
+.ui-tabs-header {
+  color: #333;
+  padding: 0 1.26em 0 0;
+  height: 3.1em;
+  line-height: 3.1em;
+  border-bottom: 1px solid #e2e2e2;
+  background-color: #f2f2f2;
+}
+.ui-tabs-nav-list {
+  font-size: 0;
+  -webkit-text-size-adjust: none;
+}
+.ui-tabs-header .ui-more {
+  float: right;
+}
+.ui-tabs-nav {
+  cursor: pointer;
+  font-size: 13px;
+  display: inline-block;
+  *display: inline; *zoom: 1;
+  height: 100%;
+  padding: 0 1.26em;
+}
+.ui-tabs-nav.active,
+.ui-tabs-nav:hover {
+  color: #fff;
+  text-decoration: none;
+  background-color: #0e90d2;
+}
+.ui-tabs-body {
+  padding: .8em 1.26em;
+}
+
+
