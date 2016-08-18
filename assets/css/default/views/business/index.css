@@ -42,3 +42,13 @@
   margin-left: 20px;
   width: 860px;
 }
+.ui-main-left .ui-list .ui-list-item{
+  background: url(/assets/images/default/ico-01.png) no-repeat 0 center;
+  overflow: hidden;
+}
+.ui-main-left .ui-list .ui-list-item a{
+  margin-left: 1.26em;
+}
+.ui-main-right .ui-list .ui-list-item span{
+  float: right;
+}
