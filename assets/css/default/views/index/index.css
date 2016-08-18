@@ -68,11 +68,12 @@
   overflow: hidden;
 }
 .ui-panel .ui-list-item span{
+  padding-left: 10px;
   float: right;
 }
 .ui-main-left .ui-list-item > a{
   display: inline-block;
-  width: 24em;
+  width: 80%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -81,8 +82,8 @@
 .ui-main-left .ui-middle-right{
   display: inline-block;
   vertical-align: top;
-  width:400px;
+  width:420px;
 }
 .ui-main-left .ui-middle-left{
-  margin-right: 60px;
+  margin-right: 20px;
 }
