@@ -15,6 +15,7 @@
   margin: 20px 0;
 }
 .ui-main-left {
+  font-size: 0;
   width: 860px;
 }
 .ui-main-left .ui-tabs + .ui-tabs,
@@ -51,4 +52,37 @@
 }
 .ui-slider > li {
   width: 1920px;
+}
+.ui-tabs-body > img {
+  float: left;
+  width: 220px;
+  height: 150px;
+  margin-right: .8em;
+}
+.ui-tabs-body > p{
+  text-indent: 2em;
+  line-height: 2em;
+}
+
+.ui-panel .ui-list-item{
+  overflow: hidden;
+}
+.ui-panel .ui-list-item span{
+  float: right;
+}
+.ui-main-left .ui-list-item > a{
+  display: inline-block;
+  width: 24em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ui-main-left .ui-middle-left,
+.ui-main-left .ui-middle-right{
+  display: inline-block;
+  vertical-align: top;
+  width:400px;
+}
+.ui-main-left .ui-middle-left{
+  margin-right: 60px;
 }
