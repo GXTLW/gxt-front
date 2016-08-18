@@ -89,7 +89,7 @@
   // unguarded in another place, it seems safer to define global only for this module
 
   var
-    version = "3.1.0 -ajax,-ajax/jsonp,-ajax/load,-ajax/parseXML,-ajax/script,-ajax/var/location,-ajax/var/nonce,-ajax/var/rquery,-ajax/xhr,-manipulation/_evalUrl,-event/ajax,-effects,-effects/Tween,-effects/animatedSelector,-deprecated",
+    version = "3.1.0",
 
     // Define a local copy of jQuery
     jQuery = function (selector, context){
