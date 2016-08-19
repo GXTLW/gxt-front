@@ -81,6 +81,7 @@
 .ui-main-left .ui-middle-left,
 .ui-main-left .ui-middle-right{
   display: inline-block;
+  *display: inline; *zoom: 1;
   vertical-align: top;
   width:420px;
 }
