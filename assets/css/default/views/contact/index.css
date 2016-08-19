@@ -42,31 +42,31 @@
   margin-left: 20px;
   width: 860px;
 }
-.ui-main-left .ui-list .ui-list-item{
+.ui-main-left .ui-list .ui-list-item {
   background: url(/assets/images/default/ico-01.png) no-repeat 0 center;
   overflow: hidden;
 }
-.ui-main-left .ui-list .ui-list-item a{
+.ui-main-left .ui-list .ui-list-item a {
   margin-left: 1.26em;
 }
-.ui-main-right .ui-list .ui-list-item span{
+.ui-main-right .ui-list .ui-list-item span {
   float: right;
 }
-.ui-message tr td{
+.ui-message tr td {
   min-height: 40px;
 }
-.ui-table-left{
+.ui-table-left {
   font-size: 14px;
   text-align: right;
   line-height: 40px;
 }
-.ui-table-right{
+.ui-table-right {
   padding-left: 30px;
 }
-.ui-table-right span{
+.ui-table-right span {
   color: red;
 }
-.ui-message-submit{
+.ui-message-submit {
   margin: 10px auto 0;
-  display:block;
+  display: block;
 }

@@ -59,19 +59,18 @@
   height: 150px;
   margin-right: .8em;
 }
-.ui-tabs-body > p{
+.ui-tabs-body > p {
   text-indent: 2em;
   line-height: 2em;
 }
-
-.ui-panel .ui-list-item{
+.ui-panel .ui-list-item {
   overflow: hidden;
 }
-.ui-panel .ui-list-item span{
+.ui-panel .ui-list-item span {
   padding-left: 10px;
   float: right;
 }
-.ui-main-left .ui-list-item > a{
+.ui-main-left .ui-list-item > a {
   display: inline-block;
   width: 80%;
   overflow: hidden;
@@ -79,12 +78,12 @@
   white-space: nowrap;
 }
 .ui-main-left .ui-middle-left,
-.ui-main-left .ui-middle-right{
+.ui-main-left .ui-middle-right {
   display: inline-block;
   *display: inline; *zoom: 1;
   vertical-align: top;
-  width:420px;
+  width: 420px;
 }
-.ui-main-left .ui-middle-left{
+.ui-main-left .ui-middle-left {
   margin-right: 20px;
 }

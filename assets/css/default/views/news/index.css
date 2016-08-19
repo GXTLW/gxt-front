@@ -42,13 +42,28 @@
   margin-left: 20px;
   width: 860px;
 }
-.ui-main-left .ui-list .ui-list-item{
+.ui-main-left .ui-list .ui-list-item {
   background: url(/assets/images/default/ico-01.png) no-repeat 0 center;
   overflow: hidden;
 }
-.ui-main-left .ui-list .ui-list-item a{
+.ui-main-left .ui-list .ui-list-item a {
   margin-left: 1.26em;
 }
-.ui-main-right .ui-list .ui-list-item span{
+.ui-main-right .ui-list .ui-list-item span {
   float: right;
+}
+.ui-main-right .ui-list .ui-list-item {
+  border-bottom: 1px dashed #ccc;
+}
+.ui-panel-plist {
+  text-align: right;
+  margin-top: .5em;
+}
+.ui-panel-plist .ui-page-index {
+  width: 25px;
+  height: 1.2em;
+  border-width: 1px;
+}
+.ui-panel-plist .ui-page-btn {
+  border: none;
 }
