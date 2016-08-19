@@ -52,3 +52,21 @@
 .ui-main-right .ui-list .ui-list-item span{
   float: right;
 }
+.ui-message tr td{
+  min-height: 40px;
+}
+.ui-table-left{
+  font-size: 14px;
+  text-align: right;
+  line-height: 40px;
+}
+.ui-table-right{
+  padding-left: 30px;
+}
+.ui-table-right span{
+  color: red;
+}
+.ui-message-submit{
+  margin: 10px auto 0;
+  display:block;
+}
