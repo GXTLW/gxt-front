@@ -16,6 +16,7 @@
 }
 .ui-main-left {
   font-size: 0;
+  -webkit-text-size-adjust: none;
   width: 860px;
 }
 .ui-main-left .ui-tabs + .ui-tabs,
@@ -53,6 +54,29 @@
 .ui-slider > li {
   width: 1920px;
 }
+.ui-marquee-content {
+  width: 100%;
+  background: url(/assets/images/default/marquee.jpg) repeat-x;
+}
+.ui-marquee {
+  width: 1200px;
+  height: 35px;
+  margin: 0 auto;
+  -webkit-text-size-adjust: none;
+  font-size: 0;
+}
+.ui-marquee > img,
+.ui-marquee > marquee {
+  font-size: 12px;
+  display: inline-block;
+  *display: inline; *zoom: 1;
+  vertical-align: top;
+}
+.ui-marquee > marquee {
+  width: 1083px;
+  height: 35px;
+  line-height: 35px;
+}
 .ui-tabs-body > img {
   float: left;
   width: 220px;
@@ -86,4 +110,31 @@
 }
 .ui-main-left .ui-middle-left {
   margin-right: 20px;
+}
+.ui-main-right .ui-panel-body .ui-list-item {
+  margin-top: .8em;
+}
+.ui-main-right .ui-panel-body .ui-list-item a > img {
+  width: 280px;
+}
+.ui-main-bottom {
+  margin-bottom: 20px;
+}
+.ui-main-bottom .ui-panel .ui-panel-body .ui-list {
+  -webkit-text-size-adjust: none;
+  font-size: 0;
+}
+.ui-main-bottom .ui-panel .ui-panel-body .ui-list-item {
+  display: inline-block;
+  *display: inline; *zoom: 1;
+  vertical-align: top;
+  font-size: 13px;
+  margin-right: 35px;
+}
+.ui-main-bottom .ui-panel .ui-panel-body .ui-list-item:last-child {
+  margin-right: 0;
+}
+.ui-main-bottom .ui-panel .ui-panel-body .ui-list-item > img {
+  width: 160px;
+  height: 60px;
 }
