@@ -113,6 +113,7 @@
 }
 .ui-main-right .ui-panel-body .ui-list-item {
   margin-top: .8em;
+  text-align: center;
 }
 .ui-main-right .ui-panel-body .ui-list-item a > img {
   width: 280px;

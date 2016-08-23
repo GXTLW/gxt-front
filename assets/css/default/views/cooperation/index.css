@@ -52,18 +52,7 @@
 .ui-main-right .ui-list .ui-list-item span {
   float: right;
 }
-.ui-main-right .ui-list .ui-list-item {
-  border-bottom: 1px dashed #ccc;
+.ui-main-right .ui-panel .ui-panel-body > p{
+  text-align: center;
 }
-.ui-panel-plist {
-  text-align: right;
-  margin-top: .5em;
-}
-.ui-panel-plist .ui-page-index {
-  width: 25px;
-  height: 1.2em;
-  border-width: 1px;
-}
-.ui-panel-plist .ui-page-btn {
-  border: none;
-}
+
