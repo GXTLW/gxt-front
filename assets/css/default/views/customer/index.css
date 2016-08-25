@@ -55,19 +55,18 @@
 .ui-main-right .ui-list {
   -webkit-text-size-adjust: none;
   font-size: 0;
+  text-align: center;
 }
 .ui-main-right .ui-list > .ui-list-item {
   display: inline-block;
   *display: inline; *zoom: 1;
   vertical-align: top;
-  width: 160px;
+  width: 170px;
   height: 100px;
   font-size: 13px;
   text-align: center;
   margin-right: 35px;
-}
-.ui-main-right .ui-list > .ui-list-item:last-child {
-  margin-right: 0;
+  margin-bottom: 2em;
 }
 .ui-main-right .ui-list > .ui-list-item > img {
   width: 160px;

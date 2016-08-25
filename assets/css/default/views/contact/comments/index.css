@@ -69,4 +69,9 @@
 .ui-message-submit {
   margin: 10px auto 0;
   display: block;
+  background: #3385ff;
+  color: #fff;
+  border: 1px solid #2d78f4;
+  border-radius: 2px;
+  box-shadow: 1px 1px 2px #52a2eb;
 }
