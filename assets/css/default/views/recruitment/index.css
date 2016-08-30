@@ -60,8 +60,9 @@
   margin-top: .5em;
 }
 .ui-panel-plist .ui-page-index {
-  width: 25px;
-  height: 1.2em;
+  padding: .25em;
+  width: 2.5em;
+  height: 1.5em;
   border: 1px solid #b2b2b2;
   border-radius: 2px;
   -webkit-border-radius: 2px;
@@ -77,7 +78,7 @@
   box-shadow: 0 0 3px rgba(34, 25, 25, .15), 0 0 3px hsla(0, 0%, 100%, .8), 0 0 6px #52a2eb;
 }
 .ui-panel-plist .ui-page-btn {
-  padding: 0 .2em;
+  padding: .3em .5em;
   background: #0e7fd4;
   color: #fff;
   border: 1px solid #2d78f4;
