@@ -26,22 +26,16 @@ function arc(x, y, radius, startAngle, endAngle, anticlockwise){
   var path;
   var large = 0;
 
+  startAngle = startAngle % (2 * PI);
+  endAngle = endAngle % (2 * PI);
   anticlockwise = anticlockwise === 0 ? 0 : 1;
 
   if (startAngle < 0) {
-    startAngle = Math.abs(startAngle % (2 * PI));
+    startAngle = 2 * PI + startAngle;
   }
 
   if (endAngle < 0) {
-    endAngle = Math.abs(endAngle % (2 * PI));
-  }
-
-  var offset = endAngle - startAngle;
-
-  if (anticlockwise === 1 && (offset > PI || offset > -PI)) {
-    large = 1;
-  } else if (anticlockwise === 0 && (offset < PI || offset < -PI)) {
-    large = 1;
+    endAngle = 2 * PI + endAngle;
   }
 
   var xStart = x + Math.cos(startAngle) * radius;
@@ -50,6 +44,18 @@ function arc(x, y, radius, startAngle, endAngle, anticlockwise){
   var xEnd = x + Math.cos(endAngle) * radius;
   var yEnd = y + Math.sin(endAngle) * radius;
   var pEnd = getCoords(xEnd, yEnd);
+
+  var offset = endAngle - startAngle;
+
+  if (anticlockwise === 1) {
+    if (offset < 0 || offset > PI) {
+      large = 1;
+    }
+  } else {
+    if (offset > 0 || offset < -PI) {
+      large = 1;
+    }
+  }
 
   path = [
     ['M', pStart.x, pStart.y],
@@ -83,6 +89,6 @@ $(function (){
     .attr({
       stroke: '#8384ff',
       'stroke-width': strokeWidth,
-      arc: [baseX, baseY, radius, -0.5 * PI, 1.5 * PI, 0]
+      arc: [baseX, baseY, radius, -0.5 * PI, 1.5 * PI, 1]
     })
 });
