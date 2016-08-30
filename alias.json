@@ -28,6 +28,7 @@
   "kindeditor": "util/kindeditor/4.1.11/kindeditor",
   "viewport": "util/viewport/0.0.1/viewport",
   "lazy": "util/lazy/0.4.2/lazy",
+  "raphael": "util/raphael/2.2.1/raphael",
   "toast": "common/toast/2.0.0/toast",
   "tabs": "common/switchable/1.1.1/tabs",
   "slide": "common/switchable/1.1.1/slide",
