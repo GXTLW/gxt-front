@@ -105,5 +105,5 @@ $(function (){
     })
     .animate({
       arc: [baseX, baseY, radius, 0, 2 * PI]
-    }, 6000, 'bounce');
+    }, 900, 'bounce');
 });
