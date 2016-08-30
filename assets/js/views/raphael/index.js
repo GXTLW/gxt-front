@@ -92,6 +92,6 @@ $(function (){
     .attr({
       stroke: '#8384ff',
       'stroke-width': strokeWidth,
-      arc: [baseX, baseY, radius, -PI / 2, 0]
+      arc: [baseX, baseY, radius, -0.5 * PI, 1.5 * PI, 0]
     })
 });
