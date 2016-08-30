@@ -24,45 +24,36 @@ function getCoords(x, y){
 
 function arc(x, y, radius, startAngle, endAngle, anticlockwise){
   var path;
-  var equalAngle = startAngle === endAngle;
+  var large = 0;
 
   anticlockwise = anticlockwise === 0 ? 0 : 1;
 
   if (startAngle < 0) {
-    startAngle = 2 * PI - Math.abs(startAngle / PI % 2 * PI);
+    startAngle = Math.abs(startAngle % (2 * PI));
   }
 
   if (endAngle < 0) {
-    endAngle = 2 * PI - Math.abs(endAngle / PI % 2 * PI);
+    endAngle = Math.abs(endAngle % (2 * PI));
   }
 
-  var large = endAngle - startAngle;
+  var offset = endAngle - startAngle;
 
-  if ((anticlockwise === 1 && startAngle > endAngle)
-    || (anticlockwise === 0 && startAngle < endAngle)) {
-    large = 2 * PI - Math.abs(large / PI % 2 * PI);
-  }
-
-  // Fixed IE bug
-  if (!(large / PI % 2)) {
-    endAngle += 0.000000001;
-  }
-
-  if (!large && !equalAngle) {
-    large = 2 * PI;
-    endAngle = startAngle - 0.0001;
+  if (anticlockwise === 1 && (offset > PI || offset > -PI)) {
+    large = 1;
+  } else if (anticlockwise === 0 && (offset < PI || offset < -PI)) {
+    large = 1;
   }
 
   var xStart = x + Math.cos(startAngle) * radius;
   var yStart = y + Math.sin(startAngle) * radius;
+  var pStart = getCoords(xStart, yStart);
   var xEnd = x + Math.cos(endAngle) * radius;
   var yEnd = y + Math.sin(endAngle) * radius;
-  var pStart = getCoords(xStart, yStart);
   var pEnd = getCoords(xEnd, yEnd);
 
   path = [
     ['M', pStart.x, pStart.y],
-    ['A', radius, radius, 0, large > PI ? 1 : 0, anticlockwise, pEnd.x, pEnd.y]
+    ['A', radius, radius, 0, large, anticlockwise, pEnd.x, pEnd.y]
   ];
 
   return { path: path };
