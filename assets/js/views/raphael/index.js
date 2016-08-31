@@ -40,11 +40,10 @@ function arc(x, y, radius, startAngle, endAngle, anticlockwise){
   }
 
   if (circle) {
-    large = anticlockwise ? 1 : 0;
-    endAngle = large ? startAngle - 0.01 / radius : startAngle + 0.01 / radius;
+    large = 1;
+    endAngle = anticlockwise ? startAngle - 0.01 / radius : startAngle + 0.01 / radius;
   } else if (zero) {
-    large = anticlockwise ? 0 : 1;
-    endAngle = large ? startAngle + 0.01 / radius : startAngle - 0.01 / radius;
+    endAngle = anticlockwise ? startAngle + 0.01 / radius : startAngle - 0.01 / radius;
   } else {
     var offset = endAngle - startAngle;
 
@@ -97,6 +96,6 @@ $(function (){
       arc: [baseX, baseY, radius, -0.5 * PI, -0.5 * PI]
     })
     .animate({
-      arc: [baseX, baseY, radius, PI, -PI]
+      arc: [baseX, baseY, radius, -0.5 * PI, 1.5 * PI]
     }, 900, 'bounce');
 });
