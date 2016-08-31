@@ -23,11 +23,12 @@ function getCoords(x, y){
 }
 
 function arc(x, y, radius, startAngle, endAngle, anticlockwise){
-  var path;
   var large = 0;
   var zero = startAngle === endAngle;
   var circle = endAngle !== startAngle
     && (endAngle - startAngle) % (2 * PI) === 0;
+  var strokeWidth = this.attrs['stroke-width'] || 1;
+  var fixAngle = 0.0125 * PI * strokeWidth / radius;
 
   anticlockwise = anticlockwise === 0 ? 0 : 1;
 
@@ -41,9 +42,7 @@ function arc(x, y, radius, startAngle, endAngle, anticlockwise){
 
   if (circle) {
     large = 1;
-    endAngle = anticlockwise ? startAngle - 0.01 / radius : startAngle + 0.01 / radius;
-  } else if (zero) {
-    endAngle = anticlockwise ? startAngle + 0.01 / radius : startAngle - 0.01 / radius;
+    endAngle = anticlockwise ? startAngle - fixAngle : startAngle + fixAngle;
   } else {
     var offset = endAngle - startAngle;
 
@@ -56,15 +55,30 @@ function arc(x, y, radius, startAngle, endAngle, anticlockwise){
 
   var xStart = x + Math.cos(startAngle) * radius;
   var yStart = y + Math.sin(startAngle) * radius;
+  var pStart = getCoords(xStart, yStart);
+  var path = [['M', pStart.x, pStart.y]];
+
+  if (zero) {
+    path.push(['L', pStart.x, pStart.y]);
+
+    return path;
+  }
+
   var xEnd = x + Math.cos(endAngle) * radius;
   var yEnd = y + Math.sin(endAngle) * radius;
-  var pStart = getCoords(xStart, yStart);
   var pEnd = getCoords(xEnd, yEnd);
 
-  path = [
-    ['M', pStart.x, pStart.y],
-    ['A', radius, radius, 0, large, anticlockwise, pEnd.x, pEnd.y]
-  ];
+  path.push(['A', radius, radius, 0, large, anticlockwise, pEnd.x, pEnd.y]);
+
+  if (circle) {
+    startAngle = anticlockwise ? startAngle + fixAngle : startAngle - fixAngle;
+
+    xStart = x + Math.cos(startAngle) * radius;
+    yStart = y + Math.sin(startAngle) * radius;
+    pStart = getCoords(xStart, yStart);
+
+    path.push(['L', pStart.x, pStart.y]);
+  }
 
   return { path: path };
 }
@@ -93,9 +107,9 @@ $(function (){
     .attr({
       stroke: '#8384ff',
       'stroke-width': strokeWidth,
-      arc: [baseX, baseY, radius, -0.5 * PI, -0.5 * PI]
+      arc: [baseX, baseY, radius, 0, 0]
     })
     .animate({
-      arc: [baseX, baseY, radius, -0.5 * PI, 1.5 * PI]
+      arc: [baseX, baseY, radius, 0, 2 * PI]
     }, 900, 'bounce');
 });
