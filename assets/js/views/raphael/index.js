@@ -25,6 +25,7 @@ function getCoords(x, y){
 function arc(x, y, radius, startAngle, endAngle, anticlockwise){
   var path;
   var large = 0;
+  var zero = startAngle === endAngle;
   var circle = endAngle !== startAngle
     && (endAngle - startAngle) % (2 * PI) === 0;
 
@@ -39,7 +40,11 @@ function arc(x, y, radius, startAngle, endAngle, anticlockwise){
   }
 
   if (circle) {
-    startAngle = 1.5 * PI;
+    large = anticlockwise ? 1 : 0;
+    endAngle = large ? startAngle - 0.01 / radius : startAngle + 0.01 / radius;
+  } else if (zero) {
+    large = anticlockwise ? 0 : 1;
+    endAngle = large ? startAngle + 0.01 / radius : startAngle - 0.01 / radius;
   } else {
     var offset = endAngle - startAngle;
 
@@ -52,27 +57,15 @@ function arc(x, y, radius, startAngle, endAngle, anticlockwise){
 
   var xStart = x + Math.cos(startAngle) * radius;
   var yStart = y + Math.sin(startAngle) * radius;
+  var xEnd = x + Math.cos(endAngle) * radius;
+  var yEnd = y + Math.sin(endAngle) * radius;
   var pStart = getCoords(xStart, yStart);
+  var pEnd = getCoords(xEnd, yEnd);
 
-  if (circle) {
-    path = [
-      ['M', pStart.x, pStart.y],
-      ['A', radius, radius, 0, 1, 1, pStart.x - 0.1, pStart.y]
-    ];
-  } else {
-    var xEnd = x + Math.cos(endAngle) * radius;
-    var yEnd = y + Math.sin(endAngle) * radius;
-    var pEnd = getCoords(xEnd, yEnd);
-
-    if (startAngle === endAngle) {
-      pEnd.x += 0.000000001;
-    }
-
-    path = [
-      ['M', pStart.x, pStart.y],
-      ['A', radius, radius, 0, large, anticlockwise, pEnd.x, pEnd.y]
-    ];
-  }
+  path = [
+    ['M', pStart.x, pStart.y],
+    ['A', radius, radius, 0, large, anticlockwise, pEnd.x, pEnd.y]
+  ];
 
   return { path: path };
 }
@@ -101,9 +94,9 @@ $(function (){
     .attr({
       stroke: '#8384ff',
       'stroke-width': strokeWidth,
-      arc: [baseX, baseY, radius, 0, 0]
+      arc: [baseX, baseY, radius, -0.5 * PI, -0.5 * PI]
     })
     .animate({
-      arc: [baseX, baseY, radius, 0, 2 * PI]
+      arc: [baseX, baseY, radius, PI, -PI]
     }, 900, 'bounce');
 });
