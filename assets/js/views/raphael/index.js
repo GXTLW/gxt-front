@@ -25,42 +25,54 @@ function getCoords(x, y){
 function arc(x, y, radius, startAngle, endAngle, anticlockwise){
   var path;
   var large = 0;
+  var circle = endAngle !== startAngle
+    && (endAngle - startAngle) % (2 * PI) === 0;
 
-  startAngle = startAngle % (2 * PI);
-  endAngle = endAngle % (2 * PI);
   anticlockwise = anticlockwise === 0 ? 0 : 1;
 
   if (startAngle < 0) {
-    startAngle = 2 * PI + startAngle;
+    startAngle = 2 * PI + startAngle % (2 * PI);
   }
 
   if (endAngle < 0) {
-    endAngle = 2 * PI + endAngle;
+    endAngle = 2 * PI + endAngle % (2 * PI);
+  }
+
+  if (circle) {
+    startAngle = 1.5 * PI;
+  } else {
+    var offset = endAngle - startAngle;
+
+    if (anticlockwise && (offset > 0 ? offset > PI : offset > -PI)) {
+      large = 1;
+    } else if (!anticlockwise && (offset > 0 ? offset < PI : offset < -PI)) {
+      large = 1;
+    }
   }
 
   var xStart = x + Math.cos(startAngle) * radius;
   var yStart = y + Math.sin(startAngle) * radius;
   var pStart = getCoords(xStart, yStart);
-  var xEnd = x + Math.cos(endAngle) * radius;
-  var yEnd = y + Math.sin(endAngle) * radius;
-  var pEnd = getCoords(xEnd, yEnd);
 
-  var offset = endAngle - startAngle;
-
-  if (anticlockwise === 1) {
-    if (offset < 0 || offset > PI) {
-      large = 1;
-    }
+  if (circle) {
+    path = [
+      ['M', pStart.x, pStart.y],
+      ['A', radius, radius, 0, 1, 1, pStart.x - 0.1, pStart.y]
+    ];
   } else {
-    if (offset > 0 || offset < -PI) {
-      large = 1;
-    }
-  }
+    var xEnd = x + Math.cos(endAngle) * radius;
+    var yEnd = y + Math.sin(endAngle) * radius;
+    var pEnd = getCoords(xEnd, yEnd);
 
-  path = [
-    ['M', pStart.x, pStart.y],
-    ['A', radius, radius, 0, large, anticlockwise, pEnd.x, pEnd.y]
-  ];
+    if (startAngle === endAngle) {
+      pEnd.x += 0.000000001;
+    }
+
+    path = [
+      ['M', pStart.x, pStart.y],
+      ['A', radius, radius, 0, large, anticlockwise, pEnd.x, pEnd.y]
+    ];
+  }
 
   return { path: path };
 }
@@ -89,6 +101,9 @@ $(function (){
     .attr({
       stroke: '#8384ff',
       'stroke-width': strokeWidth,
-      arc: [baseX, baseY, radius, -0.5 * PI, 1.5 * PI, 1]
+      arc: [baseX, baseY, radius, 0, 0]
     })
+    .animate({
+      arc: [baseX, baseY, radius, 0, 2 * PI]
+    }, 900, 'bounce');
 });
