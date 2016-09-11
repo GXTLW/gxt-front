@@ -49,38 +49,22 @@
 .ui-main-left .ui-list .ui-list-item a {
   margin-left: 1.26em;
 }
-.ui-main-right .ui-list .ui-list-item span {
-  float: right;
-}
-.ui-message tr td {
-  min-height: 40px;
-}
-.ui-table-left {
-  font-size: 14px;
-  text-align: right;
-  line-height: 40px;
-}
-.ui-table-right {
-  padding-left: 30px;
-}
-.ui-table-right span {
-  color: red;
-}
-.ui-message-submit {
-  background: #046ab6;
-  padding:.6em;
-  margin: 10px auto 0;
-  outline:none;
-  display: block;
-  color: #fff;
-  border: 1px solid #2d78f4;
-}
-.ui-message-submit:hover{
-  background: #1952a3;
-  border: 1px solid #2d78f4;
-}
-.ui-qr-code{
+.ui-article-title{
+  font-size: 16px;
   font-weight: bold;
-  float: right;
-  color: red;
+  text-align: center;
+  padding: 1em 0;
+}
+.ui-article-time{
+  padding: 1em 0;
+  width: 100%;
+  text-align: center;
+  color: #999;
+}
+.ui-article-para,
+.article-sub-title{
+  text-indent: 2em;
+}
+.article-sub-title{
+  font-weight: bold;
 }

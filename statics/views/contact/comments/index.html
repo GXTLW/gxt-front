@@ -26,7 +26,7 @@
           <li class="ui-list-item"><a href="/statics/views/recruitment/index.html">招聘信息</a></li>
           <li class="ui-list-item"><a href="/statics/views/customer/index.html">合作客户</a></li>
           <li class="ui-list-item"><a href="/statics/views/cooperation/index.html">加盟合作</a></li>
-          <li class="ui-list-item"><a href="/statics/views/contact/comments/index.html">在线留言</a></li>
+          <li class="ui-list-item"><a href="/statics/views/contact/index.html">联系我们</a></li>
         </ul>
       </div>
     </section>
@@ -35,9 +35,9 @@
     <section class="ui-panel">
       <header class="ui-panel-header">
         在线留言<span class="ui-more">您当前位置：<a href="/statics/views/index/index.html">国信通</a> &gt;&gt;
-        <a href="/statics/views/contact/index.html">联系我们</a> &gt;&gt;<a href="/statics/views/contact/comments/index.html">在线留言</a></span>
+        <a href="/statics/views/contact/index.html">联系我们</a> &gt;&gt;<a href="/statics/views/contact/comments/index.html">在线留言报名</a></span>
       </header>
-      <div class="ui-panel-body">
+      <div class="ui-panel-body fn-clear">
         <form class="ui-message"><!--此处还有相关属性没有设置-->
           <table>
             <tr>
@@ -56,9 +56,14 @@
               <td class="ui-table-left">留言内容：</td>
               <td class="ui-table-right"><textarea class="ui-message-words" rows="5" cols="50" title="填写留言内容"></textarea> <span>*</span></td>
             </tr>
+            <tr>
+              <td class="ui-table-left">验证码：</td>
+              <td class="ui-table-right"><input type="text" class="ui-message-verification" title="输入验证码"> &emsp;<img src="" alt="验证码" > </td>
+            </tr>
           </table>
           <input type="submit" class="ui-message-submit" value="确认提交" />
         </form>
+        <span class="ui-qr-code">扫公司二维码，报名入职返现！</span>
       </div>
     </section>
   </div>
