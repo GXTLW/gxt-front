@@ -7,3 +7,5 @@ layout:
 data:
   name:
     国信通
+  version:
+    dev
