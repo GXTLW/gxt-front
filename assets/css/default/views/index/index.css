@@ -12,12 +12,12 @@
   display: inline-block;
   *display: inline; *zoom: 1;
   vertical-align: top;
-  margin: 20px 0;
+  margin: 10px 0;
 }
 .ui-main-left {
   font-size: 0;
   -webkit-text-size-adjust: none;
-  width: 860px;
+  width: 870px;
 }
 .ui-main-left .ui-tabs + .ui-tabs,
 .ui-main-left .ui-tabs + .ui-panel,
@@ -27,11 +27,11 @@
 .ui-main-right .ui-tabs + .ui-panel,
 .ui-main-right .ui-panel + .ui-panel,
 .ui-main-right .ui-panel + .ui-tabs {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 .ui-main-right {
   width: 320px;
-  margin-left: 20px;
+  margin-left: 10px;
 }
 .ui-banner {
   width: 100%;
@@ -106,10 +106,10 @@
   display: inline-block;
   *display: inline; *zoom: 1;
   vertical-align: top;
-  width: 420px;
+  width: 430px;
 }
 .ui-main-left .ui-middle-left {
-  margin-right: 20px;
+  margin-right: 10px;
 }
 .ui-main-right .ui-panel-body .ui-list-item {
   margin-top: .8em;
@@ -119,7 +119,7 @@
   width: 280px;
 }
 .ui-main-bottom {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 .ui-main-bottom .ui-panel .ui-panel-body .ui-list {
   -webkit-text-size-adjust: none;

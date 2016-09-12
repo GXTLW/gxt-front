@@ -12,14 +12,14 @@
   display: inline-block;
   *display: inline; *zoom: 1;
   vertical-align: top;
-  margin: 20px 0;
+  margin: 10px 0;
 }
 .ui-main-left {
   width: 320px;
 }
 .ui-main-right {
-  margin-left: 20px;
-  width: 860px;
+  margin-left: 10px;
+  width: 870px;
 }
 .ui-banner {
   width: 100%;

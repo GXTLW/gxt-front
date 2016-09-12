@@ -52,23 +52,35 @@
 .ui-main-right .ui-list .ui-list-item span {
   float: right;
 }
-.ui-main-right .ui-list {
-  -webkit-text-size-adjust: none;
-  font-size: 0;
-  text-align: center;
+.ui-message tr td {
+  min-height: 40px;
 }
-.ui-main-right .ui-list > .ui-list-item {
-  display: inline-block;
-  *display: inline; *zoom: 1;
-  vertical-align: top;
-  width: 170px;
-  height: 100px;
-  font-size: 13px;
-  text-align: center;
-  margin-right: 35px;
-  margin-bottom: 2em;
+.ui-table-left {
+  font-size: 14px;
+  text-align: right;
+  line-height: 40px;
 }
-.ui-main-right .ui-list > .ui-list-item > img {
-  width: 160px;
-  height: 60px;
+.ui-table-right {
+  padding-left: 30px;
+}
+.ui-table-right span {
+  color: red;
+}
+.ui-message-submit {
+  background: #046ab6;
+  padding:.6em;
+  margin: 10px auto 0;
+  outline:none;
+  display: block;
+  color: #fff;
+  border: 1px solid #2d78f4;
+}
+.ui-message-submit:hover{
+  background: #1952a3;
+  border: 1px solid #2d78f4;
+}
+.ui-qr-code{
+  font-weight: bold;
+  float: right;
+  color: red;
 }

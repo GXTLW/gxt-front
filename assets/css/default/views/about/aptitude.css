@@ -55,3 +55,40 @@
 .ui-main-right .ui-list .ui-list-item span {
   float: right;
 }
+.ui-main-right .ui-list .ui-list-item {
+  border-bottom: 1px dashed #ccc;
+}
+.ui-panel-plist {
+  text-align: right;
+  margin-top: .5em;
+}
+.ui-panel-plist .ui-page-index {
+  padding: .25em;
+  width: 2.5em;
+  height: 1.5em;
+  border: 1px solid #b2b2b2;
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -o-transition: border .25s ease-in-out, box-shadow .25s ease-in-out;
+  -moz-transition: border .25s ease-in-out, box-shadow .25s ease-in-out;
+  -webkit-transition: border .25s ease-in-out, box-shadow .25s ease-in-out;
+  transition: border .25s ease-in-out, box-shadow .25s ease-in-out;
+}
+.ui-panel-plist .ui-page-index:focus{
+  outline: none;
+  border: 1px solid rgba(38, 162, 255, .8);
+  box-shadow: 0 0 3px rgba(34, 25, 25, .15), 0 0 3px hsla(0, 0%, 100%, .8), 0 0 6px #52a2eb;
+}
+.ui-panel-plist .ui-page-btn {
+  padding: .3em .5em;
+  background: #0e7fd4;
+  color: #fff;
+  border: 1px solid #2d78f4;
+  outline:none;
+}
+.ui-panel-plist .ui-page-btn:hover,
+.ui-panel-plist .ui-page-btn:focus{
+  background: #046ab6;
+  border: 1px solid #2d78f4;
+}
