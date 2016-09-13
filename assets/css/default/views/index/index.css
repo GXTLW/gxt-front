@@ -94,8 +94,10 @@
   padding-left: 10px;
   float: right;
 }
+.ui-main-left .ui-list-item{
+  line-height: 2.4;
+}
 .ui-main-left .ui-list-item > a {
-  display: inline-block;
   width: 80%;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -108,12 +110,18 @@
   vertical-align: top;
   width: 430px;
 }
+.ui-main-left .ui-middle-left .ui-panel-body,
+.ui-main-left .ui-middle-right .ui-panel-body{
+  height: 279px;
+  overflow: hidden;
+}
 .ui-main-left .ui-middle-left {
   margin-right: 10px;
 }
 .ui-main-right .ui-panel-body .ui-list-item {
-  margin-top: .8em;
+  margin-top: 1em;
   text-align: center;
+  line-height: 1.8;
 }
 .ui-main-right .ui-panel-body .ui-list-item a > img {
   width: 280px;

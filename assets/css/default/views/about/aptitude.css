@@ -52,11 +52,27 @@
 .ui-main-left .ui-list .ui-list-item a {
   margin-left: 1.3em;
 }
-.ui-main-right .ui-list .ui-list-item span {
-  float: right;
+.ui-main-right .ui-list {
+  padding-left: 20px;
+  -webkit-text-size-adjust: none;
+  font-size: 0;
 }
-.ui-main-right .ui-list .ui-list-item {
-  border-bottom: 1px dashed #ccc;
+.ui-main-right .ui-list > .ui-list-item {
+  display: inline-block;
+  vertical-align: top;
+  width: 215px;
+  height: 140px;
+  font-size: 13px;
+  text-align: center;
+  margin-right: 40px;
+  margin-bottom: 2em;
+  overflow: hidden;
+}
+.ui-main-right .ui-list > .ui-list-item > img {
+  width: 200px;
+  height: 100px;
+  border: 1px solid #ccc;
+  padding: 5px;
 }
 .ui-panel-plist {
   text-align: right;
