@@ -6,7 +6,7 @@ const koa = require('koa');
 const path = require('path');
 const etag = require('koa-etag');
 const router = require('koa-router');
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 const session = require('koa-session');
 const favicon = require('koa-favicon');
 const convert = require('koa-convert');
@@ -39,9 +39,7 @@ route.get('/', context =>{
   context.body = 'hello';
 });
 
-app
-  .use(route.routes())
-  .use(router.allowedMethods());
+app.use(route.routes());
 
 app.listen(8080, ()=>{
   console.log('listening on port 8080.');
