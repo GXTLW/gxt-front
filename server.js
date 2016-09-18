@@ -13,19 +13,26 @@ const responseTime = require('koa-response-time');
 
 const app = new koa();
 const route = router();
+const assets = 'Assets';
 const cwd = process.cwd();
 const maxAge = 365 * 24 * 60 * 60;
-const assets = path.join(cwd, 'Assets');
 
 // mongoose.connect('mongodb://localhost/test');
 
 app.keys = ['GXT'];
 
+// response time
 app.use(responseTime());
-app.use(convert(staticCache(cwd, { maxAge: maxAge, dynamic: true })));
+// assets
+app.use(convert(staticCache(path.join(cwd, assets), {
+  dynamic: true,
+  maxAge: maxAge,
+  prefix: assets
+})));
+// session
 app.use(convert(session(app)));
 
-route.get('/', context =>{
+route.get('/', context=>{
   if (!context.session.login) {
     context.session.login = true;
   }
