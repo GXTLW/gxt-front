@@ -199,8 +199,8 @@ function onpath(path, property, file, wwwroot){
     path = path.replace(/\\+/g, '/');
   }
 
-  path = path.replace('/assets/css/', '/assets/style/');
-  path = path.replace('/assets/js/', '/assets/script/');
+  path = path.replace('/Assets/css/', '/Assets/style/');
+  path = path.replace('/Assets/js/', '/Assets/script/');
 
   return path;
 }

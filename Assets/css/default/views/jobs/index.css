@@ -1,0 +1,97 @@
+@import "/Assets/css/default/modules/panel.css";
+@import "/Assets/css/default/modules/slider.css";
+@import "/Assets/css/default/modules/list.css";
+@import "/Assets/css/default/modules/tabs.css";
+.ui-banner {
+  width: 100%;
+  height: 470px;
+  overflow: hidden;
+  position: relative;
+  z-index: 0;
+}
+.ui-banner-center {
+  position: absolute;
+  left: 50%; height: 470px;
+}
+.ui-banner-center-offset {
+  width: 1920px;
+  height: 100%;
+  position: relative;
+  top: 0; left: -50%;
+  overflow: hidden;
+}
+.ui-slider > li {
+  width: 1920px;
+}
+.ui-main {
+  font-size: 0;
+  -webkit-text-size-adjust: none;
+}
+.ui-main-left,
+.ui-main-right {
+  font-size: 12px;
+  display: inline-block;
+  *display: inline; *zoom: 1;
+  vertical-align: top;
+  margin: 10px 0;
+}
+.ui-main-left {
+  width: 320px;
+}
+.ui-main-right {
+  margin-left: 10px;
+  width: 870px;
+}
+.ui-main-left .ui-list .ui-list-item {
+  background: url(/Assets/images/default/ico-01.png) no-repeat 0 center;
+  overflow: hidden;
+}
+.ui-main-left .ui-list .ui-list-item a {
+  margin-left: 1.26em;
+}
+.ui-main-right .ui-list .ui-list-item span {
+  float: right;
+}
+.ui-main-right .ui-list .ui-list-item {
+  border-bottom: 1px dashed #ccc;
+  line-height:2.4;
+}
+.ui-main-right .ui-list .ui-list-item a{
+  width: 80%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ui-panel-plist {
+  text-align: right;
+  margin-top: .5em;
+}
+.ui-panel-plist .ui-page-index {
+  padding: .25em;
+  width: 2.5em;
+  height: 1.5em;
+  border: 1px solid #b2b2b2;
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -o-transition: border .25s ease-in-out, box-shadow .25s ease-in-out;
+  -moz-transition: border .25s ease-in-out, box-shadow .25s ease-in-out;
+  -webkit-transition: border .25s ease-in-out, box-shadow .25s ease-in-out;
+  transition: border .25s ease-in-out, box-shadow .25s ease-in-out;
+}
+.ui-panel-plist .ui-page-index:focus{
+  outline: none;
+  border: 1px solid rgba(38, 162, 255, .8);
+  box-shadow: 0 0 3px rgba(34, 25, 25, .15), 0 0 3px hsla(0, 0%, 100%, .8), 0 0 6px #52a2eb;
+}
+.ui-panel-plist .ui-page-btn {
+  padding: .3em .5em;
+  background: #0e7fd4;
+  color: #fff;
+  border: 1px solid #2d78f4;
+  outline:none;
+}
+.ui-panel-plist .ui-page-btn:hover{
+  background: #046ab6;
+  border: 1px solid #2d78f4;
+}

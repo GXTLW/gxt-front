@@ -18,7 +18,7 @@ const app = new koa();
 const route = router();
 const cwd = process.cwd();
 const maxAge = 365 * 24 * 60 * 60;
-const assets = path.join(cwd, 'assets');
+const assets = path.join(cwd, 'Assets');
 
 // mongoose.connect('mongodb://localhost/test');
 

@@ -40,6 +40,6 @@ jspm_packages
 .idea/
 
 # Gulp build directory
-assets/style
-assets/script
-deploy
+Assets/style
+Assets/script
+Deploy

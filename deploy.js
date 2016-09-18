@@ -32,9 +32,9 @@ function read(dir){
           src = normalize(src);
 
           request(src, function (res){
-            console.log('deplay:', src);
+            console.log('Deploy:', src);
 
-            src = 'deploy/' + src.replace(/^\/statics\/views\//, '');
+            src = 'Deploy/' + src.replace(/^\/statics\/views\//, '');
 
             res.pipe(safeWriteStream(src));
           });
