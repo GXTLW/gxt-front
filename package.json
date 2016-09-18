@@ -4,7 +4,8 @@
   "version": "0.0.1",
   "scripts": {
     "fengine": "fengine --color",
-    "watch": "gulp watch --color"
+    "watch": "gulp watch --color",
+    "mongod": "mongod.bat"
   },
   "dependencies": {
     "del": "^2.2.2",
