@@ -19,6 +19,13 @@ const maxAge = 365 * 24 * 60 * 60;
 
 // mongoose.connect('mongodb://localhost/test');
 
+/**
+ * serve
+ * @param path
+ * @param root
+ * @param options
+ * @returns {Function}
+ */
 function serve(path, root, options){
   // remove / begin
   path = path.replace(/^\/+/, '');
@@ -27,7 +34,6 @@ function serve(path, root, options){
 
   return function (ctx, next){
     if (ctx.method == 'HEAD' || ctx.method == 'GET') {
-
       let req_path_array = ctx.path.slice(1).split('/');
 
       // match path
