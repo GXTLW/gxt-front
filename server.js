@@ -2,6 +2,8 @@
  * Created by nuintun on 2016/9/18.
  */
 
+'use strict';
+
 const koa = require('koa');
 const path = require('path');
 const send = require('koa-send');
