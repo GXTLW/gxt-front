@@ -4,15 +4,12 @@
 
 const koa = require('koa');
 const path = require('path');
-const etag = require('koa-etag');
 const router = require('koa-router');
 // const mongoose = require('mongoose');
 const session = require('koa-session');
-const favicon = require('koa-favicon');
 const convert = require('koa-convert');
 const staticCache = require('koa-static-cache');
 const responseTime = require('koa-response-time');
-const conditionalGET = require('koa-conditional-get');
 
 const app = new koa();
 const route = router();
@@ -25,11 +22,8 @@ const assets = path.join(cwd, 'Assets');
 app.keys = ['GXT'];
 
 app.use(responseTime());
+app.use(convert(staticCache(cwd, { maxAge: maxAge, dynamic: true })));
 app.use(convert(session(app)));
-app.use(conditionalGET());
-app.use(etag());
-app.use(favicon());
-app.use(convert(staticCache(assets, { maxAge: maxAge })));
 
 route.get('/', context =>{
   if (!context.session.login) {
