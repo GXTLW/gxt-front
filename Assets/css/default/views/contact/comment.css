@@ -2,35 +2,7 @@
 @import "/Assets/css/default/modules/slider.css";
 @import "/Assets/css/default/modules/list.css";
 @import "/Assets/css/default/modules/tabs.css";
-.ui-main {
-  font-size: 0;
-  -webkit-text-size-adjust: none;
-}
-.ui-main-left,
-.ui-main-right {
-  font-size: 12px;
-  display: inline-block;
-  *display: inline; *zoom: 1;
-  vertical-align: top;
-  margin: 10px 0;
-}
-.ui-main-left {
-  width: 320px;
-}
-.ui-main-right {
-  margin-left: 10px;
-  width: 870px;
-}
-.ui-main-left .ui-list .ui-list-item {
-  background: url(/Assets/images/default/ico-01.png) no-repeat 0 center;
-  overflow: hidden;
-}
-.ui-main-left .ui-list .ui-list-item a {
-  margin-left: 1.26em;
-}
-.ui-main-right .ui-list .ui-list-item span {
-  float: right;
-}
+@import "/Assets/css/default/modules/contentPage.css";
 .ui-message tr td {
   min-height: 40px;
 }

@@ -2,18 +2,6 @@
 @import "/Assets/css/default/modules/slider.css";
 @import "/Assets/css/default/modules/list.css";
 @import "/Assets/css/default/modules/tabs.css";
-.ui-main {
-  font-size: 0;
-  -webkit-text-size-adjust: none;
-}
-.ui-main-left,
-.ui-main-right {
-  font-size: 12px;
-  display: inline-block;
-  *display: inline; *zoom: 1;
-  vertical-align: top;
-  margin: 10px 0;
-}
 .ui-main-left {
   font-size: 0;
   -webkit-text-size-adjust: none;
@@ -32,29 +20,6 @@
 .ui-main-right {
   width: 320px;
   margin-left: 10px;
-}
-.ui-marquee-content {
-  width: 100%;
-  background: url(/Assets/images/default/marquee.jpg) repeat-x;
-}
-.ui-marquee {
-  width: 1200px;
-  height: 35px;
-  margin: 0 auto;
-  -webkit-text-size-adjust: none;
-  font-size: 0;
-}
-.ui-marquee > img,
-.ui-marquee > marquee {
-  font-size: 12px;
-  display: inline-block;
-  *display: inline; *zoom: 1;
-  vertical-align: top;
-}
-.ui-marquee > marquee {
-  width: 1083px;
-  height: 35px;
-  line-height: 35px;
 }
 .ui-tabs-body > img {
   float: left;

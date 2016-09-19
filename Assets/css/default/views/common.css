@@ -195,3 +195,22 @@ body > header {
   height: 35px;
   line-height: 35px;
 }
+.ui-main {
+  font-size: 0;
+  -webkit-text-size-adjust: none;
+}
+.ui-main-left,
+.ui-main-right {
+  font-size: 12px;
+  display: inline-block;
+  *display: inline; *zoom: 1;
+  vertical-align: top;
+  margin: 10px 0;
+}
+.ui-main-left {
+  width: 320px;
+}
+.ui-main-right {
+  margin-left: 10px;
+  width: 870px;
+}

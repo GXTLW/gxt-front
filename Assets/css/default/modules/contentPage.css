@@ -1,0 +1,7 @@
+.ui-main-left .ui-list .ui-list-item {
+  background: url(/Assets/images/default/ico-01.png) no-repeat 0 center;
+  overflow: hidden;
+}
+.ui-main-left .ui-list .ui-list-item a {
+  margin-left: 1.3em;
+}
