@@ -52,8 +52,11 @@
 .ui-main-left .ui-list .ui-list-item a {
   margin-left: 1.3em;
 }
+.ui-main-right .ui-panel-body {
+  padding-top: 2.8em;
+  text-align: center;
+}
 .ui-main-right .ui-list {
-  padding-left: 20px;
   -webkit-text-size-adjust: none;
   font-size: 0;
 }
@@ -64,8 +67,7 @@
   height: 140px;
   font-size: 13px;
   text-align: center;
-  margin-right: 40px;
-  margin-bottom: 2em;
+  margin: 0 17px 2em;
   overflow: hidden;
 }
 .ui-main-right .ui-list > .ui-list-item > img {
