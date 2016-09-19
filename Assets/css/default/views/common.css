@@ -153,14 +153,14 @@ body > header {
 }
 .ui-banner {
   width: 100%;
-  height: 470px;
+  height: 550px;
   overflow: hidden;
   position: relative;
   z-index: 0;
 }
 .ui-banner-center {
   position: absolute;
-  left: 50%; height: 470px;
+  left: 50%; height: 100%;
 }
 .ui-banner-center-offset {
   width: 1920px;

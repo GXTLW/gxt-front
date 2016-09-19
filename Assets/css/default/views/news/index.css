@@ -2,27 +2,6 @@
 @import "/Assets/css/default/modules/slider.css";
 @import "/Assets/css/default/modules/list.css";
 @import "/Assets/css/default/modules/tabs.css";
-.ui-banner {
-  width: 100%;
-  height: 470px;
-  overflow: hidden;
-  position: relative;
-  z-index: 0;
-}
-.ui-banner-center {
-  position: absolute;
-  left: 50%; height: 470px;
-}
-.ui-banner-center-offset {
-  width: 1920px;
-  height: 100%;
-  position: relative;
-  top: 0; left: -50%;
-  overflow: hidden;
-}
-.ui-slider > li {
-  width: 1920px;
-}
 .ui-main {
   font-size: 0;
   -webkit-text-size-adjust: none;
