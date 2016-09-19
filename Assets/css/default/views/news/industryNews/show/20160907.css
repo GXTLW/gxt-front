@@ -2,23 +2,5 @@
 @import "/Assets/css/default/modules/slider.css";
 @import "/Assets/css/default/modules/list.css";
 @import "/Assets/css/default/modules/tabs.css";
-@import "/Assets/css/default/modules/contentPage.css";
-.ui-article-title{
-  font-size: 16px;
-  font-weight: bold;
-  text-align: center;
-  padding: 1em 0;
-}
-.ui-article-time{
-  padding: 1em 0;
-  width: 100%;
-  text-align: center;
-  color: #999;
-}
-.ui-article-para,
-.article-sub-title{
-  text-indent: 2em;
-}
-.article-sub-title{
-  font-weight: bold;
-}
+@import "/Assets/css/default/modules/contentpage.css";
+@import "/Assets/css/default/modules/article.css";
