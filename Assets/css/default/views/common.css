@@ -67,7 +67,6 @@ body > header {
   text-decoration: none;
   border-bottom: 2px solid #fc720d;
 }
-.ui-site-nav .active .ui-site-sub-nav,
 .ui-site-nav li:hover .ui-site-sub-nav {
   display: block;
 }
