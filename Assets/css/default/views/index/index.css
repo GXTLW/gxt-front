@@ -42,10 +42,21 @@
   line-height: 2.4;
 }
 .ui-main-left .ui-list-item > a {
+  display: inline-block;
   width: 80%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.ui-main-left .ui-middle-left .ui-list-item,
+.ui-main-left .ui-middle-right .ui-list-item{
+  font-size: 0;
+}
+.ui-main-left .ui-middle-left .ui-list-item > a,
+.ui-main-left .ui-middle-left .ui-list-item > span,
+.ui-main-left .ui-middle-right .ui-list-item > a,
+.ui-main-left .ui-middle-right .ui-list-item > span{
+  font-size: 13px;
 }
 .ui-main-left .ui-middle-left,
 .ui-main-left .ui-middle-right {

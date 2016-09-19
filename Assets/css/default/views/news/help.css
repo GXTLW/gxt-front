@@ -4,16 +4,5 @@
 @import "/Assets/css/default/modules/tabs.css";
 @import "/Assets/css/default/modules/contentpage.css";
 @import "/Assets/css/default/modules/pagelist.css";
-.ui-main-right .ui-list .ui-list-item span {
-  float: right;
-}
-.ui-main-right .ui-list .ui-list-item {
-  border-bottom: 1px dashed #ccc;
-  line-height:2.4;
-}
-.ui-main-right .ui-list .ui-list-item a{
-  width: 80%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
+@import "/Assets/css/default/modules/textlist.css";
+
