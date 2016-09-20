@@ -4,15 +4,9 @@
 .ui-main-right .ui-list .ui-list-item {
   border-bottom: 1px dashed #ccc;
   line-height: 2.4;
-  font-size: 0;
 }
-.ui-main-right .ui-list .ui-list-item a{
-  width: 80%;
+.ui-main-right .ui-list .ui-list-item a {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-.ui-main-right .ui-list-item > a,
-.ui-main-right .ui-list-item > span{
-  font-size: 13px;
 }
