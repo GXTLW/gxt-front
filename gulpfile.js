@@ -76,6 +76,9 @@ function compress(){
 
         context.push(vinyl);
         next();
+      }).catch(function (){
+        context.push(vinyl);
+        next();
       });
     })
   });
@@ -107,6 +110,9 @@ var CMDPLUGINS = {
         context.push(vinyl);
         next();
       });
+    }).catch(function (){
+      context.push(vinyl);
+      next();
     });
   }
 };
@@ -148,6 +154,9 @@ var CSSPLUGINS = {
         context.push(vinyl);
         next();
       });
+    }).catch(function (){
+      context.push(vinyl);
+      next();
     });
   }
 };
