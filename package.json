@@ -21,7 +21,7 @@
     "gulp": "^3.9.1",
     "pedding": "^1.0.0",
     "chokidar": "^1.6.0",
-    "cssnano": "^3.7.4",
+    "cssnano": "^3.7.5",
     "uglify-js": "^2.7.3",
     "gulp-concat": "^2.6.0",
     "gulp-plumber": "^1.1.0",
