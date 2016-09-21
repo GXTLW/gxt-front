@@ -4,7 +4,3 @@
 @import "/Assets/css/default/modules/tabs.css";
 @import "/Assets/css/default/modules/contentpage.css";
 @import "/Assets/css/default/modules/article.css";
-.ui-article-image {
-  text-align: center;
-  padding: 1em 0;
-}
