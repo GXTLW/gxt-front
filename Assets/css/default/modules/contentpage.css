@@ -1,7 +1,29 @@
 .ui-main-left .ui-list .ui-list-item {
-  background: url(/Assets/images/default/ico-01.png) no-repeat 0 center;
+  background: url(/Assets/images/default/sidebar-bj.png) no-repeat right center;
   overflow: hidden;
+  line-height: 2.6;
+  border-top: 1px dotted #ccc;
+}
+.ui-main-left .ui-list .ui-list-item:first-child{
+  border-top: none 0;
 }
 .ui-main-left .ui-list .ui-list-item a {
-  margin-left: 1.3em;
+  color: #8c8c8c;
+}
+.ui-main-left .ui-list .ui-list-item a:before{
+  content:"";
+  border-left: 2px solid #fc720d;
+  margin-right: .5em;
+}
+.ui-main-left .ui-list .active,
+.ui-main-left .ui-list .ui-list-item:hover{
+  background: url(/Assets/images/default/sidebar-bj2.png) no-repeat right center;
+}
+.ui-main-left .ui-list .active a,
+.ui-main-left .ui-list .ui-list-item:hover a{
+  text-decoration: none;
+  color: #2989c6;
+}
+.ui-main-right .ui-panel-body{
+  min-height:400px;
 }

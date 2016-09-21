@@ -3,7 +3,4 @@
 @import "/Assets/css/default/modules/list.css";
 @import "/Assets/css/default/modules/tabs.css";
 @import "/Assets/css/default/modules/contentpage.css";
-.ui-main-right .ui-panel .ui-panel-body > p{
-  text-align: center;
-}
-
+@import "/Assets/css/default/modules/voidcontent.css";
