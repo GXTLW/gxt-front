@@ -1,0 +1,10 @@
+@import "/Assets/css/default/modules/panel.css";
+@import "/Assets/css/default/modules/slider.css";
+@import "/Assets/css/default/modules/list.css";
+@import "/Assets/css/default/modules/tabs.css";
+@import "/Assets/css/default/modules/contentpage.css";
+@import "/Assets/css/default/modules/article.css";
+.ui-article-image {
+  display: block;
+  margin: 1em auto;
+}
