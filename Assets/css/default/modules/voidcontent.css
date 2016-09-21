@@ -1,4 +1,4 @@
-
+/*
 @font-face {
   font-family: 'icomoon';
   src: url('/Assets/fonts/icomoon.eot?ga87g7');
@@ -10,7 +10,7 @@
   font-style: normal;
 }
 [class^="icon-"], [class*=" icon-"] {
-  /* use !important to prevent issues with browser extensions that change fonts */
+  !* use !important to prevent issues with browser extensions that change fonts *!
   font-family: 'icomoon' !important;
   speak: none;
   font-style: normal;
@@ -19,15 +19,23 @@
   text-transform: none;
   line-height: 1;
 
-  /* Better Font Rendering =========== */
+  !* Better Font Rendering =========== *!
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.ui-main-right .ui-panel .ui-panel-body > p {
-  text-align: center;
-}
+
 .icon-void-content:before {
   content: "\e900";
   margin-right: .5em;
   font-size: 16px;
+}*/
+.ui-main-right .ui-panel .ui-panel-body > p {
+  width:200px;
+  height:200px;
+  margin:50px auto;
+  text-align: center;
+  padding-top: 150px;
+}
+.ui-main-right .ui-panel-body > p{
+  background: url(/Assets/images/default/empty.png) no-repeat center top;
 }

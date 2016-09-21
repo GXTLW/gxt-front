@@ -10,7 +10,13 @@
 .ui-main-left .ui-list .ui-list-item a {
   color: #8c8c8c;
 }
-.ui-main-left .ui-list .ui-list-item a:before{
+.ui-main-left .ui-list .ui-list-item a::before{
+  content:"";
+  border-left: 2px solid #1952a3;
+  margin-right: .5em;
+}
+.ui-main-left .ui-list .ui-list-item:hover a::before,
+.ui-main-left .ui-list .active a::before{
   content:"";
   border-left: 2px solid #fc720d;
   margin-right: .5em;
