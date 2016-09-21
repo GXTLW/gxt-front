@@ -35,3 +35,24 @@
   float: right;
   color: red;
 }
+input[type='text']{
+  height: 1.5em;
+}
+input[type='text'],
+textarea{
+  padding: .25em;
+  border: 1px solid #b2b2b2;
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -o-transition: border .25s ease-in-out, box-shadow .25s ease-in-out;
+  -moz-transition: border .25s ease-in-out, box-shadow .25s ease-in-out;
+  -webkit-transition: border .25s ease-in-out, box-shadow .25s ease-in-out;
+  transition: border .25s ease-in-out, box-shadow .25s ease-in-out;
+}
+input[type='text']:focus,
+textarea:focus{
+  outline: none;
+  border: 1px solid rgba(38, 162, 255, .8);
+  box-shadow: 0 0 3px rgba(34, 25, 25, .15), 0 0 3px hsla(0, 0%, 100%, .8), 0 0 6px #52a2eb;
+}
