@@ -1,0 +1,25 @@
+@import "/Assets/css/default/modules/panel.css";
+@import "/Assets/css/default/modules/slider.css";
+@import "/Assets/css/default/modules/list.css";
+@import "/Assets/css/default/modules/tabs.css";
+@import "/Assets/css/default/modules/contentpage.css";
+@import "/Assets/css/default/modules/article.css";
+.ui-article-image {
+  display: block;
+  margin: 1em auto;
+  max-width: 815px;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  empty-cells: show;
+}
+table td,
+table th {
+  padding: 1em 0;
+  border-bottom: 1px solid #f0f0f0;
+  text-align: center;
+}
+table tr td:first-of-type{
+  font-weight:bold;
+}
