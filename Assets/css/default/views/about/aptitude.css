@@ -15,16 +15,14 @@
 .ui-main-right .ui-list > .ui-list-item {
   display: inline-block;
   vertical-align: top;
-  width: 215px;
-  height: 140px;
   font-size: 13px;
   text-align: center;
+  padding-bottom: 2em;
   margin: 0 17px 2em;
   overflow: hidden;
 }
 .ui-main-right .ui-list > .ui-list-item > img {
-  width: 200px;
-  height: 100px;
+  max-width: 815px;
   border: 1px solid #ccc;
   padding: 5px;
 }
