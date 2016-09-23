@@ -28,6 +28,7 @@
     "gulp-cmd": "https://github.com/nuintun/gulp-cmd/archive/master.tar.gz",
     "gulp-css": "https://github.com/nuintun/gulp-css/archive/master.tar.gz",
     "switch-stream": "https://github.com/nuintun/switch-stream/archive/master.tar.gz",
-    "safe-write-stream": "^1.0.4"
+    "safe-write-stream": "^1.0.4",
+    "koa-onerror": "^2.0.0"
   }
 }
