@@ -1,5 +1,0 @@
-define("common/calendar/1.1.2/css/month.css.js", ["util/import-style/1.0.0/import-style"], function(require, exports, module){
-var style = require("util/import-style/1.0.0/import-style");
-
-style.css("/* month */\n.ui-calendar-month {\n  border: none;\n  box-shadow: none;\n  border-collapse: separate;\n  *border-collapse: collapse;\n  border-spacing: 0;\n}\ntable.ui-calendar-month tr {\n  border: none;\n  margin: 0;\n  padding: 0;\n  width: 100%;\n  background: #fff;\n}\n.ui-calendar-month .ui-calendar-month-column td {\n  width: 79px;\n  height: 36px;\n  line-height: 36px;\n  padding: 0;\n  margin: 0;\n  text-align: center;\n  border: none;\n  cursor: pointer;\n}\n.ui-calendar-month .ui-calendar-month-column td:hover {\n  cursor: pointer;\n  background-color: #ffdeb8;\n}\n.ui-calendar-month .ui-calendar-month-column td.focused-element {\n  color: #fff;\n  background: #f57403;\n}\n.ui-calendar-month .ui-calendar-month-column td.disabled-element {\n  background: #e2e2e2;\n  color: #c3c3c3;\n}\n.ui-calendar-month .ui-calendar-month-column td.disabled-element:hover {\n  border-color: #fff;\n}\n");
-});
