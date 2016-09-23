@@ -34,7 +34,7 @@ function read(dir){
           request(src, function (res){
             console.log('Deploy:', src);
 
-            src = 'Deploy/' + src.replace(/^\/statics\/views\//, '');
+            src = 'heroku/' + src.replace(/^\/statics\/apps\//, '');
 
             res.pipe(safeWriteStream(src));
           });
@@ -44,4 +44,4 @@ function read(dir){
   });
 }
 
-read('statics/views');
+read('statics/apps');

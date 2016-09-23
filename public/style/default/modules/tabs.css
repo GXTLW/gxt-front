@@ -1,0 +1,47 @@
+.ui-tabs {
+  font-size: 13px;
+  background-color: #fff;
+  overflow: hidden;
+}
+.ui-tabs-header {
+  color: #fff;
+  padding: 0 1.26em 0 0;
+  height: 3.1em;
+  line-height: 3.1em;
+  background-color: #1952a3;
+  overflow: hidden;
+}
+.ui-tabs-nav-list {
+  font-size: 0;
+  -webkit-text-size-adjust: none;
+}
+.ui-tabs-header .ui-more {
+  float: right;
+  color: #fff;
+}
+.ui-tabs-header .ui-more a {
+  color: #fff;
+}
+.ui-tabs-nav {
+  position: relative;
+  cursor: pointer;
+  font-size: 13px;
+  display: inline-block;
+  *display: inline; *zoom: 1;
+  height: 100%;
+  padding: 0 1.26em;
+}
+.ui-tabs-nav.active:after,
+.ui-tabs-nav:hover:after {
+  content: " ";
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 100%; height: 2px;
+  background-color: #fc720d;
+}
+.ui-tabs-body {
+  padding: .8em 1.26em;
+  border: 1px solid #1952a3;
+  border-top: none;
+  overflow: hidden;
+}

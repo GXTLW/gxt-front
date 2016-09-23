@@ -1,0 +1,116 @@
+@import "/public/css/default/modules/panel.css";
+@import "/public/css/default/modules/slider.css";
+@import "/public/css/default/modules/list.css";
+@import "/public/css/default/modules/tabs.css";
+.ui-main-left {
+  font-size: 0;
+  -webkit-text-size-adjust: none;
+  width: 870px;
+}
+.ui-main-left .ui-tabs + .ui-tabs,
+.ui-main-left .ui-tabs + .ui-panel,
+.ui-main-left .ui-panel + .ui-panel,
+.ui-main-left .ui-panel + .ui-tabs,
+.ui-main-right .ui-tabs + .ui-tabs,
+.ui-main-right .ui-tabs + .ui-panel,
+.ui-main-right .ui-panel + .ui-panel,
+.ui-main-right .ui-panel + .ui-tabs {
+  margin-top: 10px;
+}
+.ui-main-right {
+  width: 320px;
+  margin-left: 10px;
+}
+.ui-tabs-body > img {
+  float: left;
+  width: 220px;
+  height: 150px;
+  margin-right: .8em;
+}
+.ui-tabs-body > p {
+  text-indent: 2em;
+  line-height: 2em;
+}
+.ui-panel .ui-list-item {
+  overflow: hidden;
+}
+.ui-panel .ui-list-item span {
+  padding-left: 10px;
+  float: right;
+}
+.ui-main-left .ui-list-item {
+  line-height: 2.4;
+}
+.ui-main-left .ui-list-item > a {
+  display: inline-block;
+  width: 80%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ui-main-left .ui-middle-left .ui-list-item,
+.ui-main-left .ui-middle-right .ui-list-item{
+  font-size: 0;
+}
+.ui-main-left .ui-middle-left .ui-list-item > a,
+.ui-main-left .ui-middle-left .ui-list-item > span,
+.ui-main-left .ui-middle-right .ui-list-item > a,
+.ui-main-left .ui-middle-right .ui-list-item > span{
+  font-size: 13px;
+}
+.ui-main-left .ui-middle-left,
+.ui-main-left .ui-middle-right {
+  display: inline-block;
+  *display: inline; *zoom: 1;
+  vertical-align: top;
+  width: 430px;
+}
+.ui-main-left .ui-middle-left .ui-panel-body,
+.ui-main-left .ui-middle-right .ui-panel-body {
+  height: 279px;
+  overflow: hidden;
+}
+.ui-main-left .ui-middle-left {
+  margin-right: 10px;
+}
+.ui-main-right .ui-panel-body .ui-list{
+  text-align: center;
+}
+.ui-main-left .ui-middle-bottom .ui-list-item{
+  display: inline-block;
+  *display: inline; *zoom: 1;
+  vertical-align: top;
+  font-size: 13px;
+  margin: 0 17px;
+}
+.ui-main-left .ui-middle-bottom .ui-list-item > img {
+  width: 200px;
+  height: 100px;
+}
+  /*
+.ui-main-right .ui-panel-body .ui-list-item {
+  margin-top: 1em;
+  text-align: center;
+  line-height: 1.8;
+}*/
+/*.ui-main-right .ui-panel-body .ui-list-item a > img {
+  width: 280px;
+}*/
+.ui-main-bottom {
+  margin-bottom: 10px;
+}
+.ui-custom {
+  -webkit-text-size-adjust: none;
+  font-size: 0;
+}
+.ui-custom .ui-list-item {
+  display: inline-block;
+  *display: inline; *zoom: 1;
+  vertical-align: top;
+  font-size: 13px;
+  margin: 0 17px;
+}
+.ui-custom .ui-list-item > img {
+  width: 160px;
+  height: 60px;
+}

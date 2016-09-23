@@ -1,0 +1,11 @@
+@import "/public/css/default/modules/panel.css";
+@import "/public/css/default/modules/slider.css";
+@import "/public/css/default/modules/list.css";
+@import "/public/css/default/modules/tabs.css";
+@import "/public/css/default/modules/contentpage.css";
+.ui-panel-body p {
+  text-indent: 2em;
+}
+.ui-main-right .ui-panel-body > dl > dt{
+  font-weight: bold;
+}

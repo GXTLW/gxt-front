@@ -33,10 +33,10 @@ var plumber = require('gulp-plumber');
 var switchStream = require('switch-stream');
 var bookmark = Date.now();
 var runtime = [
-  'assets/js/seajs/3.0.1/sea.js',
-  'assets/js/seajs/config.js',
-  'assets/js/base/json/1.1.2/json.js',
-  'assets/js/base/es5-safe/1.0.0/es5-safe.js'
+  'public/js/seajs/3.0.1/sea.js',
+  'public/js/seajs/config.js',
+  'public/js/base/json/1.1.2/json.js',
+  'public/js/base/es5-safe/1.0.0/es5-safe.js'
 ];
 
 // compress javascript file
@@ -208,8 +208,8 @@ function onpath(path, property, file, wwwroot){
     path = path.replace(/\\+/g, '/');
   }
 
-  path = path.replace('/Assets/css/', '/Assets/style/');
-  path = path.replace('/Assets/js/', '/Assets/script/');
+  path = path.replace('/public/css/', '/public/style/');
+  path = path.replace('/public/js/', '/public/script/');
 
   return path;
 }
@@ -257,26 +257,26 @@ function dateFormat(date, format){
 gulp.task('clean', function (){
   bookmark = Date.now();
 
-  rimraf.sync(['assets/style', 'assets/script']);
+  rimraf.sync(['public/style', 'public/script']);
 });
 
 // runtime task
 gulp.task('runtime', ['clean'], function (){
   // loader file
-  gulp.src(runtime, { base: 'assets/js', nodir: true })
+  gulp.src(runtime, { base: 'public/js', nodir: true })
     .pipe(plumber())
     .pipe(concat('seajs/3.0.1/sea.js'))
-    .pipe(gulp.dest('assets/script'));
+    .pipe(gulp.dest('public/script'));
 });
 
 // runtime task
 gulp.task('runtime-product', ['clean'], function (){
   // loader file
-  gulp.src(runtime, { base: 'assets/js', nodir: true })
+  gulp.src(runtime, { base: 'public/js', nodir: true })
     .pipe(plumber())
     .pipe(concat('seajs/3.0.1/sea.js'))
     .pipe(compress())
-    .pipe(gulp.dest('assets/script'));
+    .pipe(gulp.dest('public/script'));
 });
 
 // develop task
@@ -295,42 +295,42 @@ gulp.task('default', ['runtime'], function (){
 
   // cmd js file
   gulp.src([
-    'assets/js/**/*',
-    '!assets/js/seajs/**/*',
-    '!assets/js/base/json/**/*',
-    '!assets/js/base/es5-safe/**/*',
-    '!assets/js/base/html5shiv/**/*',
-    '!assets/js/util/kindeditor/*/*/**/*'
-  ], { base: 'assets/js', nodir: true })
+    'public/js/**/*',
+    '!public/js/seajs/**/*',
+    '!public/js/base/json/**/*',
+    '!public/js/base/es5-safe/**/*',
+    '!public/js/base/html5shiv/**/*',
+    '!public/js/util/kindeditor/*/*/**/*'
+  ], { base: 'public/js', nodir: true })
     .pipe(plumber())
     .pipe(cmd({
       alias: getAlias(),
       include: 'self',
       css: { onpath: onpath }
     }))
-    .pipe(gulp.dest('assets/script'))
+    .pipe(gulp.dest('public/script'))
     .on('finish', complete);
 
   // kindeditor file
   gulp.src([
-    'assets/js/base/html5shiv/**/*',
-    'assets/js/util/kindeditor/*/*/**/*'
-  ], { base: 'assets/js', nodir: true })
+    'public/js/base/html5shiv/**/*',
+    'public/js/util/kindeditor/*/*/**/*'
+  ], { base: 'public/js', nodir: true })
     .pipe(plumber())
-    .pipe(gulp.dest('assets/script'))
+    .pipe(gulp.dest('public/script'))
     .on('finish', complete);
 
   // css file
-  gulp.src('assets/css/**/*', { base: 'assets/css', nodir: true })
+  gulp.src('public/css/**/*', { base: 'public/css', nodir: true })
     .pipe(plumber())
     .pipe(css({ onpath: onpath }))
-    .pipe(gulp.dest('assets/style'))
+    .pipe(gulp.dest('public/style'))
     .on('finish', complete);
 });
 
 // develop watch task
 gulp.task('watch', ['default'], function (){
-  var base = join(process.cwd(), 'assets');
+  var base = join(process.cwd(), 'public');
 
   // debug watcher
   function debugWatcher(event, path){
@@ -340,7 +340,7 @@ gulp.task('watch', ['default'], function (){
       '  %s %s: %s %s',
       colors.green.bold('gulp-watch'),
       event,
-      colors.magenta(join('assets', path).replace(/\\/g, '/')),
+      colors.magenta(join('public', path).replace(/\\/g, '/')),
       colors.green('+' + (now - bookmark) + 'ms')
     );
   }
@@ -359,12 +359,12 @@ gulp.task('watch', ['default'], function (){
 
   // watch js file
   watch([
-    'assets/js',
-    '!assets/js/seajs',
-    '!assets/js/base/json',
-    '!assets/js/base/es5-safe',
-    '!assets/js/base/html5shiv',
-    'assets/js/util/kindeditor/*/kindeditor.js'
+    'public/js',
+    '!public/js/seajs',
+    '!public/js/base/json',
+    '!public/js/base/es5-safe',
+    '!public/js/base/html5shiv',
+    'public/js/util/kindeditor/*/kindeditor.js'
   ], function (event, path){
     var rpath = relative(join(base, 'js'), path);
 
@@ -374,10 +374,10 @@ gulp.task('watch', ['default'], function (){
     debugWatcher(event, join('js', rpath));
 
     if (event === 'unlink' || event === 'unlinkdir') {
-      rimraf.sync(resolve('assets/script', rpath));
+      rimraf.sync(resolve('public/script', rpath));
       complete();
     } else {
-      gulp.src(path, { base: 'assets/js' })
+      gulp.src(path, { base: 'public/js' })
         .pipe(plumber())
         .pipe(cmd({
           alias: getAlias(),
@@ -385,16 +385,16 @@ gulp.task('watch', ['default'], function (){
           cache: false,
           css: { onpath: onpath }
         }))
-        .pipe(gulp.dest('assets/script'))
+        .pipe(gulp.dest('public/script'))
         .on('finish', complete);
     }
   });
 
   // kindeditor file
   watch([
-    'assets/js/base/html5shiv',
-    'assets/js/util/kindeditor',
-    '!assets/js/util/kindeditor/*/kindeditor.js'
+    'public/js/base/html5shiv',
+    'public/js/util/kindeditor',
+    '!public/js/util/kindeditor/*/kindeditor.js'
   ], function (event, path){
     var rpath = relative(join(base, 'js'), path);
 
@@ -404,18 +404,18 @@ gulp.task('watch', ['default'], function (){
     debugWatcher(event, join('js', rpath));
 
     if (event === 'unlink' || event === 'unlinkdir') {
-      rimraf.sync(resolve('assets/script', rpath));
+      rimraf.sync(resolve('public/script', rpath));
       complete();
     } else {
-      gulp.src(path, { base: 'assets/js' })
+      gulp.src(path, { base: 'public/js' })
         .pipe(plumber())
-        .pipe(gulp.dest('assets/script'))
+        .pipe(gulp.dest('public/script'))
         .on('finish', complete);
     }
   });
 
   // watch css file
-  watch('assets/css', function (event, path){
+  watch('public/css', function (event, path){
     var rpath = relative(join(base, 'css'), path);
 
     bookmark = Date.now();
@@ -424,17 +424,17 @@ gulp.task('watch', ['default'], function (){
     debugWatcher(event, join('css', rpath));
 
     if (event === 'unlink' || event === 'unlinkdir') {
-      rimraf.sync(resolve('assets/style', rpath));
+      rimraf.sync(resolve('public/style', rpath));
       complete();
     } else {
-      gulp.src(path, { base: 'assets/css' })
+      gulp.src(path, { base: 'public/css' })
         .pipe(plumber())
         .pipe(css({
           onpath: function (path){
-            return path.replace('assets/css/', 'assets/style/')
+            return path.replace('public/css/', 'public/style/')
           }
         }))
-        .pipe(gulp.dest('assets/style'))
+        .pipe(gulp.dest('public/style'))
         .on('finish', complete);
     }
   });
@@ -455,7 +455,7 @@ gulp.task('product', ['runtime-product'], function (){
     );
   });
 
-  gulp.src('assets/js/views/common.js', { base: 'assets/js', nodir: true })
+  gulp.src('public/js/apps/common.js', { base: 'public/js', nodir: true })
     .pipe(plumber())
     .pipe(cmd({
       cache: false,
@@ -481,52 +481,52 @@ gulp.task('product', ['runtime-product'], function (){
       next();
     }))
     .pipe(compress())
-    .pipe(gulp.dest('assets/script'))
+    .pipe(gulp.dest('public/script'))
     .on('finish', function (){
       // cmd js file
       gulp.src([
-        'assets/js/**/*',
-        '!assets/js/seajs/**/*',
-        '!assets/js/views/common.js',
-        '!assets/js/base/json/**/*',
-        '!assets/js/base/es5-safe/**/*',
-        '!assets/js/base/html5shiv/**/*',
-        '!assets/js/util/kindeditor/*/*/**/*'
-      ], { base: 'assets/js', nodir: true })
+        'public/js/**/*',
+        '!public/js/seajs/**/*',
+        '!public/js/apps/common.js',
+        '!public/js/base/json/**/*',
+        '!public/js/base/es5-safe/**/*',
+        '!public/js/base/html5shiv/**/*',
+        '!public/js/util/kindeditor/*/*/**/*'
+      ], { base: 'public/js', nodir: true })
         .pipe(plumber())
         .pipe(cmd({
           alias: getAlias(),
           ignore: ignore,
           plugins: CMDPLUGINS,
           include: function (id){
-            return id && id.indexOf('views') === 0 ? 'all' : 'self';
+            return id && id.indexOf('apps') === 0 ? 'all' : 'self';
           },
           css: {
             onpath: onpath
           }
         }))
-        .pipe(gulp.dest('assets/script'))
+        .pipe(gulp.dest('public/script'))
         .on('finish', complete);
     });
 
   // kindeditor file
   gulp.src([
-    'assets/js/base/html5shiv/**/*',
-    'assets/js/util/kindeditor/*/*/**/*'
-  ], { base: 'assets/js', nodir: true })
+    'public/js/base/html5shiv/**/*',
+    'public/js/util/kindeditor/*/*/**/*'
+  ], { base: 'public/js', nodir: true })
     .pipe(plumber())
     .pipe(compress())
-    .pipe(gulp.dest('assets/script'))
+    .pipe(gulp.dest('public/script'))
     .on('finish', complete);
 
   // css file
-  gulp.src('assets/css/?(default|fonts)/**/*', { base: 'assets/css', nodir: true })
+  gulp.src('public/css/?(default|fonts)/**/*', { base: 'public/css', nodir: true })
     .pipe(plumber())
     .pipe(css({
       include: true,
       onpath: onpath,
       plugins: CSSPLUGINS
     }))
-    .pipe(gulp.dest('assets/style'))
+    .pipe(gulp.dest('public/style'))
     .on('finish', complete);
 });

@@ -1,0 +1,19 @@
+.ui-article-title{
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  padding: 1em 0;
+}
+.ui-article-time{
+  padding: 1em 0;
+  width: 100%;
+  text-align: center;
+  color: #999;
+}
+.ui-article-para,
+.article-sub-title{
+  text-indent: 2em;
+}
+.article-sub-title{
+  font-weight: bold;
+}
