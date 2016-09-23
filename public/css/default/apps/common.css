@@ -1,10 +1,42 @@
 @import "/public/css/default/modules/animate.css";
-html,
-body {
+html, body {
   min-width: 1200px;
   min-height: 100%;
   -webkit-font-smoothing: antialiased;
   background-color: #eff5fd;
+}
+textarea,
+input[type=text],
+input[type=password] {
+  resize: none;
+  padding: 3px 7px;
+  font-size: 13px;
+  border: 1px solid #ccc;
+  -o-transition: border .25s ease-in-out, box-shadow .25s ease-in-out;
+  -moz-transition: border .25s ease-in-out, box-shadow .25s ease-in-out;
+  -webkit-transition: border .25s ease-in-out, box-shadow .25s ease-in-out;
+  transition: border .25s ease-in-out, box-shadow .25s ease-in-out;
+}
+input[type=text]:-webkit-autofill,
+input[type=password]:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px white inset !important;
+}
+textarea:focus,
+input[type=text]:focus,
+input[type=password]:focus {
+  outline: none;
+  border: 1px solid rgba(38, 162, 255, .8);
+  box-shadow: 0 0 3px rgba(34, 25, 25, 0.15), 0 0 3px rgba(255, 255, 255, 0.8), 0 0 6px rgba(82, 162, 235, 1);
+}
+textarea {
+  padding: 7px;
+}
+input[type=text],
+input[type=password] {
+  height: 24px;
+  line-height: 24px;
 }
 a {
   color: #0e90d2;
