@@ -276,13 +276,13 @@ var KEYWORDS =
   + ',finally,for,function,if,in,instanceof,new,null,return,switch,this'
   + ',throw,true,try,typeof,var,void,while,with'
 
-    // 保留字
+  // 保留字
   + ',abstract,boolean,byte,char,class,const,double,enum,export,extends'
   + ',final,float,goto,implements,import,int,interface,long,native'
   + ',package,private,protected,public,short,static,super,synchronized'
   + ',throws,transient,volatile'
 
-    // ECMA 5 - use strict
+  // ECMA 5 - use strict
   + ',arguments,let,yield'
 
   + ',undefined';
@@ -309,7 +309,7 @@ function getVariable(code){
 function stringify(code){
   return "'"
     + code
-      // 单引号与反斜杠转义
+    // 单引号与反斜杠转义
       .replace(/('|\\)/g, '\\$1')
       // 换行符转义(windows + linux)
       .replace(/\r/g, '\\r')

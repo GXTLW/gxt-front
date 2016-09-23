@@ -13,11 +13,11 @@ KindEditor.plugin('link', function (K){
     edit: function (){
       var lang = self.lang(name + '.'),
         html = '<div style="padding:20px;">' +
-            //url
+          //url
           '<div class="ke-dialog-row">' +
           '<label for="keUrl" style="width:60px;">' + lang.url + '</label>' +
           '<input class="ke-input-text" type="text" id="keUrl" name="url" value="" style="width:260px;" /></div>' +
-            //type
+          //type
           '<div class="ke-dialog-row"">' +
           '<label for="keType" style="width:60px;">' + lang.linkType + '</label>' +
           '<select id="keType" name="type"></select>' +

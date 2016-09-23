@@ -31,10 +31,10 @@ var swfobject = function (){
     autoHideShow = true,
     encodeURI_enabled = false,
 
-  /* Centralized function for browser feature detection
-   - User agent string detection is only used when no good alternative is possible
-   - Is executed directly for optimal performance
-   */
+    /* Centralized function for browser feature detection
+     - User agent string detection is only used when no good alternative is possible
+     - Is executed directly for optimal performance
+     */
     ua = function (){
       var w3cdom = typeof doc.getElementById != UNDEF && typeof doc.getElementsByTagName != UNDEF && typeof doc.createElement != UNDEF,
         u = nav.userAgent.toLowerCase(),
@@ -74,11 +74,11 @@ var swfobject = function (){
       return { w3: w3cdom, pv: playerVersion, wk: webkit, ie: ie, win: windows, mac: mac };
     }(),
 
-  /* Cross-browser onDomLoad
-   - Will fire an event as soon as the DOM of a web page is loaded
-   - Internet Explorer workaround based on Diego Perini's solution: http://javascript.nwbox.com/IEContentLoaded/
-   - Regular onload serves as fallback
-   */
+    /* Cross-browser onDomLoad
+     - Will fire an event as soon as the DOM of a web page is loaded
+     - Internet Explorer workaround based on Diego Perini's solution: http://javascript.nwbox.com/IEContentLoaded/
+     - Regular onload serves as fallback
+     */
     onDomLoad = function (){
       if (!ua.w3) { return; }
       if ((typeof doc.readyState != UNDEF && (doc.readyState === "complete" || doc.readyState === "interactive")) || (typeof doc.readyState == UNDEF && (doc.getElementsByTagName("body")[0] || doc.body))) { // function is fired after onload, e.g. when script is inserted dynamically

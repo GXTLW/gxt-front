@@ -15,7 +15,7 @@
   -webkit-transition: border .25s ease-in-out, box-shadow .25s ease-in-out;
   transition: border .25s ease-in-out, box-shadow .25s ease-in-out;
 }
-.ui-pagination .ui-pagination-index:focus{
+.ui-pagination .ui-pagination-index:focus {
   outline: none;
   border: 1px solid rgba(38, 162, 255, .8);
   box-shadow: 0 0 3px rgba(34, 25, 25, .15), 0 0 3px hsla(0, 0%, 100%, .8), 0 0 6px #52a2eb;
@@ -25,10 +25,10 @@
   background: #0e7fd4;
   color: #fff;
   border: 1px solid #2d78f4;
-  outline:none;
+  outline: none;
 }
 .ui-pagination .ui-pagination-jump:hover,
-.ui-pagination .ui-pagination-jump:focus{
+.ui-pagination .ui-pagination-jump:focus {
   background: #046ab6;
   border: 1px solid #2d78f4;
 }

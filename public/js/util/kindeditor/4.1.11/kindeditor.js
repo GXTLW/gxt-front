@@ -188,10 +188,7 @@ function _json(text){
       return '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
     });
   }
-  if (/^[\],:{}\s]*$/.
-    test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@').
-    replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').
-    replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
+  if (/^[\],:{}\s]*$/.test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@').replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']').replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
     return eval('(' + text + ')');
   }
   throw 'JSON parse error';
@@ -4067,8 +4064,8 @@ _extend(KToolbar, KWidget, {
     }
 
     self.div.mouseover(function (e){
-        hover(e, 'addClass');
-      })
+      hover(e, 'addClass');
+    })
       .mouseout(function (e){
         hover(e, 'removeClass');
       })
@@ -4190,11 +4187,11 @@ _extend(KMenu, KWidget, {
       }
     }
     itemDiv.mouseover(function (e){
-        K(this).addClass('ke-menu-item-on');
-        if (centerDiv) {
-          centerDiv.addClass('ke-menu-item-center-on');
-        }
-      })
+      K(this).addClass('ke-menu-item-on');
+      if (centerDiv) {
+        centerDiv.addClass('ke-menu-item-center-on');
+      }
+    })
       .mouseout(function (e){
         K(this).removeClass('ke-menu-item-on');
         if (centerDiv) {
@@ -6099,8 +6096,8 @@ _plugin('core', function (K){
       });
     }
     return html.replace(/(<(?:noscript|noscript\s[^>]*)>)([\s\S]*?)(<\/noscript>)/ig, function ($0, $1, $2, $3){
-        return $1 + _unescape($2).replace(/\s+/g, ' ') + $3;
-      })
+      return $1 + _unescape($2).replace(/\s+/g, ' ') + $3;
+    })
       .replace(/<img[^>]*class="?ke-(flash|rm|media)"?[^>]*>/ig, function (full){
         var imgAttrs = _getAttrList(full);
         var styles = _getCssList(imgAttrs.style || '');
@@ -6150,12 +6147,12 @@ _plugin('core', function (K){
       });
     }
     return html.replace(/<embed[^>]*type="([^"]+)"[^>]*>(?:<\/embed>)?/ig, function (full){
-        var attrs = _getAttrList(full);
-        attrs.src = _undef(attrs.src, '');
-        attrs.width = _undef(attrs.width, 0);
-        attrs.height = _undef(attrs.height, 0);
-        return _mediaImg(self.themesPath + 'common/blank.gif', attrs);
-      })
+      var attrs = _getAttrList(full);
+      attrs.src = _undef(attrs.src, '');
+      attrs.width = _undef(attrs.width, 0);
+      attrs.height = _undef(attrs.height, 0);
+      return _mediaImg(self.themesPath + 'common/blank.gif', attrs);
+    })
       .replace(/<a[^>]*name="([^"]+)"[^>]*>(?:<\/a>)?/ig, function (full){
         var attrs = _getAttrList(full);
         if (attrs.href !== undefined) {

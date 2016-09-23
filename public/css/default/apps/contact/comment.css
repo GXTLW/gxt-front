@@ -19,27 +19,27 @@
 }
 .ui-message-submit {
   background: #046ab6;
-  padding:.6em;
+  padding: .6em;
   margin: 10px auto 0;
-  outline:none;
+  outline: none;
   display: block;
   color: #fff;
   border: 1px solid #2d78f4;
 }
-.ui-message-submit:hover{
+.ui-message-submit:hover {
   background: #1952a3;
   border: 1px solid #2d78f4;
 }
-.ui-qr-code{
+.ui-qr-code {
   font-weight: bold;
   float: right;
   color: red;
 }
-input[type='text']{
+input[type='text'] {
   height: 1.5em;
 }
 input[type='text'],
-textarea{
+textarea {
   padding: .25em;
   border: 1px solid #b2b2b2;
   border-radius: 2px;
@@ -51,7 +51,7 @@ textarea{
   transition: border .25s ease-in-out, box-shadow .25s ease-in-out;
 }
 input[type='text']:focus,
-textarea:focus{
+textarea:focus {
   outline: none;
   border: 1px solid rgba(38, 162, 255, .8);
   box-shadow: 0 0 3px rgba(34, 25, 25, .15), 0 0 3px hsla(0, 0%, 100%, .8), 0 0 6px #52a2eb;

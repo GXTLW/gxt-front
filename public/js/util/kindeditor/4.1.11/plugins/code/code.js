@@ -7,8 +7,8 @@
  * @licence http://www.kindsoft.net/license.php
  *******************************************************************************/
 
-  // google code prettify: http://google-code-prettify.googlecode.com/
-  // http://google-code-prettify.googlecode.com/
+// google code prettify: http://google-code-prettify.googlecode.com/
+// http://google-code-prettify.googlecode.com/
 
 KindEditor.plugin('code', function (K){
   var self = this, name = 'code';

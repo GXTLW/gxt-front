@@ -4,32 +4,32 @@
   line-height: 2.6;
   border-top: 1px dotted #ccc;
 }
-.ui-main-left .ui-list .ui-list-item:first-child{
+.ui-main-left .ui-list .ui-list-item:first-child {
   border-top: none 0;
 }
 .ui-main-left .ui-list .ui-list-item a {
   color: #8c8c8c;
 }
-.ui-main-left .ui-list .ui-list-item a::before{
-  content:"";
+.ui-main-left .ui-list .ui-list-item a::before {
+  content: "";
   border-left: 2px solid #1952a3;
   margin-right: .5em;
 }
 .ui-main-left .ui-list .ui-list-item:hover a::before,
-.ui-main-left .ui-list .active a::before{
-  content:"";
+.ui-main-left .ui-list .active a::before {
+  content: "";
   border-left: 2px solid #fc720d;
   margin-right: .5em;
 }
 .ui-main-left .ui-list .active,
-.ui-main-left .ui-list .ui-list-item:hover{
+.ui-main-left .ui-list .ui-list-item:hover {
   background: url(/public/images/default/sidebar-bj2.png) no-repeat right center;
 }
 .ui-main-left .ui-list .active a,
-.ui-main-left .ui-list .ui-list-item:hover a{
+.ui-main-left .ui-list .ui-list-item:hover a {
   text-decoration: none;
   color: #2989c6;
 }
-.ui-main-right .ui-panel-body{
-  min-height:400px;
+.ui-main-right .ui-panel-body {
+  min-height: 400px;
 }

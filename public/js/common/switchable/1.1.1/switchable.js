@@ -288,7 +288,7 @@ var Switchable = Widget.extend({
     if (pluginAttrs) {
       for (var key in pluginAttrs) {
         if (pluginAttrs.hasOwnProperty(key) &&
-            // 不覆盖用户传入的配置
+          // 不覆盖用户传入的配置
           !(key in this.attrs)) {
           this.set(key, pluginAttrs[key]);
         }

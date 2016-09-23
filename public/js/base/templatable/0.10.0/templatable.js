@@ -157,7 +157,7 @@ function convertObjectToTemplate(templateObject, selector){
  */
 function encode(template){
   return template
-    // 替换 <?= xxx ?> 为 <!--<?= xxx ?>-->
+  // 替换 <?= xxx ?> 为 <!--<?= xxx ?>-->
     .replace(/(<\?.+?\?>)/g, '<!--$1-->')
     // 替换 src="<?= xxx ?>" 为 data-templatable-src="<?= xxx ?>"
     .replace(/\s(src|href)\s*=\s*(['"])(.*?\<.+?)\2/g, ' data-templatable-$1=$2$3$2');

@@ -12,7 +12,7 @@
  * @license release under MIT license
  */
 
-// 消息前缀, 建议使用自己的项目名, 避免多项目之间的冲突
+  // 消息前缀, 建议使用自己的项目名, 避免多项目之间的冲突
 var prefix = "arale-messenger",
   supportPostMessage = 'postMessage' in window;
 

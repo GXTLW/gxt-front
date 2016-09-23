@@ -24,10 +24,10 @@
     SECOND = 5,
     MILLISECOND = 6,
 
-  // internal storage for language config files
+    // internal storage for language config files
     languages = {},
 
-  // moment internal properties
+    // moment internal properties
     momentProperties = {
       _isAMomentObject: null,
       _i: null,
@@ -40,19 +40,19 @@
       _lang: null  // optional
     },
 
-  // ASP.NET json date format regex
+    // ASP.NET json date format regex
     aspNetJsonRegex = /^\/?Date\((\-?\d+)/i,
     aspNetTimeSpanJsonRegex = /(\-)?(?:(\d*)\.)?(\d+)\:(\d+)(?:\:(\d+)\.?(\d{3})?)?/,
 
-  // from http://docs.closure-library.googlecode.com/git/closure_goog_date_date.js.source.html
-  // somewhat more in line with 4.4.3.2 2004 spec, but allows decimal anywhere
+    // from http://docs.closure-library.googlecode.com/git/closure_goog_date_date.js.source.html
+    // somewhat more in line with 4.4.3.2 2004 spec, but allows decimal anywhere
     isoDurationRegex = /^(-)?P(?:(?:([0-9,.]*)Y)?(?:([0-9,.]*)M)?(?:([0-9,.]*)D)?(?:T(?:([0-9,.]*)H)?(?:([0-9,.]*)M)?(?:([0-9,.]*)S)?)?|([0-9,.]*)W)$/,
 
-  // format tokens
+    // format tokens
     formattingTokens = /(\[[^\[]*\])|(\\)?(Mo|MM?M?M?|Do|DDDo|DD?D?D?|ddd?d?|do?|w[o|w]?|W[o|W]?|YYYYYY|YYYYY|YYYY|YY|gg(ggg?)?|GG(GGG?)?|e|E|a|A|hh?|HH?|mm?|ss?|S{1,4}|X|zz?|ZZ?|.)/g,
     localFormattingTokens = /(\[[^\[]*\])|(\\)?(LT|LL?L?L?|l{1,4})/g,
 
-  // parsing token regexes
+    // parsing token regexes
     parseTokenOneOrTwoDigits = /\d\d?/, // 0 - 99
     parseTokenOneToThreeDigits = /\d{1,3}/, // 0 - 999
     parseTokenOneToFourDigits = /\d{1,4}/, // 0 - 9999
@@ -64,7 +64,7 @@
     parseTokenTimestampMs = /[\+\-]?\d+(\.\d{1,3})?/, // 123456789 123456789.123
     parseTokenOrdinal = /\d{1,2}/,
 
-  //strict parsing regexes
+    //strict parsing regexes
     parseTokenOneDigit = /\d/, // 0 - 9
     parseTokenTwoDigits = /\d\d/, // 00 - 99
     parseTokenThreeDigits = /\d{3}/, // 000 - 999
@@ -72,8 +72,8 @@
     parseTokenSixDigits = /[+-]?\d{6}/, // -999,999 - 999,999
     parseTokenSignedNumber = /[+-]?\d+/, // -inf - inf
 
-  // iso 8601 regex
-  // 0000-00-00 0000-W00 or 0000-W00-0 + T + 00 or 00:00 or 00:00:00 or 00:00:00.000 + +00:00 or +0000 or +00)
+    // iso 8601 regex
+    // 0000-00-00 0000-W00 or 0000-W00-0 + T + 00 or 00:00 or 00:00:00 or 00:00:00.000 + +00:00 or +0000 or +00)
     isoRegex = /^\s*(?:[+-]\d{6}|\d{4})-(?:(\d\d-\d\d)|(W\d\d$)|(W\d\d-\d)|(\d\d\d))((T| )(\d\d(:\d\d(:\d\d(\.\d+)?)?)?)?([\+\-]\d\d(?::?\d\d)?|\s*Z)?)?$/,
 
     isoFormat = 'YYYY-MM-DDTHH:mm:ssZ',
@@ -86,7 +86,7 @@
       ['YYYY-DDD', /\d{4}-\d{3}/]
     ],
 
-  // iso time formats and regexes
+    // iso time formats and regexes
     isoTimes = [
       ['HH:mm:ss.SSSS', /(T| )\d\d:\d\d:\d\d\.\d{1,3}/],
       ['HH:mm:ss', /(T| )\d\d:\d\d:\d\d/],
@@ -94,10 +94,10 @@
       ['HH', /(T| )\d\d/]
     ],
 
-  // timezone chunker "+10:00" > ["10", "00"] or "-1530" > ["-15", "30"]
+    // timezone chunker "+10:00" > ["10", "00"] or "-1530" > ["-15", "30"]
     parseTimezoneChunker = /([\+\-]|\d\d)/gi,
 
-  // getter and setter names
+    // getter and setter names
     proxyGettersAndSetters = 'Date|Hours|Minutes|Seconds|Milliseconds'.split('|'),
     unitMillisecondFactors = {
       'Milliseconds': 1,
@@ -135,10 +135,10 @@
       isoweekyear: 'isoWeekYear'
     },
 
-  // format function strings
+    // format function strings
     formatFunctions = {},
 
-  // tokens to ordinalize and pad
+    // tokens to ordinalize and pad
     ordinalizeTokens = 'DDD w W M D d'.split(' '),
     paddedTokens = 'M D H h m s w W'.split(' '),
 
@@ -1623,7 +1623,7 @@
   // duration
   moment.duration = function (input, key){
     var duration = input,
-    // matching against regexp is expensive, do it on demand
+      // matching against regexp is expensive, do it on demand
       match = null,
       sign,
       ret,
@@ -2352,7 +2352,7 @@
    ************************************/
 
 
-    // Set default language, other languages will inherit from English.
+  // Set default language, other languages will inherit from English.
   moment.lang('en', {
     ordinal: function (number){
       var b = number % 10,

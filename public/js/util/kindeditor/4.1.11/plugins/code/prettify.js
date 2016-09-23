@@ -271,7 +271,7 @@ window.PR_SHOULD_USE_CONTINUATION = !0;
         e >= o && (h += 2);
         e >= c && (a += 2)
       }
-    } catch (w) {"console"in window && console.log(w && w.stack ? w.stack : w)}
+    } catch (w) {"console" in window && console.log(w && w.stack ? w.stack : w)}
   }
 
   var v = ["break,continue,do,else,for,if,return,while"], w = [
