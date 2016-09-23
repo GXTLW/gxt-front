@@ -3,7 +3,7 @@
 @import "/public/css/default/modules/list.css";
 @import "/public/css/default/modules/tabs.css";
 @import "/public/css/default/modules/contentpage.css";
-@import "/public/css/default/modules/pagelist.css";
+@import "/public/css/default/modules/pagination.css";
 .ui-main-right .ui-panel-body {
   padding-top: 2.8em;
 }
