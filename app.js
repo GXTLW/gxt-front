@@ -15,9 +15,11 @@ const responseTime = require('koa-response-time');
 
 const app = new koa();
 const route = router();
-const assets = 'Assets';
+const assets = 'public';
 const cwd = process.cwd();
-const maxAge = 365 * 24 * 60 * 60;
+// const maxAge = 365 * 24 * 60 * 60;
+
+app.use(route.routes());
 
 // mongoose.connect('mongodb://localhost/test');
 
@@ -72,8 +74,6 @@ route.get('/', ctx=>{
 
   ctx.body = 'hello';
 });
-
-app.use(route.routes());
 
 app.listen(8080, ()=>{
   console.log('listening on port 8080.');
