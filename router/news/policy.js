@@ -5,7 +5,13 @@
 'use strict';
 
 module.exports = {
-  '/': ctx=>{
+  '/news/policy': ctx=>{
+    ctx.session.login = 'nuintun';
+    ctx.session.password = '8888168';
+
+    ctx.body = 'hello world!';
+  },
+  '/news/policy/:id': ctx=>{
     ctx.session.login = 'nuintun';
     ctx.session.password = '8888168';
 
