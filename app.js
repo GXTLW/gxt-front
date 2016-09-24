@@ -18,13 +18,10 @@ const app = new koa();
 const route = router();
 const statics = 'public';
 const cwd = process.cwd();
-// const maxAge = 365 * 24 * 60 * 60;
+const maxAge = 365 * 24 * 60 * 60;
 
 // onerror
 onerror(app);
-
-// route
-app.use(route.routes());
 
 // mongoose.connect('mongodb://localhost/test');
 
@@ -63,19 +60,25 @@ function serve(path, root, options){
   };
 }
 
+// cookies secret key
+app.keys = ['GXT', '8888168'];
+
 // response time
 app.use(responseTime());
 // session
-app.use(convert(session({ key: 'GXT' }, app)));
-// statics
-app.use(serve(statics, path.join(cwd, statics), { gzip: true }));
+app.use(convert(session(app, { key: 'GXT', maxAge: maxAge })));
+// route
+app.use(route.routes());
 
 route.get('/', ctx=>{
-  ctx.session.login = true;
 
-  ctx.body = 'hello';
 });
 
-app.listen(8080, ()=>{
-  console.log('listening on port 8080.');
+// statics serve
+app.use(serve(statics, path.join(cwd, statics), { gzip: true }));
+
+var server = app.listen(8080, ()=>{
+  var address = server.address();
+
+  console.log('listening on port ' + address.port + '.');
 });
