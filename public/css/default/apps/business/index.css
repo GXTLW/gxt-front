@@ -4,3 +4,13 @@
 @import "/public/css/default/modules/tabs.css";
 @import "/public/css/default/modules/contentpage.css";
 @import "/public/css/default/modules/article.css";
+.ui-article-illustration{
+  float: right;
+  clear: right;
+  margin: 0 10px;
+}
+.ui-article-image {
+  display: block;
+  margin: 1em auto;
+  max-width: 815px;
+}
