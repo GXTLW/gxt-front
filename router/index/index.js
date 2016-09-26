@@ -4,11 +4,10 @@
 
 'use strict';
 
-var util = require('../../lib/util');
-
-module.exports = [
-  {
-    route: '/',
-    action: util.require('controller/index/index')
-  }
-];
+module.exports = {
+  '/': [
+    {
+      action: 'index'
+    }
+  ]
+};

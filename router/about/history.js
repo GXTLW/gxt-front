@@ -4,11 +4,10 @@
 
 'use strict';
 
-module.exports = [
-  {
-    route: '/about/history',
-    action: ctx=>{
-      ctx.body = ctx.path;
+module.exports = {
+  '/about/history': [
+    {
+      action: 'index'
     }
-  }
-];
+  ]
+};

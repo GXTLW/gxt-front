@@ -4,11 +4,10 @@
 
 'use strict';
 
-module.exports = [
-  {
-    route: '/about/culture',
-    action: ctx=>{
-      ctx.body = ctx.path;
+module.exports = {
+  '/about/culture': [
+    {
+      action: 'index'
     }
-  }
-];
+  ]
+};

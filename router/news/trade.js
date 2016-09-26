@@ -4,17 +4,10 @@
 
 'use strict';
 
-module.exports = [
-  {
-    route: '/news/trade',
-    action: ctx=>{
-      ctx.body = ctx.path;
+module.exports = {
+  '/news/trade': [
+    {
+      action: 'index'
     }
-  },
-  {
-    route: '/news/trade/:id',
-    action: ctx=>{
-      ctx.body = ctx.path;
-    }
-  }
-];
+  ]
+};

@@ -4,11 +4,10 @@
 
 'use strict';
 
-module.exports = [
-  {
-    route: '/cooperation',
-    action: ctx=>{
-      ctx.body = ctx.path;
+module.exports = {
+  '/cooperation': [
+    {
+      action: 'index'
     }
-  }
-];
+  ]
+};

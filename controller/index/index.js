@@ -4,9 +4,11 @@
 
 'use strict';
 
-module.exports = ctx=>{
-  ctx.session.login = 'nuintun';
-  ctx.session.password = '8888168';
+module.exports = {
+  index: ctx=>{
+    ctx.session.login = 'nuintun';
+    ctx.session.password = '8888168';
 
-  ctx.body = ctx.path;
+    ctx.body = ctx.path;
+  }
 };

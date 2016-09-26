@@ -35,7 +35,7 @@ app.use(responseTime());
 app.use(convert(session(app, { key: 'GXT', maxAge: maxAge })));
 
 // router
-app.use(route('router'));
+app.use(route('router').routes());
 
 // statics serve
 app.use(serve(statics, path.join(cwd, statics), { gzip: true }));

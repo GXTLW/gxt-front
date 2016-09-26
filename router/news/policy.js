@@ -4,11 +4,10 @@
 
 'use strict';
 
-module.exports = [
-  {
-    route: '/news/policy',
-    action: ctx=>{
-      ctx.body = ctx.path;
+module.exports = {
+  '/news/policy': [
+    {
+      action: 'index'
     }
-  }
-];
+  ]
+};

@@ -4,11 +4,10 @@
 
 'use strict';
 
-module.exports = [
-  {
-    route: '/business/proxy',
-    action: ctx=>{
-      ctx.body = ctx.path;
+module.exports = {
+  '/business/proxy': [
+    {
+      action: 'index'
     }
-  }
-];
+  ]
+};
