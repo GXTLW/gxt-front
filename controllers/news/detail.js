@@ -4,6 +4,10 @@
 
 module.exports = {
   company: ctx=>{
+    console.log('company detail');
+
+    ctx.session.login = 'nuintun';
+    ctx.session.password = '8888168';
     ctx.body = 'detail: ' + ctx.path;
   },
   trade: ctx=>{

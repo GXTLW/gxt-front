@@ -9,11 +9,11 @@ const koa = require('koa');
 const zlib = require('zlib');
 const path = require('path');
 const util = require('./lib/util');
-const route = require('./lib/route');
 const serve = require('./lib/serve');
 // const mongoose = require('mongoose');
 const session = require('koa-session');
 const convert = require('koa-convert');
+const router = require('./lib/router')();
 const responseTime = require('koa-response-time');
 
 const cwd = util.cwd;
@@ -34,9 +34,24 @@ app.keys = ['GXT', '8888168'];
 // response time
 app.use(responseTime());
 // session
-app.use(convert(session(app, { key: 'GXT', maxAge: maxAge })));
-// router
-app.use(route().routes());
+router.use(convert(session(app, { key: 'GXT', maxAge: maxAge })));
+//
+function stat(file){
+  return function (fn){
+    fs.stat(file, fn);
+  }
+}
+router.use(convert(function*(next){
+  var ctx = this;
+  var stats = yield stat('app.js');
+
+  console.log('resource', stats);
+  console.log('resource', ctx.captures);
+
+  yield next;
+}));
+// routers
+app.use(router.routes());
 
 if (util.env.development) {
   // statics serve
