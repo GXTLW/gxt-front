@@ -45,8 +45,8 @@ router.use(convert(function*(next){
   var ctx = this;
   var stats = yield stat('app.js');
 
-  console.log('resource', ctx.routerPath);
-  console.log('resource', ctx.captures);
+  console.log('captures: ', ctx.captures);
+  console.log('stats: ', JSON.stringify(stats, null, 2));
 
   yield next;
 }));
