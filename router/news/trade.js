@@ -4,17 +4,17 @@
 
 'use strict';
 
-module.exports = {
-  '/news/trade': ctx=>{
-    ctx.session.login = 'nuintun';
-    ctx.session.password = '8888168';
-
-    ctx.body = 'hello world!';
+module.exports = [
+  {
+    route: '/news/trade',
+    action: ctx=>{
+      ctx.body = ctx.path;
+    }
   },
-  '/news/trade/:id': ctx=>{
-    ctx.session.login = 'nuintun';
-    ctx.session.password = '8888168';
-
-    ctx.body = 'hello world!';
+  {
+    route: '/news/trade/:id',
+    action: ctx=>{
+      ctx.body = ctx.path;
+    }
   }
-};
+];

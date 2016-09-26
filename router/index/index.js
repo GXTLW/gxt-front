@@ -4,11 +4,11 @@
 
 'use strict';
 
-module.exports = {
-  '/': ctx=>{
-    ctx.session.login = 'nuintun';
-    ctx.session.password = '8888168';
+var util = require('../../lib/util');
 
-    ctx.body = 'hello world!';
-  },
-};
+module.exports = [
+  {
+    route: '/',
+    action: util.require('controller/index/index')
+  }
+];
