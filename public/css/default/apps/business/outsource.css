@@ -1,0 +1,11 @@
+@import "/public/css/default/modules/panel.css";
+@import "/public/css/default/modules/slider.css";
+@import "/public/css/default/modules/list.css";
+@import "/public/css/default/modules/tabs.css";
+@import "/public/css/default/modules/contentpage.css";
+@import "/public/css/default/modules/article.css";
+.ui-article-illustration{
+  float: right;
+  clear: right;
+  margin: 0 10px;
+}
