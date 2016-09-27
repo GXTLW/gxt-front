@@ -4,9 +4,6 @@
 @import "/public/css/default/modules/tabs.css";
 @import "/public/css/default/modules/contentpage.css";
 @import "/public/css/default/modules/pagination.css";
-.ui-main-right .ui-panel-body {
-  padding-top: 2.8em;
-}
 .ui-main-right .ui-list {
   text-align: center;
 }
@@ -14,13 +11,12 @@
   display: inline-block;
   vertical-align: top;
   font-size: 13px;
-  text-align: center;
   padding-bottom: 2em;
-  margin: 0 17px 2em;
+  margin-bottom:2em;
   overflow: hidden;
 }
 .ui-main-right .ui-list > .ui-list-item > img {
-  max-width: 815px;
+  max-width: 823px;
   border: 1px solid #ccc;
   padding: 5px;
 }
