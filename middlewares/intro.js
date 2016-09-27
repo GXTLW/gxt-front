@@ -41,14 +41,14 @@ function controller2id(controller, controller_base){
 }
 
 /**
- * id to src
+ * id to path
  * @param src
  * @param src_base
  * @param ext
  * @returns {string}
  */
-function id2src(src, src_base, ext){
-  return util.normalize(path.join(src_base, src + ext));
+function id2path(src, src_base, ext){
+  return util.path2cwd(path.join(src_base, src + ext));
 }
 
 /**
@@ -66,22 +66,22 @@ function assert(value, defs){
 
 // exports
 module.exports = function (controller_base, style_base, script_base){
-  controller_base = assert(controller_base, 'controllers');
-  style_base = assert(controller_base, '/public/style/default/apps');
-  script_base = assert(controller_base, '/public/script/apps');
+  controller_base = util.realpath(assert(controller_base, '/controllers'));
+  style_base = util.realpath(assert(controller_base, '/public/style/default/apps'));
+  script_base = util.realpath(assert(controller_base, '/public/script/apps'));
 
   // middleware
   return convert(function*(next){
     var ctx = this;
     var model = ctx.model || {};
     /** @namespace ctx.routeData.controller */
-    var id = controller2id(ctx.routeData.controller, controller_base);
+    var id = controller2id(util.realpath(ctx.routeData.controller), controller_base);
 
-    var style_src = id2src(id, style_base, '.css');
-    var script_src = id2src(id, script_base, '.js');
+    var style_path = id2path(id, style_base, '.css');
+    var script_path = id2path(id, script_base, '.js');
 
-    model.style = (yield fexists(style_src)) ? style_src : '';
-    model.script = (yield fexists(script_src)) ? script_src : '';
+    model.style = (yield fexists(style_path)) ? style_path : '';
+    model.script = (yield fexists(script_path)) ? script_path : '';
 
     // set model
     ctx.model = model;
