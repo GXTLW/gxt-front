@@ -6,8 +6,6 @@
 
 module.exports = {
   index: ctx=>{
-    console.log('/index');
-
     ctx.session.login = 'nuintun';
     ctx.session.password = '8888168';
 
