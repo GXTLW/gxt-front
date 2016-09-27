@@ -3,9 +3,10 @@
 @import "/public/css/default/modules/list.css";
 @import "/public/css/default/modules/tabs.css";
 @import "/public/css/default/modules/contentpage.css";
-.ui-main-right .ui-panel-body {
-  padding: 1em 1.26em;
-}
 .ui-main-right .ui-panel-body span {
-  line-height: 3em;
+  line-height: 2em;
+}
+.ui-panel-image{
+  float: right;
+  max-width: 835px;
 }

@@ -5,7 +5,12 @@
 @import "/public/css/default/modules/contentpage.css";
 .ui-panel-body p {
   text-indent: 2em;
+  line-height: 2em;
 }
 .ui-main-right .ui-panel-body > dl > dt {
   font-weight: bold;
+}
+.ui-panel-image{
+  float: right;
+  max-width: 835px;
 }
