@@ -8,15 +8,27 @@ module.exports = {
 
     ctx.session.login = 'nuintun';
     ctx.session.password = '8888168';
-    ctx.body = 'detail: ' + ctx.path;
+    ctx.body = JSON.stringify({
+      path: ctx.path,
+      intro: ctx.model
+    }, '&nbsp;', 2);
   },
   trade: ctx=>{
-    ctx.body = 'detail: ' + ctx.path;
+    ctx.body = JSON.stringify({
+      path: ctx.path,
+      intro: ctx.model
+    }, '&nbsp;', 2);
   },
   help: ctx=>{
-    ctx.body = 'detail: ' + ctx.path;
+    ctx.body = JSON.stringify({
+      path: ctx.path,
+      intro: ctx.model
+    }, '&nbsp;', 2);
   },
   policy: ctx=>{
-    ctx.body = 'detail: ' + ctx.path;
+    ctx.body = JSON.stringify({
+      path: ctx.path,
+      intro: ctx.model
+    }, '&nbsp;', 2);
   }
 };

@@ -5,8 +5,8 @@
 'use strict';
 
 const path = require('path');
-const util = require('./util');
 const send = require('koa-send');
+const util = require('../lib/util');
 
 /**
  * serve

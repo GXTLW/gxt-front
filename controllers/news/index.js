@@ -9,6 +9,9 @@ module.exports = {
     ctx.session.login = 'nuintun';
     ctx.session.password = '8888168';
 
-    ctx.body = ctx.path;
+    ctx.body = JSON.stringify({
+      path: ctx.path,
+      intro: ctx.model
+    }, '&nbsp;', 2);
   }
 };
