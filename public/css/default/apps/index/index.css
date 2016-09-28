@@ -2,7 +2,7 @@
 @import "/public/css/default/modules/slider.css";
 @import "/public/css/default/modules/list.css";
 @import "/public/css/default/modules/tabs.css";
-.ui-panel-body{
+.ui-panel-body {
   padding: .8em 1.26em;
 }
 .ui-main-left {
