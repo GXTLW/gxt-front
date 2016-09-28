@@ -210,8 +210,26 @@ body > header {
   top: 0; left: -50%;
   overflow: hidden;
 }
+.ui-banner-prev,
+.ui-banner-next {
+  display: block; cursor: pointer;
+  z-index: 10; font-size: 0;
+  top: 50%; position: absolute;
+  margin-top: -80px;
+  width: 70px; height: 160px;
+  background: url(/public/images/default/arrow-large.png) no-repeat;
+}
+.ui-banner-prev {
+  left: 30px;
+}
+.ui-banner-next {
+  right: 30px; background-position: 0 -160px;
+}
+.ui-banner-prev:hover { background-position: -70px 0; }
+.ui-banner-next:hover { background-position: -70px -160px; }
 .ui-slider > li {
   width: 1920px;
+  height: 550px;
 }
 .ui-marquee-content {
   width: 100%;
