@@ -243,27 +243,38 @@ body > header {
   width: 1920px;
   height: 550px;
 }
-.ui-marquee-content {
+.ui-marquee-notice {
   width: 100%;
   background: url(/public/images/default/marquee.jpg) repeat-x;
 }
-.ui-marquee {
-  width: 1200px;
+.ui-notice-viewport {
+  width: 1083px;
   height: 35px;
   margin: 0 auto;
   -webkit-text-size-adjust: none;
   font-size: 0;
+  padding: 0 0 0 117px;
+  overflow: hidden;
+  background: url(/public/images/default/notice.jpg) no-repeat left center;
 }
-.ui-marquee > img,
-.ui-marquee > span {
+.ui-notice-content {
+  width: 999999px;
+  height: 100%;
+}
+.ui-notice-content > a {
+  color: #000;
   height: 35px;
   line-height: 35px;
   font-size: 12px;
   display: inline-block;
   *display: inline; *zoom: 1;
   vertical-align: middle;
+  margin: 0 6px;
 }
-.ui-marquee > span:before {
+.ui-notice-content > a:hover {
+  text-decoration: none;
+}
+.ui-notice-content > a:before {
   content: "·";
   color: #f00;
   font-weight: bold;
