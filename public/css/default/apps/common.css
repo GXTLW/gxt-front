@@ -255,16 +255,19 @@ body > header {
   font-size: 0;
 }
 .ui-marquee > img,
-.ui-marquee > marquee {
+.ui-marquee > span {
+  height: 35px;
+  line-height: 35px;
   font-size: 12px;
   display: inline-block;
   *display: inline; *zoom: 1;
-  vertical-align: top;
+  vertical-align: middle;
 }
-.ui-marquee > marquee {
-  width: 1083px;
-  height: 35px;
-  line-height: 35px;
+.ui-marquee > span:before {
+  content: "·";
+  color: #f00;
+  font-weight: bold;
+  margin-right: 6px;
 }
 .ui-main {
   font-size: 0;
