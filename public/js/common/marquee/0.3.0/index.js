@@ -109,10 +109,11 @@ $.fn.marquee = function (options){
      For details https://twitter.com/aamirafridi/status/403848044069679104 - Can't find a better solution :/
      jQuery 1.3.2 doesn't support $.data().KEY hence writting the following */
     var attr;
-    
-    $.each(o, function (key, value){
+
+    $.each(o, function (key){
       // Check if element has this data attribute
       attr = $this.attr('data-' + key);
+
       if (typeof attr !== 'undefined') {
         // Now check if value is boolean or not
         switch (attr) {
