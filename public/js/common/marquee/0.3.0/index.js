@@ -108,8 +108,8 @@ $.fn.marquee = function (options){
     /* Check if element has data attributes. They have top priority
      For details https://twitter.com/aamirafridi/status/403848044069679104 - Can't find a better solution :/
      jQuery 1.3.2 doesn't support $.data().KEY hence writting the following */
-    var dataAttributes = {},
-      attr;
+    var attr;
+    
     $.each(o, function (key, value){
       // Check if element has this data attribute
       attr = $this.attr('data-' + key);
