@@ -2,9 +2,6 @@
 @import "/public/css/default/modules/slider.css";
 @import "/public/css/default/modules/list.css";
 @import "/public/css/default/modules/tabs.css";
-.ui-panel-body {
-  padding: .8em 1.26em;
-}
 .ui-main-left {
   font-size: 0;
   -webkit-text-size-adjust: none;
@@ -76,9 +73,6 @@
 .ui-main-left .ui-news {
   margin-right: 10px;
 }
-.ui-main-right .ui-panel-body .ui-list {
-  text-align: center;
-}
 .ui-showcase .ui-list-item {
   display: inline-block;
   *display: inline; *zoom: 1;
@@ -100,6 +94,13 @@
 }
 .ui-showcase-items {
   width: 100000px;
+}
+.ui-follow .ui-panel-body {
+  text-align: center;
+}
+.ui-follow .ui-weinxin-qr {
+  width: 285px;
+  height: 285px;
 }
 .ui-main-bottom {
   margin-bottom: 10px;
