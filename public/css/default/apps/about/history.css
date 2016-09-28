@@ -6,7 +6,7 @@
 .ui-main-right .ui-panel-body span {
   line-height: 2em;
 }
-.ui-panel-image{
+.ui-main-right .ui-panel-body img {
   float: right;
   max-width: 835px;
 }

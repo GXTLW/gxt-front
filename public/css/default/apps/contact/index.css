@@ -3,3 +3,9 @@
 @import "/public/css/default/modules/list.css";
 @import "/public/css/default/modules/tabs.css";
 @import "/public/css/default/modules/contentpage.css";
+.ui-main-right .ui-panel-body img {
+  max-width: 835px;
+}
+.ui-main-right .ui-panel-body p {
+  line-height: 3em;
+}

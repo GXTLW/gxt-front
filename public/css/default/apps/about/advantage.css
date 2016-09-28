@@ -10,7 +10,7 @@
 .ui-main-right .ui-panel-body > dl > dt {
   font-weight: bold;
 }
-.ui-panel-image{
+.ui-main-right .ui-panel-body img {
   float: right;
   max-width: 835px;
 }
