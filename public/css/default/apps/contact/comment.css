@@ -23,6 +23,10 @@
 .ui-table-right span {
   color: red;
 }
+.ui-captcha,
+.ui-message-verification {
+  vertical-align: middle;
+}
 .ui-message-submit {
   background: #046ab6;
   padding: .6em;
