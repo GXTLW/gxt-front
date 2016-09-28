@@ -245,23 +245,27 @@ body > header {
 }
 .ui-marquee-notice {
   width: 100%;
-  background: url(/public/images/default/marquee.jpg) repeat-x;
+  background: url(/public/images/default/marquee-notice-bg.jpg) repeat-x;
 }
-.ui-notice-viewport {
+.ui-marquee-viewport {
   width: 1083px;
   height: 35px;
   margin: 0 auto;
   -webkit-text-size-adjust: none;
   font-size: 0;
   padding: 0 0 0 117px;
+  background: url(/public/images/default/marquee-notice.jpg) no-repeat left center;
+}
+.ui-notice-viewport {
+  width: 100%;
+  height: 100%;
   overflow: hidden;
-  background: url(/public/images/default/notice.jpg) no-repeat left center;
 }
 .ui-notice-content {
-  width: 999999px;
+  width: 100000px;
   height: 100%;
 }
-.ui-notice-content > a {
+.ui-notice-content a {
   color: #000;
   height: 35px;
   line-height: 35px;
@@ -269,12 +273,12 @@ body > header {
   display: inline-block;
   *display: inline; *zoom: 1;
   vertical-align: middle;
-  margin: 0 6px;
+  padding: 0 6px;
 }
-.ui-notice-content > a:hover {
+.ui-notice-content a:hover {
   text-decoration: none;
 }
-.ui-notice-content > a:before {
+.ui-notice-content a:before {
   content: "·";
   color: #f00;
   font-weight: bold;

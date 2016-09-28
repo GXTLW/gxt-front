@@ -5,6 +5,7 @@
 'use strict';
 
 var $ = require('jquery');
+var Marquee = require('marquee');
 var Carousel = require('carousel');
 
 $(function (){
@@ -22,6 +23,10 @@ $(function (){
     classPrefix: 'ui-banner',
     prevBtn: banner.find('.ui-banner-prev'),
     nextBtn: banner.find('.ui-banner-next'),
-    viewSize: [1920, 550],
+    viewSize: [1920, 550]
   }).render();
+
+  var notice = $('#marquee-notice');
+
+  notice.marquee({ duration: 20000 });
 });
