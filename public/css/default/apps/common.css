@@ -261,11 +261,11 @@ body > header {
   height: 100%;
   overflow: hidden;
 }
-.ui-notice-content {
+.ui-notice-items {
   width: 100000px;
   height: 100%;
 }
-.ui-notice-content a {
+.ui-notice-items a {
   color: #000;
   height: 35px;
   line-height: 35px;
@@ -275,10 +275,10 @@ body > header {
   vertical-align: middle;
   padding: 0 6px;
 }
-.ui-notice-content a:hover {
+.ui-notice-items a:hover {
   text-decoration: none;
 }
-.ui-notice-content a:before {
+.ui-notice-items a:before {
   content: "·";
   color: #f00;
   font-weight: bold;
