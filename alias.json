@@ -53,5 +53,6 @@
   "inputmask-phone": "common/inputmask/3.3.2/inputmask.phone.extensions",
   "inputmask-regex": "common/inputmask/3.3.2/inputmask.regex.extensions",
   "inputmask-numeric": "common/inputmask/3.3.2/inputmask.numeric.extensions",
-  "inputmask-extensions": "common/inputmask/3.3.2/inputmask.extensions"
+  "inputmask-extensions": "common/inputmask/3.3.2/inputmask.extensions",
+  "marquee": "common/marquee/0.3.0/index"
 }
