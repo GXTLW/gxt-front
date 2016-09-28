@@ -1,7 +1,8 @@
 .ui-pagination {
   display: none;
   text-align: right;
-  margin-top: 1.5em;
+  padding-top: 1.5em;
+  border-top: 1px dashed #ccc;
 }
 .ui-pagination .ui-pagination-index {
   width: 2.5em;
