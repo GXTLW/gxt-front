@@ -200,7 +200,7 @@ body > header {
   z-index: 0;
 }
 .ui-banner-center {
-  position: absolute;
+  position: relative;
   left: 50%; height: 100%;
 }
 .ui-banner-center-offset {
@@ -227,6 +227,18 @@ body > header {
 }
 .ui-banner-prev:hover { background-position: -70px 0; }
 .ui-banner-next:hover { background-position: -70px -160px; }
+.ui-banner-nav {
+  position: relative;
+  text-align: center;
+  bottom: 30px;
+}
+.ui-banner-nav .ui-banner-trigger {
+  overflow: hidden; cursor: pointer; line-height: 0; font-size: 0; margin: 0 5px;
+  display: inline-block; *display: inline; *zoom: 1; vertical-align: middle;
+  background: url(/public/images/default/arrow-large.png) 0 -323px;
+}
+.ui-banner-nav .ui-banner-trigger { width: 16px; height: 16px; }
+.ui-banner-nav .ui-banner-active { background-position: -18px -323px; }
 .ui-slider > li {
   width: 1920px;
   height: 550px;
