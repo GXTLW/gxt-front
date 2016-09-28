@@ -464,7 +464,7 @@ $.fn.marquee = function (options){
           }
         });
       }
-      
+
       // save the status
       $this.data('runningStatus', 'resumed');
     };
