@@ -11,9 +11,11 @@
   display: inline-block;
   vertical-align: top;
   font-size: 13px;
-  padding-bottom: 2em;
-  margin-bottom:2em;
+  margin-top: 2em;
   overflow: hidden;
+}
+.ui-main-right .ui-list > .ui-list-item:first-child {
+  margin-top: 0;
 }
 .ui-main-right .ui-list > .ui-list-item > img {
   max-width: 823px;
