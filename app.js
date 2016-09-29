@@ -27,10 +27,12 @@ const maxAge = 365 * 24 * 60 * 60;
 if (process.env.NODE_ENV === 'local' || process.env.NODE_ENV === 'development') {
   // onerror
   require('koa-onerror')(app);
+  // set engine
+  engine(app, { watch: true });
+} else {
+  // set engine
+  engine(app);
 }
-
-// set engine
-engine(app);
 
 // mongoose.connect('mongodb://localhost/test');
 

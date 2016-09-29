@@ -6,7 +6,6 @@
 
 module.exports = {
   index: ctx=>{
-    ctx.layout = false;
     ctx.body = ctx.render('apps/index/index');
   }
 };
