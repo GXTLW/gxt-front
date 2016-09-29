@@ -4,14 +4,15 @@
 
 'use strict';
 
+const nunjucks = require('nunjucks');
+
+nunjucks.configure('views', {
+  watch: true
+});
+
 module.exports = {
   index: ctx=>{
-    ctx.session.login = 'nuintun';
-    ctx.session.password = '8888168';
-
-    ctx.body = JSON.stringify({
-      path: ctx.path,
-      intro: ctx.model
-    }, '&nbsp;', 2);
+    ctx.model.layout = 'layout/default.html';
+    ctx.body = nunjucks.render('apps/index/index.html', ctx.model);
   }
 };

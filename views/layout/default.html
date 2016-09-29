@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="renderer" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type"/>
+    <link type="text/css" rel="stylesheet" href="/public/style/default/base.css"/>
+    <link type="text/css" rel="stylesheet" href="/public/style/default/apps/common.css"/>
+    {% if style %}
+    <link type="text/css" rel="stylesheet" href="{{style}}"/>
+    {% endif %}
+    <!--[if lt IE 9]>
+    <script src="/public/script/base/html5shiv/3.7.3/html5shiv-printshiv.js"></script>
+    <![endif]-->
+    <title>{{title}}</title>
+    <script type="text/javascript">
+      window.GXT = {
+        DEBUG: true,
+        VERSION: '{{version}}',
+        ROOT: '/public/script/'
+      }
+    </script>
+    <script type="text/javascript" src="/public/script/seajs/3.0.1/sea.js"></script>
+    {% if script %}
+    <script type="text/javascript">
+      seajs.use(['/public/script/apps/common.js', '{{script}}']);
+    </script>
+    {% else %}
+    <script type="text/javascript">
+      seajs.use(['/public/script/apps/common']);
+    </script>
+    {% endif %}
+  </head>
+  <body>
+    {% include "modules/header.html" %}
+    {% include "modules/banner.html" %}
+    {% include "modules/notice.html" %}
+    {% block body %}{% endblock %}
+    {% include "modules/footer.html" %}
+  </body>
+</html>
