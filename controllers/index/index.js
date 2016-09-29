@@ -6,6 +6,8 @@
 
 module.exports = {
   index: ctx=>{
+    ctx.model.title = '国信通';
+
     ctx.body = ctx.render('apps/index/index');
   }
 };

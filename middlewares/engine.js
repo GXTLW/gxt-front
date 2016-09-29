@@ -50,34 +50,34 @@ function assert(value, defs){
  * @param options
  */
 module.exports = function (app, options){
-  if (!app.context.render) {
-    options = util.extend(true, clone(defs), options);
-    options.root = assert(options.root, defs.root);
-    options.extname = assert(options.extname, defs.extname);
-    options.layout = assert(options.layout, defs.layout);
+  if (app.context.render) return;
 
-    // configure nunjucks
-    const engine = nunjucks.configure(options.root, clone(options));
+  options = util.extend(true, clone(defs), options);
+  options.root = assert(options.root, defs.root);
+  options.extname = assert(options.extname, defs.extname);
+  options.layout = assert(options.layout, defs.layout);
 
-    // render function
-    app.context.render = function (view){
-      var ctx = this;
+  // configure nunjucks
+  const engine = nunjucks.configure(options.root, clone(options));
 
-      // assert view
-      if (!view || !util.string(view)) {
-        throw new TypeError('The path of view must be set.');
-      }
+  // render function
+  app.context.render = function (view){
+    var ctx = this;
 
-      // add view extname
-      view = addExt(view, options.extname);
+    // assert view
+    if (!view || !util.string(view)) {
+      throw new TypeError('The path of view must be set.');
+    }
 
-      // set layout
-      if (!ctx.hasOwnProperty('layout') || ctx.layout) {
-        ctx.model.layout = addExt(assert(ctx.layout, options.layout), options.extname);
-      }
+    // add view extname
+    view = addExt(view, options.extname);
 
-      // render view
-      return engine.render(view, ctx.model);
-    };
-  }
+    // set layout
+    if (!ctx.hasOwnProperty('layout') || ctx.layout) {
+      ctx.model.layout = addExt(assert(ctx.layout, options.layout), options.extname);
+    }
+
+    // render view
+    return engine.render(view, ctx.model);
+  };
 };
