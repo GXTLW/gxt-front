@@ -28,5 +28,5 @@ $(function (){
 
   var notice = $('#marquee-notice');
 
-  notice.marquee({ duration: 20000 });
+  notice.marquee({ duration: 100000 });
 });

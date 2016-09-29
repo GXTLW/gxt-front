@@ -7,5 +7,5 @@ var $ = require('marquee');
 $(function (){
   var showcase = $('#marquee-showcase');
 
-  showcase.marquee({ duration: 30000 });
+  showcase.marquee({ duration: 100000 });
 });

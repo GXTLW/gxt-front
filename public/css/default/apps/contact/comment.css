@@ -3,6 +3,9 @@
 @import "/public/css/default/modules/list.css";
 @import "/public/css/default/modules/tabs.css";
 @import "/public/css/default/modules/contentpage.css";
+.ui-main-right .ui-panel-body img {
+  max-width: 835px;
+}
 .ui-message table {
   margin: 10px 0 0 15px;
 }
@@ -20,6 +23,10 @@
 .ui-table-right span {
   color: red;
 }
+.ui-captcha,
+.ui-message-verification {
+  vertical-align: middle;
+}
 .ui-message-submit {
   background: #046ab6;
   padding: .6em;
@@ -27,6 +34,7 @@
   outline: none;
   display: block;
   color: #fff;
+  cursor: pointer;
   border: 1px solid #2d78f4;
 }
 .ui-message-submit:hover {

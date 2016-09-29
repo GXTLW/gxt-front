@@ -200,7 +200,7 @@ body > header {
   z-index: 0;
 }
 .ui-banner-center {
-  position: relative;
+  position: absolute;
   left: 50%; height: 100%;
 }
 .ui-banner-center-offset {
@@ -228,8 +228,9 @@ body > header {
 .ui-banner-prev:hover { background-position: -70px 0; }
 .ui-banner-next:hover { background-position: -70px -160px; }
 .ui-banner-nav {
-  position: relative;
+  position: absolute;
   text-align: center;
+  width: 100%;
   bottom: 30px;
 }
 .ui-banner-nav .ui-banner-trigger {
