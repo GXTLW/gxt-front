@@ -57,7 +57,7 @@ module.exports = function (app, options){
     options.layout = assert(options.layout, defs.layout);
 
     // configure nunjucks
-    nunjucks.configure(options.root, options);
+    const engine = nunjucks.configure(options.root, clone(options));
 
     // render function
     app.context.render = function (view){
@@ -72,14 +72,12 @@ module.exports = function (app, options){
       view = addExt(view, options.extname);
 
       // set layout
-      if (!ctx.layout) {
-        ctx.model.layout = '';
-      } else {
+      if (!ctx.hasOwnProperty('layout') || ctx.layout) {
         ctx.model.layout = addExt(assert(ctx.layout, options.layout), options.extname);
       }
 
       // render view
-      return nunjucks.render(view, ctx.model);
+      return engine.render(view, ctx.model);
     };
   }
 };
