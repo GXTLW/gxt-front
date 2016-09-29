@@ -4,17 +4,9 @@
 
 'use strict';
 
-const nunjucks = require('nunjucks');
-
-nunjucks.configure('views', {
-  watch: true
-});
-
 module.exports = {
   index: ctx=>{
-    ctx.render();
-    console.log('bbbb');
-    ctx.model.layout = 'layout/default.html';
-    ctx.body = nunjucks.render('apps/index/index.html', ctx.model);
+    ctx.layout = '';
+    ctx.body = ctx.render('apps/index/index');
   }
 };
