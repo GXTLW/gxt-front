@@ -78,6 +78,10 @@ module.exports = function (app, options){
     }
 
     // render view
-    return engine.render(view, ctx.model);
+    try {
+      return engine.render(view, ctx.model);
+    } catch (error) {
+      console.log('aaaaaaaaaaaaaaaaaaaaa-------------------')
+    }
   };
 };
