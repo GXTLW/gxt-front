@@ -12,6 +12,8 @@ nunjucks.configure('views', {
 
 module.exports = {
   index: ctx=>{
+    ctx.render();
+    console.log('bbbb');
     ctx.model.layout = 'layout/default.html';
     ctx.body = nunjucks.render('apps/index/index.html', ctx.model);
   }

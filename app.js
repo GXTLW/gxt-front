@@ -17,6 +17,7 @@ const serve = require('./middlewares/serve');
 const intro = require('./middlewares/intro');
 const responseTime = require('koa-response-time');
 const interceptors = require('koa-interceptors')();
+const engine = require('./middlewares/engine');
 
 const cwd = util.cwd;
 const app = new koa();
@@ -27,6 +28,9 @@ if (process.env.NODE_ENV === 'local' || process.env.NODE_ENV === 'development') 
   // onerror
   require('koa-onerror')(app);
 }
+
+// set engine
+engine(app);
 
 // mongoose.connect('mongodb://localhost/test');
 

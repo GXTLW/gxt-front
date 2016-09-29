@@ -15,7 +15,7 @@ const util = require('../lib/util');
  * @param options
  * @returns {Function}
  */
-function serve(path, root, options){
+module.exports = function serve(path, root, options){
   // remove / begin
   path = path.replace(/^\/+/, '');
   options = options || {};
@@ -41,6 +41,4 @@ function serve(path, root, options){
 
     return next();
   };
-}
-
-module.exports = serve;
+};
