@@ -44,6 +44,11 @@ function assert(value, defs){
   return value && util.string(value) ? value : defs;
 }
 
+/**
+ * view engine
+ * @param app
+ * @param options
+ */
 module.exports = function (app, options){
   if (!app.context.render) {
     options = util.extend(true, clone(defs), options);
@@ -58,11 +63,13 @@ module.exports = function (app, options){
     app.context.render = function (view){
       var ctx = this;
 
+      // assert view
       if (!view || !util.string(view)) {
         throw new TypeError('The path of view must be set.');
-      } else {
-        view = addExt(view, options.extname);
       }
+
+      // add view extname
+      view = addExt(view, options.extname);
 
       // set layout
       if (!ctx.layout) {
