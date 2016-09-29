@@ -5,7 +5,7 @@
 'use strict';
 
 module.exports = {
-  '/contact/join': [
+  '/contact/school': [
     {
       action: 'index'
     }
