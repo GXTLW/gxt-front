@@ -29,10 +29,10 @@ if (process.env.NODE_ENV === 'local' || process.env.NODE_ENV === 'development') 
   // onerror
   require('koa-onerror')(app);
   // set engine
-  engine(app, { watch: true });
+  engine(app, { watch: true, root: config.view_base, extname: config.view_ext });
 } else {
   // set engine
-  engine(app);
+  engine(app, { root: config.view_base, extname: config.view_ext });
 }
 
 // mongoose.connect('mongodb://localhost/test');

@@ -7,8 +7,10 @@
 module.exports = {
   database: '',
   version: 'dev',
+  view_base: 'views',
+  view_ext: 'html',
   router_base: '/routers',
   controller_base: '/controllers',
-  style_base: '/public/style/default/apps',
-  script_base: '/public/script/apps'
+  script_base: '/public/script/apps',
+  style_base: '/public/style/default/apps'
 };

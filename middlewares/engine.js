@@ -10,8 +10,8 @@ const nunjucks = require('nunjucks');
 
 // default options
 const defs = {
-  extname: '.html',
   root: 'views',
+  extname: 'html',
   layout: 'layout/default',
 };
 
@@ -31,6 +31,8 @@ function clone(object){
  * @returns {*}
  */
 function addExt(view, extname){
+  extname = '.' + extname;
+
   return view.slice(-5).toLowerCase() === extname ? view : view + extname;
 }
 

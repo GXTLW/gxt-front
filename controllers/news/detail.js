@@ -2,33 +2,38 @@
  * Created by nuintun on 2016/9/26.
  */
 
-module.exports = {
-  company: ctx=>{
-    console.log('company detail');
+'use strict';
 
-    ctx.session.login = 'nuintun';
-    ctx.session.password = '8888168';
-    ctx.body = JSON.stringify({
-      path: ctx.path,
-      intro: ctx.model
-    }, '&nbsp;', 2);
-  },
-  trade: ctx=>{
-    ctx.body = JSON.stringify({
-      path: ctx.path,
-      intro: ctx.model
-    }, '&nbsp;', 2);
-  },
-  help: ctx=>{
-    ctx.body = JSON.stringify({
-      path: ctx.path,
-      intro: ctx.model
-    }, '&nbsp;', 2);
-  },
-  policy: ctx=>{
-    ctx.body = JSON.stringify({
-      path: ctx.path,
-      intro: ctx.model
-    }, '&nbsp;', 2);
-  }
+const convert = require('koa-convert');
+const detail = require('../../lib/detail-util');
+
+module.exports = {
+  company: convert(function*(){
+    var ctx = this;
+
+    ctx.state.title = '公司新闻';
+
+    yield detail.render(ctx, 'apps/news/news-' + ctx.params.id);
+  }),
+  trade: convert(function*(){
+    var ctx = this;
+
+    ctx.state.title = '行业新闻';
+
+    yield detail.render(ctx, 'apps/news/trade-' + ctx.params.id);
+  }),
+  help: convert(function*(){
+    var ctx = this;
+
+    ctx.state.title = '派遣知识';
+
+    yield detail.render(ctx, 'apps/news/help-' + ctx.params.id);
+  }),
+  policy: convert(function*(){
+    var ctx = this;
+
+    ctx.state.title = '政策法规';
+
+    yield detail.render(ctx, 'apps/news/policy-' + ctx.params.id);
+  })
 };

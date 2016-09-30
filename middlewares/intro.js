@@ -9,6 +9,7 @@ const path = require('path');
 const util = require('../lib/util');
 const thunkify = require('thunkify');
 const convert = require('koa-convert');
+
 const fstat = thunkify(fs.stat);
 
 /**
