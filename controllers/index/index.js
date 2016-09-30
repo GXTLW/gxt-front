@@ -6,8 +6,8 @@
 
 module.exports = {
   index: ctx=>{
-    ctx.model.title = '国信通';
-    ctx.model.version = ctx.version;
+    ctx.state.title = '国信通';
+    ctx.state.version = ctx.version;
 
     ctx.body = ctx.render('apps/index/index');
   }

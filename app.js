@@ -8,6 +8,7 @@ const fs = require('fs');
 const koa = require('koa');
 const zlib = require('zlib');
 const path = require('path');
+const config = require('./config');
 const util = require('./lib/util');
 const thunkify = require('thunkify');
 // const mongoose = require('mongoose');
@@ -15,9 +16,9 @@ const session = require('koa-session');
 const convert = require('koa-convert');
 const serve = require('./middlewares/serve');
 const intro = require('./middlewares/intro');
+const engine = require('./middlewares/engine');
 const responseTime = require('koa-response-time');
 const interceptors = require('koa-interceptors')();
-const engine = require('./middlewares/engine');
 
 const cwd = util.cwd;
 const app = new koa();
@@ -44,7 +45,7 @@ app.use(responseTime());
 // session
 interceptors.use(convert(session(app, { key: 'GXT', maxAge: maxAge })));
 // resource
-interceptors.use(intro());
+interceptors.use(intro(config));
 // routers
 app.use(interceptors.routes());
 

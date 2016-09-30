@@ -65,26 +65,31 @@ function assert(value, defs){
 }
 
 // exports
-module.exports = function (controller_base, style_base, script_base){
-  controller_base = util.realpath(assert(controller_base, '/controllers'));
-  style_base = util.realpath(assert(controller_base, '/public/style/default/apps'));
-  script_base = util.realpath(assert(controller_base, '/public/script/apps'));
+module.exports = function (config){
+  config = config || {};
+
+  var version = Date.now();
+  var controller_base = util.realpath(assert(config.controller_base, '/controllers'));
+  var style_base = util.realpath(assert(config.style_base, '/public/style/default/apps'));
+  var script_base = util.realpath(assert(config.script_base, '/public/script/apps'));
 
   // middleware
   return convert(function*(next){
     var ctx = this;
-    var model = ctx.model || {};
+    var model = ctx.state || {};
     /** @namespace ctx.routeData.controller */
     var id = controller2id(util.realpath(ctx.routeData.controller), controller_base);
 
     var style_path = id2path(id, style_base, '.css');
     var script_path = id2path(id, script_base, '.js');
 
+    model.title = model.title || config.title;
+    model.version = config.version || version;
     model.style = (yield fexists(style_path)) ? style_path : '';
     model.script = (yield fexists(script_path)) ? script_path : '';
 
     // set model
-    ctx.model = model;
+    ctx.state = model;
 
     yield next;
   });
