@@ -49,11 +49,10 @@ interceptors.use(intro(config));
 // routers
 app.use(interceptors.routes());
 
+// statics serve
 if (util.env.development) {
-  // statics serve
   app.use(serve(statics, path.join(cwd, statics)));
 } else {
-  // statics serve
   app.use(serve(statics, path.join(cwd, statics), { maxAge: maxAge }));
   // compress
   app.use(require('koa-compress')());
