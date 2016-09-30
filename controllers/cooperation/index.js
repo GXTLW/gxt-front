@@ -6,9 +6,8 @@
 
 module.exports = {
   index: ctx=>{
-    ctx.session.login = 'nuintun';
-    ctx.session.password = '8888168';
+    ctx.state.title = '加盟合作';
 
-    ctx.body = ctx.path;
+    ctx.body = ctx.render('apps/cooperation/index');
   }
 };
