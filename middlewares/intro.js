@@ -83,6 +83,7 @@ module.exports = function (config){
     var style_path = id2path(id, style_base, '.css');
     var script_path = id2path(id, script_base, '.js');
 
+    model.nav = id.split(/[/\\]/)[0];
     model.title = model.title || config.title;
     model.version = config.version || version;
     model.style = (yield fexists(style_path)) ? style_path : '';

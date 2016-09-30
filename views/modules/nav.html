@@ -1,7 +1,9 @@
 <nav class="ui-site-nav fn-clean-space">
   <ul>
-    <li class="active"><a title="网站首页" href="/">网站首页</a></li>
-    <li>
+    <li{% if nav === "index" %} class="active"{% endif %}>
+      <a title="网站首页" href="/">网站首页</a>
+    </li>
+    <li{% if nav === "about" %} class="active"{% endif %}>
       <a title="关于国信通" href="/about">关于国信通</a>
       <ul class="ui-site-sub-nav">
         <li><a href="/about">公司简介</a></li>
@@ -11,7 +13,7 @@
         <li><a href="/about/history">发展历程</a></li>
       </ul>
     </li>
-    <li>
+    <li{% if nav === "news" %} class="active"{% endif %}>
       <a title="新闻动态" href="/news">新闻动态</a>
       <ul class="ui-site-sub-nav">
         <li><a href="/news">公司新闻</a></li>
@@ -20,7 +22,7 @@
         <li><a href="/news/policy">政策法规</a></li>
       </ul>
     </li>
-    <li>
+    <li{% if nav === "business" %} class="active"{% endif %}>
       <a title="主营业务" href="/business">主营业务</a>
       <ul class="ui-site-sub-nav">
         <li><a href="/business">劳务派遣</a></li>
@@ -30,10 +32,16 @@
         <li><a href="/business/insurance">代缴社保</a></li>
       </ul>
     </li>
-    <li><a title="招聘信息" href="/jobs">招聘信息</a></li>
-    <li><a title="合作客户" href="/custom">合作客户</a></li>
-    <li><a title="加盟合作" href="/cooperation">加盟合作</a></li>
-    <li>
+    <li{% if nav === "jobs" %} class="active"{% endif %}>
+      <a title="招聘信息" href="/jobs">招聘信息</a>
+    </li>
+    <li{% if nav === "index" %} class="active"{% endif %}>
+      <a title="合作客户" href="/custom">合作客户</a>
+    </li>
+    <li{% if nav === "cooperation" %} class="active"{% endif %}>
+      <a title="加盟合作" href="/cooperation">加盟合作</a>
+    </li>
+    <li{% if nav === "contact" %} class="active"{% endif %}>
       <a title="联系我们" href="/contact">联系我们</a>
       <ul class="ui-site-sub-nav">
         <li><a href="/contact/society">社会招聘</a></li>
