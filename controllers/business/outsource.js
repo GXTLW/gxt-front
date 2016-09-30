@@ -6,8 +6,8 @@
 
 module.exports = {
   index: ctx=>{
-    ctx.state.title = '代缴社保';
+    ctx.state.title = '生产外包';
 
-    ctx.body = ctx.render('apps/business/insurance');
+    ctx.body = ctx.render('apps/business/outsource');
   }
 };
