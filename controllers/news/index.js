@@ -6,12 +6,8 @@
 
 module.exports = {
   index: ctx=>{
-    ctx.session.login = 'nuintun';
-    ctx.session.password = '8888168';
+    ctx.state.title = '公司新闻';
 
-    ctx.body = JSON.stringify({
-      path: ctx.path,
-      intro: ctx.model
-    }, '&nbsp;', 2);
+    ctx.body = ctx.render('apps/news/index');
   }
 };
