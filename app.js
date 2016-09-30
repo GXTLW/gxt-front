@@ -58,6 +58,11 @@ if (util.env.development) {
   app.use(require('koa-compress')());
 }
 
+// error handler
+app.on('error', (error, ctx)=>{
+  // do nothing
+});
+
 var server = app.listen(8080, ()=>{
   var address = server.address();
 

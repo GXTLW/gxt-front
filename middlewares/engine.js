@@ -61,26 +61,28 @@ module.exports = function (app, options){
   const engine = nunjucks.configure(options.root, clone(options));
 
   // render function
-  app.context.render = function (view, model, layout){
-    var ctx = this;
-
+  app.context.render = function (view, layout){
     // assert view
     if (!view || !util.string(view)) {
       throw new TypeError('The path of view must be set.');
     }
 
+    var ctx = this;
+    // model
+    var model = ctx.state || {};
+
     // add view extname
     view = addExt(view, options.extname);
 
-    // model
-    model = util.extend(true, ctx.state, model);
+    // set layout and render view
+    if (layout === false) {
 
-    // set layout
-    if (arguments.length < 3 || layout) {
-      model.layout = addExt(assert(layout, options.layout), options.extname);
+      return engine.render(view, model);
+    } else {
+      model.__BODY__ = view;
+      layout = addExt(assert(layout, options.layout), options.extname);
+
+      return engine.render(layout, model);
     }
-
-    // render view
-    return engine.render(view, model);
   };
 };
