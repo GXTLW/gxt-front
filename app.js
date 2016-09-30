@@ -11,6 +11,7 @@ const path = require('path');
 const config = require('./config');
 const util = require('./lib/util');
 const thunkify = require('thunkify');
+const favicon = require('koa-favicon');
 // const mongoose = require('mongoose');
 const session = require('koa-session');
 const convert = require('koa-convert');
@@ -48,6 +49,9 @@ interceptors.use(convert(session(app, { key: 'GXT', maxAge: maxAge })));
 interceptors.use(intro(config));
 // routers
 app.use(interceptors.routes());
+
+//
+app.use(convert(favicon('favicon.ico')));
 
 // statics serve
 if (util.env.development) {

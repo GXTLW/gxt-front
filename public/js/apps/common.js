@@ -4,8 +4,7 @@
 
 'use strict';
 
-var $ = require('jquery');
-var Marquee = require('marquee');
+var $ = require('marquee');
 var Carousel = require('carousel');
 
 $(function (){
