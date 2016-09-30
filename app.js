@@ -49,8 +49,7 @@ interceptors.use(convert(session(app, { key: 'GXT', maxAge: maxAge })));
 interceptors.use(intro(config));
 // routers
 app.use(interceptors.routes());
-
-//
+// favicon
 app.use(convert(favicon('favicon.ico')));
 
 // statics serve
@@ -67,8 +66,5 @@ app.on('error', (error, ctx)=>{
   // do nothing
 });
 
-var server = app.listen(8080, ()=>{
-  var address = server.address();
-
-  console.log('listening on port ' + address.port + '.');
-});
+// exports
+module.exports = app;

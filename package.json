@@ -6,7 +6,7 @@
     "mongod": "mongod.bat",
     "fengine": "fengine --color",
     "watch": "gulp watch --color",
-    "koa": "node app --color --harmony",
+    "start": "node server.js --color --harmony",
     "development": "node app-dev --color --harmony"
   },
   "dependencies": {
