@@ -50,7 +50,7 @@ interceptors.use(intro(config));
 // routers
 app.use(interceptors.routes());
 // favicon
-app.use(convert(favicon('favicon.ico')));
+app.use(favicon('favicon.ico'));
 
 // statics serve
 if (util.env.development) {
