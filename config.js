@@ -5,12 +5,13 @@
 'use strict';
 
 module.exports = {
-  database: '',
   version: 'dev',
+  title: '深圳市国信通劳务派遣有限公司',
+  database: '',
   view_base: 'views',
   view_ext: 'html',
   router_base: '/routers',
   controller_base: '/controllers',
   script_base: '/public/script/apps',
-  style_base: '/public/style/default/apps'
+  style_base: '/public/style/default/apps',
 };

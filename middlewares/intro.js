@@ -69,7 +69,6 @@ function assert(value, defs){
 module.exports = function (config){
   config = config || {};
 
-  var version = Date.now();
   var controller_base = util.realpath(assert(config.controller_base, '/controllers'));
   var style_base = util.realpath(assert(config.style_base, '/public/style/default/apps'));
   var script_base = util.realpath(assert(config.script_base, '/public/script/apps'));
@@ -97,8 +96,26 @@ module.exports = function (config){
       model.nav = '';
     }
 
-    model.title = model.title || config.title;
-    model.version = config.version || version;
+    // version
+    if (util.env.development) {
+      model.version = Date.now();
+    } else {
+      model.version = config.version;
+    }
+
+    // title
+    var title = config.title;
+
+    // set title
+    Object.defineProperty(model, 'title', {
+      enumerable: true,
+      set: function (value){
+        title = (value ? value + ' - ' : '') + config.title;
+      },
+      get: function (){
+        return title;
+      }
+    });
 
     // set model
     ctx.state = model;
