@@ -52,7 +52,13 @@ function compress(){
   }, {
     js: switchStream.through(function (vinyl, encoding, next){
       try {
-        var result = uglify.minify(vinyl.contents.toString(), { fromString: true });
+        var result = uglify.minify(vinyl.contents.toString(), {
+          fromString: true,
+          compress: { screw_ie8: false },
+          mangle: { screw_ie8: false },
+          output: { screw_ie8: false }
+        });
+
         vinyl.contents = new Buffer(result.code);
       } catch (error) {
         // no nothing
@@ -74,9 +80,6 @@ function compress(){
       }).then(function (result){
         vinyl.contents = new Buffer(result.css);
 
-        context.push(vinyl);
-        next();
-      }).catch(function (){
         context.push(vinyl);
         next();
       });
@@ -101,7 +104,13 @@ var CMDPLUGINS = {
 
       cmd.defaults.plugins.css.exec(vinyl, options, function (vinyl){
         try {
-          var result = uglify.minify(vinyl.contents.toString(), { fromString: true });
+          var result = uglify.minify(vinyl.contents.toString(), {
+            fromString: true,
+            compress: { screw_ie8: false },
+            mangle: { screw_ie8: false },
+            output: { screw_ie8: false }
+          });
+
           vinyl.contents = new Buffer(result.code);
         } catch (error) {
           // no nothing
@@ -110,9 +119,6 @@ var CMDPLUGINS = {
         context.push(vinyl);
         next();
       });
-    }).catch(function (){
-      context.push(vinyl);
-      next();
     });
   }
 };
@@ -123,7 +129,13 @@ var CMDPLUGINS = {
     // transform
     cmd.defaults.plugins[name].exec(vinyl, options, function (vinyl){
       try {
-        var result = uglify.minify(vinyl.contents.toString(), { fromString: true });
+        var result = uglify.minify(vinyl.contents.toString(), {
+          fromString: true,
+          compress: { screw_ie8: false },
+          mangle: { screw_ie8: false },
+          output: { screw_ie8: false }
+        });
+
         vinyl.contents = new Buffer(result.code);
       } catch (error) {
         // no nothing
@@ -154,9 +166,6 @@ var CSSPLUGINS = {
         context.push(vinyl);
         next();
       });
-    }).catch(function (){
-      context.push(vinyl);
-      next();
     });
   }
 };
