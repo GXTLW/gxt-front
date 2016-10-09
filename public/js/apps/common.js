@@ -31,6 +31,4 @@ $(function (){
 
   // 百度统计
   // require.async('//hm.baidu.com/hm.js?1c66fd20ce257b7023e522efb4623ef2');
-  // 百度收录
-  // require.async('//push.zhanzhang.baidu.com/push.js');
 });
