@@ -78,17 +78,27 @@ module.exports = function (config){
   return convert(function*(next){
     var ctx = this;
     var model = ctx.state || {};
-    /** @namespace ctx.routeData.controller */
-    var id = controller2id(util.realpath(ctx.routeData.controller), controller_base);
+    var routeData = ctx.routeData;
 
-    var style_path = id2path(id, style_base, '.css');
-    var script_path = id2path(id, script_base, '.js');
+    if (routeData) {
+      var id = controller2id(
+        util.realpath(routeData.controller),
+        controller_base
+      );
+      var style_path = id2path(id, style_base, '.css');
+      var script_path = id2path(id, script_base, '.js');
 
-    model.nav = id.split(/[/\\]/)[0];
+      model.style = (yield fexists(style_path)) ? style_path : '';
+      model.script = (yield fexists(script_path)) ? script_path : '';
+      model.nav = id.split(/[/\\]/)[0];
+    } else {
+      model.style = '';
+      model.script = '';
+      model.nav = '';
+    }
+
     model.title = model.title || config.title;
     model.version = config.version || version;
-    model.style = (yield fexists(style_path)) ? style_path : '';
-    model.script = (yield fexists(script_path)) ? script_path : '';
 
     // set model
     ctx.state = model;
