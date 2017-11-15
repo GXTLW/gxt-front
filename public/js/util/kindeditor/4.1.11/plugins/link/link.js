@@ -7,22 +7,25 @@
  * @licence http://www.kindsoft.net/license.php
  *******************************************************************************/
 
-KindEditor.plugin('link', function (K){
-  var self = this, name = 'link';
+KindEditor.plugin('link', function(K) {
+  var self = this,
+    name = 'link';
   self.plugin.link = {
-    edit: function (){
+    edit: function() {
       var lang = self.lang(name + '.'),
-        html = '<div style="padding:20px;">' +
-          //url
-          '<div class="ke-dialog-row">' +
-          '<label for="keUrl" style="width:60px;">' + lang.url + '</label>' +
-          '<input class="ke-input-text" type="text" id="keUrl" name="url" value="" style="width:260px;" /></div>' +
-          //type
-          '<div class="ke-dialog-row"">' +
-          '<label for="keType" style="width:60px;">' + lang.linkType + '</label>' +
-          '<select id="keType" name="type"></select>' +
-          '</div>' +
-          '</div>',
+        html = '<div style="padding:20px;">'
+        +
+        //url
+        '<div class="ke-dialog-row">'
+        + '<label for="keUrl" style="width:60px;">' + lang.url + '</label>'
+        + '<input class="ke-input-text" type="text" id="keUrl" name="url" value="" style="width:260px;" /></div>'
+        +
+        //type
+        '<div class="ke-dialog-row"">'
+        + '<label for="keType" style="width:60px;">' + lang.linkType + '</label>'
+        + '<select id="keType" name="type"></select>'
+        + '</div>'
+        + '</div>',
         dialog = self.createDialog({
           name: name,
           width: 450,
@@ -30,7 +33,7 @@ KindEditor.plugin('link', function (K){
           body: html,
           yesBtn: {
             name: self.lang('yes'),
-            click: function (e){
+            click: function(e) {
               var url = K.trim(urlBox.val());
               if (url == 'http://' || K.invalidUrl(url)) {
                 alert(self.lang('invalidUrl'));
@@ -58,7 +61,7 @@ KindEditor.plugin('link', function (K){
       urlBox[0].focus();
       urlBox[0].select();
     },
-    'delete': function (){
+    'delete': function() {
       self.exec('unlink', null);
     }
   };

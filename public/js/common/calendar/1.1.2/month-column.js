@@ -7,7 +7,7 @@ var MonthColumn = BaseColumn.extend({
     template: template,
     process: null,
     model: {
-      getter: function (){
+      getter: function() {
         return createMonthModel(
           this.get('focus'), this.get('process'), this
         );
@@ -16,31 +16,31 @@ var MonthColumn = BaseColumn.extend({
   },
 
   events: {
-    'click [data-role=month]': function (ev){
+    'click [data-role=month]': function(ev) {
       var el = $(ev.target);
       var value = el.data('value');
       this.select(value, el);
     }
   },
 
-  setup: function (){
+  setup: function() {
     MonthColumn.superclass.setup.call(this);
-    this.on('change:range', function (){
+    this.on('change:range', function() {
       this.element.html($(this.compileTemplate()).html());
     });
   },
 
-  prev: function (){
+  prev: function() {
     var focus = this.get('focus').add('months', -1);
     return this._sync(focus);
   },
 
-  next: function (){
+  next: function() {
     var focus = this.get('focus').add('months', 1);
     return this._sync(focus);
   },
 
-  select: function (value, el){
+  select: function(value, el) {
     if (el && el.hasClass('disabled-element')) {
       this.trigger('selectDisable', value, el);
       return value;
@@ -55,14 +55,14 @@ var MonthColumn = BaseColumn.extend({
     return this._sync(focus, el);
   },
 
-  focus: function (focus){
+  focus: function(focus) {
     focus = focus || this.get('focus');
     var selector = '[data-value="' + focus.month() + '"]';
     this.element.find('.focused-element').removeClass('focused-element');
     this.element.find(selector).addClass('focused-element');
   },
 
-  refresh: function (){
+  refresh: function() {
     var focus = this.get('focus').year();
     var year = this.element.find('[data-year]').data('year');
     if (parseInt(year, 10) !== focus) {
@@ -70,7 +70,7 @@ var MonthColumn = BaseColumn.extend({
     }
   },
 
-  inRange: function (date){
+  inRange: function(date) {
     var range = this.get('range');
     if (date.month) {
       return isInRange(date, range);
@@ -82,7 +82,7 @@ var MonthColumn = BaseColumn.extend({
     return isInRange(moment(date, this.get('format')), range);
   },
 
-  _sync: function (focus, el){
+  _sync: function(focus, el) {
     this.set('focus', focus);
     this.refresh();
     this.focus(focus);
@@ -102,7 +102,7 @@ var MONTHS = [
   'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
 ];
 
-function createMonthModel(time, fn, ctx){
+function createMonthModel(time, fn, ctx) {
   var month = time.month();
   var items = [];
 
@@ -133,7 +133,7 @@ function createMonthModel(time, fn, ctx){
   return { current: current, items: list };
 }
 
-function isInRange(d, range){
+function isInRange(d, range) {
   // reset to the first day
   if (range == null) {
     return true;
@@ -175,12 +175,12 @@ function isInRange(d, range){
  </table>
  */
 
-function template(model, options){
+function template(model, options) {
   var _ = options.helpers._;
   var html = '<table class="ui-calendar-month" data-role="month-column">';
-  $.each(model.items, function (i, items){
+  $.each(model.items, function(i, items) {
     html += '<tr class="ui-calendar-month-column" data-year="' + model.current.year + '">';
-    $.each(items, function (i, item){
+    $.each(items, function(i, item) {
       html += '<td data-role="month"';
       if (!item.available) {
         html += ' class="disabled-element"';

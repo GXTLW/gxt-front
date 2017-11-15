@@ -33,7 +33,7 @@ var BaseCalendar = Widget.extend({
     triggerType: 'click',
     output: {
       value: '',
-      getter: function (val){
+      getter: function(val) {
         val = val ? val : this.get('trigger');
         return $(val);
       }
@@ -42,14 +42,14 @@ var BaseCalendar = Widget.extend({
 
     focus: {
       value: '',
-      getter: function (val){
+      getter: function(val) {
         val = val || this._outputTime();
         if (val) {
           return moment(val, this.get('format'));
         }
         return current_date;
       },
-      setter: function (val){
+      setter: function(val) {
         if (!val) {
           return current_date;
         }
@@ -63,11 +63,11 @@ var BaseCalendar = Widget.extend({
 
     range: {
       value: null,
-      setter: function (val){
+      setter: function(val) {
         if ($.isArray(val)) {
           var format = this.get('format');
           var range = [];
-          $.each(val, function (i, date){
+          $.each(val, function(i, date) {
             date = date === null ? null : moment(date, format);
             range.push(date);
           });
@@ -80,7 +80,7 @@ var BaseCalendar = Widget.extend({
     process: null,
 
     align: {
-      getter: function (val){
+      getter: function(val) {
         if (val) return val;
 
         var trigger = $(this.get('trigger'));
@@ -99,7 +99,7 @@ var BaseCalendar = Widget.extend({
     }
   },
 
-  setup: function (){
+  setup: function() {
     BaseCalendar.superclass.setup.call(this);
     this.enable();
 
@@ -112,10 +112,10 @@ var BaseCalendar = Widget.extend({
     var self = this;
 
     // keep cursor focus in trigger
-    this.element.on('mousedown', function (e){
+    this.element.on('mousedown', function(e) {
       if (insaneIE) {
         var trigger = $(self.get('trigger'))[0];
-        trigger.onbeforedeactivate = function (){
+        trigger.onbeforedeactivate = function() {
           window.event.returnValue = false;
           trigger.onbeforedeactivate = null;
         };
@@ -124,7 +124,7 @@ var BaseCalendar = Widget.extend({
     });
   },
 
-  show: function (){
+  show: function() {
     this.trigger('show');
     if (!this.rendered) {
       this._pin();
@@ -134,12 +134,12 @@ var BaseCalendar = Widget.extend({
     this.element.show();
   },
 
-  hide: function (){
+  hide: function() {
     this.trigger('hide');
     this.element.hide();
   },
 
-  _pin: function (align){
+  _pin: function(align) {
     align = align || this.get('align');
     Position.pin({
       element: this.element,
@@ -152,7 +152,7 @@ var BaseCalendar = Widget.extend({
     });
   },
 
-  _outputTime: function (){
+  _outputTime: function() {
     // parse time from output value
     var output = $(this.get('output'));
     var value = output.val() || output.text();
@@ -164,7 +164,7 @@ var BaseCalendar = Widget.extend({
     }
   },
 
-  output: function (value){
+  output: function(value) {
     // send value to output
     var output = this.get('output');
     if (!output.length) {
@@ -182,7 +182,7 @@ var BaseCalendar = Widget.extend({
     }
   },
 
-  enable: function (){
+  enable: function() {
     // enable trigger for show calendar
     var trigger = this.get('trigger');
     if (!trigger) {
@@ -194,15 +194,14 @@ var BaseCalendar = Widget.extend({
       try {
         // remove default style for type date
         $trigger.attr('type', 'text');
-      } catch (e) {
-      }
+      } catch (e) {}
     }
     var event = this.get('triggerType') + '.calendar';
-    $trigger.on(event, function (){
+    $trigger.on(event, function() {
       self.show();
       self._shim.sync();
     });
-    $trigger.on('blur.calendar', function (){
+    $trigger.on('blur.calendar', function() {
       self.hide();
       self._shim.sync();
     });
@@ -212,7 +211,7 @@ var BaseCalendar = Widget.extend({
     }
   },
 
-  disable: function (){
+  disable: function() {
     // disable trigger
     var trigger = this.get('trigger');
     var self = this;
@@ -224,7 +223,7 @@ var BaseCalendar = Widget.extend({
     }
   },
 
-  autohide: function (){
+  autohide: function() {
     // autohide when trigger is not input
     var me = this;
 
@@ -232,7 +231,7 @@ var BaseCalendar = Widget.extend({
     var element = this.element;
 
     // click anywhere except calendar and trigger
-    $('body').on('mousedown.calendar', function (e){
+    $('body').on('mousedown.calendar', function(e) {
       // not click on element
       if (element.find(e.target).length || element[0] === e.target) {
         return;
@@ -244,7 +243,7 @@ var BaseCalendar = Widget.extend({
     });
   },
 
-  destroy: function (){
+  destroy: function() {
     if (this._shim) {
       this._shim.destroy();
     }

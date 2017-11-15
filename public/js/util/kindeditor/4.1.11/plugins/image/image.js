@@ -7,8 +7,9 @@
  * @licence http://www.kindsoft.net/license.php
  *******************************************************************************/
 
-KindEditor.plugin('image', function (K){
-  var self = this, name = 'image',
+KindEditor.plugin('image', function(K) {
+  var self = this,
+    name = 'image',
     allowImageUpload = K.undef(self.allowImageUpload, true),
     allowImageRemote = K.undef(self.allowImageRemote, true),
     formatUploadUrl = K.undef(self.formatUploadUrl, true),
@@ -21,7 +22,7 @@ KindEditor.plugin('image', function (K){
     fillDescAfterUploadImage = K.undef(self.fillDescAfterUploadImage, false),
     lang = self.lang(name + '.');
 
-  self.plugin.imageDialog = function (options){
+  self.plugin.imageDialog = function(options) {
     var imageUrl = options.imageUrl,
       imageWidth = K.undef(options.imageWidth, ''),
       imageHeight = K.undef(options.imageHeight, ''),
@@ -100,7 +101,7 @@ KindEditor.plugin('image', function (K){
         body: html,
         yesBtn: {
           name: self.lang('yes'),
-          click: function (e){
+          click: function(e) {
             // Bugfix: http://code.google.com/p/kindeditor/issues/detail?id=319
             if (dialog.isLoading) {
               return;
@@ -123,7 +124,7 @@ KindEditor.plugin('image', function (K){
               height = heightBox.val(),
               title = titleBox.val(),
               align = '';
-            alignBox.each(function (){
+            alignBox.each(function() {
               if (this.checked) {
                 align = this.value;
                 return false;
@@ -151,7 +152,7 @@ KindEditor.plugin('image', function (K){
             clickFn.call(self, url, title, width, height, 0, align);
           }
         },
-        beforeRemove: function (){
+        beforeRemove: function() {
           viewServerBtn.unbind();
           widthBox.unbind();
           heightBox.unbind();
@@ -174,7 +175,7 @@ KindEditor.plugin('image', function (K){
     if (showRemote && showLocal) {
       tabs = K.tabs({
         src: K('.tabs', div),
-        afterSelect: function (i){}
+        afterSelect: function(i) {}
       });
       tabs.add({
         title: lang.remoteImage,
@@ -197,7 +198,7 @@ KindEditor.plugin('image', function (K){
       form: K('.ke-form', div),
       target: target,
       width: 60,
-      afterUpload: function (data){
+      afterUpload: function(data) {
         dialog.hideLoading();
 
         if (data.error === 0) {
@@ -222,21 +223,21 @@ KindEditor.plugin('image', function (K){
           alert(data.message);
         }
       },
-      afterError: function (html){
+      afterError: function(html) {
         dialog.hideLoading();
         self.errorDialog(html);
       }
     });
-    uploadbutton.fileBox.change(function (e){
+    uploadbutton.fileBox.change(function(e) {
       localUrlBox.val(uploadbutton.fileBox.val());
     });
     if (allowFileManager) {
-      viewServerBtn.click(function (e){
-        self.loadPlugin('filemanager', function (){
+      viewServerBtn.click(function(e) {
+        self.loadPlugin('filemanager', function() {
           self.plugin.filemanagerDialog({
             viewType: 'VIEW',
             dirName: 'image',
-            clickFn: function (url, title){
+            clickFn: function(url, title) {
               if (self.dialogs.length > 1) {
                 K('[name="url"]', div).val(url);
                 if (self.afterSelectFile) {
@@ -252,34 +253,35 @@ KindEditor.plugin('image', function (K){
       viewServerBtn.hide();
     }
 
-    var originalWidth = 0, originalHeight = 0;
+    var originalWidth = 0,
+      originalHeight = 0;
 
-    function setSize(width, height){
+    function setSize(width, height) {
       widthBox.val(width);
       heightBox.val(height);
       originalWidth = width;
       originalHeight = height;
     }
 
-    refreshBtn.click(function (e){
+    refreshBtn.click(function(e) {
       var tempImg = K('<img src="' + urlBox.val() + '" />', document).css({
         position: 'absolute',
         visibility: 'hidden',
         top: 0,
         left: '-1000px'
       });
-      tempImg.bind('load', function (){
+      tempImg.bind('load', function() {
         setSize(tempImg.width(), tempImg.height());
         tempImg.remove();
       });
       K(document.body).append(tempImg);
     });
-    widthBox.change(function (e){
+    widthBox.change(function(e) {
       if (originalWidth > 0) {
         heightBox.val(Math.round(originalHeight / originalWidth * parseInt(this.value, 10)));
       }
     });
-    heightBox.change(function (e){
+    heightBox.change(function(e) {
       if (originalHeight > 0) {
         widthBox.val(Math.round(originalWidth / originalHeight * parseInt(this.value, 10)));
       }
@@ -287,7 +289,7 @@ KindEditor.plugin('image', function (K){
     urlBox.val(options.imageUrl);
     setSize(options.imageWidth, options.imageHeight);
     titleBox.val(options.imageTitle);
-    alignBox.each(function (){
+    alignBox.each(function() {
       if (this.value === options.imageAlign) {
         this.checked = true;
         return false;
@@ -300,7 +302,7 @@ KindEditor.plugin('image', function (K){
     return dialog;
   };
   self.plugin.image = {
-    edit: function (){
+    edit: function() {
       var img = self.plugin.getSelectedImage();
       self.plugin.imageDialog({
         imageUrl: img ? img.attr('data-ke-src') : 'http://',
@@ -311,7 +313,7 @@ KindEditor.plugin('image', function (K){
         showRemote: allowImageRemote,
         showLocal: allowImageUpload,
         tabIndex: img ? 0 : imageTabIndex,
-        clickFn: function (url, title, width, height, border, align){
+        clickFn: function(url, title, width, height, border, align) {
           if (img) {
             img.attr('src', url);
             img.attr('data-ke-src', url);
@@ -324,13 +326,13 @@ KindEditor.plugin('image', function (K){
             self.exec('insertimage', url, title, width, height, border, align);
           }
           // Bugfix: [Firefox] 上传图片后，总是出现正在加载的样式，需要延迟执行hideDialog
-          setTimeout(function (){
+          setTimeout(function() {
             self.hideDialog().focus();
           }, 0);
         }
       });
     },
-    'delete': function (){
+    'delete': function() {
       var target = self.plugin.getSelectedImage();
 
       if (target.parent().name == 'a') {

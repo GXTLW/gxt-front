@@ -5,7 +5,7 @@
 'use strict';
 
 module.exports = {
-  index: ctx=>{
+  index: ctx => {
     ctx.state.title = '人事代理';
 
     ctx.body = ctx.render('apps/business/proxy');

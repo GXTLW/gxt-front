@@ -8,7 +8,7 @@ var Popup = Overlay.extend({
     trigger: {
       value: null,
       // required
-      getter: function (val){
+      getter: function(val) {
         return $(val);
       }
     },
@@ -19,7 +19,7 @@ var Popup = Overlay.extend({
     // 触发事件委托的对象
     delegateNode: {
       value: null,
-      getter: function (val){
+      getter: function(val) {
         return $(val);
       }
     },
@@ -30,7 +30,7 @@ var Popup = Overlay.extend({
         baseXY: [0, '100%'],
         selfXY: [0, 0]
       },
-      setter: function (val){
+      setter: function(val) {
         if (!val) {
           return;
         }
@@ -43,7 +43,7 @@ var Popup = Overlay.extend({
         }
         return val;
       },
-      getter: function (val){
+      getter: function(val) {
         // 若未指定基准元素，则按照当前的触发元素进行定位
         return $.extend({}, val, this._specifiedBaseElement ? {} : {
           baseElement: this.activeTrigger
@@ -66,7 +66,7 @@ var Popup = Overlay.extend({
 
   },
 
-  setup: function (){
+  setup: function() {
     Popup.superclass.setup.call(this);
     this._bindTrigger();
     this._blurHide(this.get('trigger'));
@@ -79,14 +79,14 @@ var Popup = Overlay.extend({
     // 这时需要重新绑定
     var that = this;
     if (this.get('delegateNode')) {
-      this.before('show', function (){
+      this.before('show', function() {
         that._relativeElements = that.get('trigger');
         that._relativeElements.push(that.element);
       });
     }
   },
 
-  render: function (){
+  render: function() {
     Popup.superclass.render.call(this);
 
     // 通过 template 生成的元素默认也应该是不可见的
@@ -95,7 +95,7 @@ var Popup = Overlay.extend({
     return this;
   },
 
-  show: function (){
+  show: function() {
     if (this.get('disabled')) {
       return;
     }
@@ -104,14 +104,14 @@ var Popup = Overlay.extend({
 
   // triggerShimSync 为 true 时
   // 表示什么都不做，只是触发 hide 的 before/after 绑定方法
-  hide: function (triggerShimSync){
+  hide: function(triggerShimSync) {
     if (!triggerShimSync) {
       return Popup.superclass.hide.call(this);
     }
     return this;
   },
 
-  _bindTrigger: function (){
+  _bindTrigger: function() {
     var triggerType = this.get('triggerType');
 
     if (triggerType === 'click') {
@@ -124,10 +124,10 @@ var Popup = Overlay.extend({
     }
   },
 
-  _bindClick: function (){
+  _bindClick: function() {
     var that = this;
 
-    bindEvent('click', this.get('trigger'), function (e){
+    bindEvent('click', this.get('trigger'), function(e) {
       // this._active 这个变量表明了当前触发元素是激活状态
       if (this._active === true) {
         that.hide();
@@ -139,17 +139,17 @@ var Popup = Overlay.extend({
     }, this.get('delegateNode'), this);
 
     // 隐藏前清空激活状态
-    this.before('hide', function (){
+    this.before('hide', function() {
       makeActive();
     });
 
     // 处理所有trigger的激活状态
     // 若 trigger 为空，相当于清除所有元素的激活状态
-    function makeActive(trigger){
+    function makeActive(trigger) {
       if (that.get('disabled')) {
         return;
       }
-      that.get('trigger').each(function (i, item){
+      that.get('trigger').each(function(i, item) {
         if (trigger == item) {
           item._active = true;
           // 标识当前点击的元素
@@ -161,18 +161,18 @@ var Popup = Overlay.extend({
     }
   },
 
-  _bindFocus: function (){
+  _bindFocus: function() {
     var that = this;
 
-    bindEvent('focus', this.get('trigger'), function (){
+    bindEvent('focus', this.get('trigger'), function() {
       // 标识当前点击的元素
       that.activeTrigger = $(this);
       that.show();
     }, this.get('delegateNode'), this);
 
-    bindEvent('blur', this.get('trigger'), function (){
+    bindEvent('blur', this.get('trigger'), function() {
       var blurTrigger = this;
-      setTimeout(function (){
+      setTimeout(function() {
         // 当 blur 的触发元素和当前的 activeTrigger 一样时才能干掉
         // 修复 https://github.com/aralejs/popup/issues/27
         if (!that._downOnElement && that.activeTrigger[0] === blurTrigger) {
@@ -183,12 +183,12 @@ var Popup = Overlay.extend({
     }, this.get('delegateNode'), this);
 
     // 为了当input blur时能够选择和操作弹出层上的内容
-    this.delegateEvents("mousedown", function (e){
+    this.delegateEvents("mousedown", function(e) {
       this._downOnElement = true;
     });
   },
 
-  _bindHover: function (){
+  _bindHover: function() {
     var trigger = this.get('trigger');
     var delegateNode = this.get('delegateNode');
     var delay = this.get('delay');
@@ -203,13 +203,13 @@ var Popup = Overlay.extend({
       return;
     }
 
-    bindEvent('mouseenter', trigger, function (){
+    bindEvent('mouseenter', trigger, function() {
       clearTimeout(hideTimer);
       hideTimer = null;
 
       // 标识当前点击的元素
       that.activeTrigger = $(this);
-      showTimer = setTimeout(function (){
+      showTimer = setTimeout(function() {
         that.show();
       }, delay);
     }, delegateNode, this);
@@ -217,44 +217,44 @@ var Popup = Overlay.extend({
     bindEvent('mouseleave', trigger, leaveHandler, delegateNode, this);
 
     // 鼠标在悬浮层上时不消失
-    this.delegateEvents("mouseenter", function (){
+    this.delegateEvents("mouseenter", function() {
       clearTimeout(hideTimer);
     });
     this.delegateEvents("mouseleave", leaveHandler);
 
-    this.element.on('mouseleave', 'select', function (e){
+    this.element.on('mouseleave', 'select', function(e) {
       e.stopPropagation();
     });
 
-    function leaveHandler(e){
+    function leaveHandler(e) {
       clearTimeout(showTimer);
       showTimer = null;
 
       if (that.get('visible')) {
-        hideTimer = setTimeout(function (){
+        hideTimer = setTimeout(function() {
           that.hide();
         }, delay);
       }
     }
   },
 
-  _bindTooltip: function (){
+  _bindTooltip: function() {
     var trigger = this.get('trigger');
     var delegateNode = this.get('delegateNode');
     var that = this;
 
-    bindEvent('mouseenter', trigger, function (){
+    bindEvent('mouseenter', trigger, function() {
       // 标识当前点击的元素
       that.activeTrigger = $(this);
       that.show();
     }, delegateNode, this);
 
-    bindEvent('mouseleave', trigger, function (){
+    bindEvent('mouseleave', trigger, function() {
       that.hide();
     }, delegateNode, this);
   },
 
-  _onRenderVisible: function (val, originVal){
+  _onRenderVisible: function(val, originVal) {
     // originVal 为 undefined 时不继续执行
     if (val === !!originVal) {
       return;
@@ -271,14 +271,14 @@ var Popup = Overlay.extend({
     // 修复 ie6 下 shim 未隐藏的问题
     // visible 只有从 true 变为 false 时，才调用这个 hide
     var that = this;
-    var hideComplete = val ?
-      function (){
+    var hideComplete = val
+      ? function() {
         that.trigger('animated');
-      } : function (){
-      // 参数 true 代表只是为了触发 shim 方法
-      that.hide(true);
-      that.trigger('animated');
-    };
+      } : function() {
+        // 参数 true 代表只是为了触发 shim 方法
+        that.hide(true);
+        that.trigger('animated');
+      };
 
     if (fade || slide) {
       this.element.stop(true, true).animate(animConfig, this.get('duration'), hideComplete).css({
@@ -294,11 +294,12 @@ var Popup = Overlay.extend({
 module.exports = Popup;
 
 // 一个绑定事件的简单封装
-function bindEvent(type, element, fn, delegateNode, context){
+function bindEvent(type, element, fn, delegateNode, context) {
   var hasDelegateNode = delegateNode && delegateNode[0];
 
   context.delegateEvents(
-    hasDelegateNode ? delegateNode : element, hasDelegateNode ? type + " " + element.selector : type, function (e){
+    hasDelegateNode ? delegateNode : element, hasDelegateNode ? type + " " + element.selector : type,
+    function(e) {
       fn.call(e.currentTarget, e);
     });
 }

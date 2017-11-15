@@ -33,7 +33,7 @@ var Calendar = BaseCalendar.extend({
   },
 
   events: {
-    'click [data-role=current-month]': function (ev){
+    'click [data-role=current-month]': function(ev) {
       var value = this.get('focus');
 
       if (this.months.inRange(value)) {
@@ -46,32 +46,32 @@ var Calendar = BaseCalendar.extend({
         this.output(value);
       }
     },
-    'click [data-role=current-year]': function (ev){
+    'click [data-role=current-year]': function(ev) {
       if (this.get('mode') === 'years') {
         this.renderContainer('months');
       } else {
         this.renderContainer('years');
       }
     },
-    'click [data-role=prev-year]': function (ev){
+    'click [data-role=prev-year]': function(ev) {
       var focus = this.years.prev();
       this.months.select(focus);
     },
-    'click [data-role=next-year]': function (ev){
+    'click [data-role=next-year]': function(ev) {
       var focus = this.years.next();
       this.months.select(focus);
     },
-    'click [data-role=prev-month]': function (ev){
+    'click [data-role=prev-month]': function(ev) {
       var focus = this.months.prev();
       this.years.select(focus);
     },
-    'click [data-role=next-month]': function (ev){
+    'click [data-role=next-month]': function(ev) {
       var focus = this.months.next();
       this.years.select(focus);
     }
   },
 
-  setup: function (){
+  setup: function() {
     Calendar.superclass.setup.call(this);
     this.renderPannel();
 
@@ -89,7 +89,7 @@ var Calendar = BaseCalendar.extend({
 
     var self = this;
 
-    this.months.on('select', function (value, el){
+    this.months.on('select', function(value, el) {
       var focus = self.get('focus');
       focus.month(value);
       self.set('focus', focus);
@@ -104,7 +104,7 @@ var Calendar = BaseCalendar.extend({
       }
     });
 
-    this.years.on('select', function (value, el){
+    this.years.on('select', function(value, el) {
       var focus = self.get('focus');
 
       focus.year(value);
@@ -123,7 +123,7 @@ var Calendar = BaseCalendar.extend({
     this.renderContainer('months');
   },
 
-  renderContainer: function (mode, focus){
+  renderContainer: function(mode, focus) {
     this.set('mode', mode);
 
     focus = focus || this.get('focus');
@@ -142,7 +142,7 @@ var Calendar = BaseCalendar.extend({
 
   },
 
-  renderPannel: function (){
+  renderPannel: function() {
     var focus = this.get('focus');
     var monthPannel = this.element.find('[data-role=current-month]');
     var yearPannel = this.element.find('[data-role=current-year]');
@@ -159,13 +159,13 @@ var Calendar = BaseCalendar.extend({
     yearPannel.text(focus.year());
   },
 
-  focus: function (date){
+  focus: function(date) {
     date = moment(date, this.get('format'));
     this.months.focus(date);
     this.years.focus(date);
   },
 
-  range: function (range){
+  range: function(range) {
     // change range dynamically
     this.set('range', range);
     this.months.set('range', range);
@@ -174,7 +174,7 @@ var Calendar = BaseCalendar.extend({
     this.renderPannel();
   },
 
-  show: function (){
+  show: function() {
     var value = this._outputTime();
     if (value) {
       this.months.select(value);
@@ -182,7 +182,7 @@ var Calendar = BaseCalendar.extend({
     Calendar.superclass.show.call(this);
   },
 
-  destroy: function (){
+  destroy: function() {
     this.months.destroy();
     this.years.destroy();
     Calendar.superclass.destroy.call(this);

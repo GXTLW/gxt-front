@@ -7,20 +7,25 @@
  * @licence http://www.kindsoft.net/license.php
  *******************************************************************************/
 
-KindEditor.plugin('emoticons', function (K){
-  var self = this, name = 'emoticons',
+KindEditor.plugin('emoticons', function(K) {
+  var self = this,
+    name = 'emoticons',
     path = (self.emoticonsPath || self.pluginsPath + 'emoticons/images/'),
     allowPreview = self.allowPreviewEmoticons === undefined ? true : self.allowPreviewEmoticons,
     currentPageNum = 1;
-  self.clickToolbar(name, function (){
-    var rows = 5, cols = 9, total = 135, startNum = 0,
-      cells = rows * cols, pages = Math.ceil(total / cells),
+  self.clickToolbar(name, function() {
+    var rows = 5,
+      cols = 9,
+      total = 135,
+      startNum = 0,
+      cells = rows * cols,
+      pages = Math.ceil(total / cells),
       colsHalf = Math.floor(cols / 2),
       wrapperDiv = K('<div class="ke-plugin-emoticons"></div>'),
       elements = [],
       menu = self.createMenu({
         name: name,
-        beforeRemove: function (){
+        beforeRemove: function() {
           removeEvent();
         }
       });
@@ -32,9 +37,10 @@ KindEditor.plugin('emoticons', function (K){
       wrapperDiv.append(previewDiv);
       previewDiv.append(previewImg);
     }
-    function bindCellEvent(cell, j, num){
+
+    function bindCellEvent(cell, j, num) {
       if (previewDiv) {
-        cell.mouseover(function (){
+        cell.mouseover(function() {
           if (j > colsHalf) {
             previewDiv.css('left', 0);
             previewDiv.css('right', '');
@@ -46,27 +52,27 @@ KindEditor.plugin('emoticons', function (K){
           K(this).addClass('ke-on');
         });
       } else {
-        cell.mouseover(function (){
+        cell.mouseover(function() {
           K(this).addClass('ke-on');
         });
       }
-      cell.mouseout(function (){
+      cell.mouseout(function() {
         K(this).removeClass('ke-on');
       });
-      cell.click(function (e){
+      cell.click(function(e) {
         self.insertHtml('<img src="' + path + num + '.gif" border="0" alt="" />').hideMenu().focus();
         e.stop();
       });
     }
 
-    function createEmoticonsTable(pageNum, parentDiv){
+    function createEmoticonsTable(pageNum, parentDiv) {
       var table = document.createElement('table');
       parentDiv.append(table);
       if (previewDiv) {
-        K(table).mouseover(function (){
+        K(table).mouseover(function() {
           previewDiv.show('block');
         });
-        K(table).mouseout(function (){
+        K(table).mouseout(function() {
           previewDiv.hide();
         });
         elements.push(K(table));
@@ -95,16 +101,16 @@ KindEditor.plugin('emoticons', function (K){
 
     var table = createEmoticonsTable(currentPageNum, wrapperDiv);
 
-    function removeEvent(){
-      K.each(elements, function (){
+    function removeEvent() {
+      K.each(elements, function() {
         this.unbind();
       });
     }
 
     var pageDiv;
 
-    function bindPageEvent(el, pageNum){
-      el.click(function (e){
+    function bindPageEvent(el, pageNum) {
+      el.click(function(e) {
         removeEvent();
         table.parentNode.removeChild(table);
         pageDiv.remove();
@@ -115,7 +121,7 @@ KindEditor.plugin('emoticons', function (K){
       });
     }
 
-    function createPageTable(currentPageNum){
+    function createPageTable(currentPageNum) {
       pageDiv = K('<div class="ke-page"></div>');
       wrapperDiv.append(pageDiv);
       for (var pageNum = 1; pageNum <= pages; pageNum++) {

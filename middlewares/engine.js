@@ -20,7 +20,7 @@ const defs = {
  * @param object
  * @returns {Object}
  */
-function clone(object){
+function clone(object) {
   return Object.create(object);
 }
 
@@ -30,7 +30,7 @@ function clone(object){
  * @param extname
  * @returns {*}
  */
-function addExt(view, extname){
+function addExt(view, extname) {
   extname = '.' + extname;
 
   return view.slice(-5).toLowerCase() === extname ? view : view + extname;
@@ -42,7 +42,7 @@ function addExt(view, extname){
  * @param defs
  * @returns {*}
  */
-function assert(value, defs){
+function assert(value, defs) {
   return value && util.string(value) ? value : defs;
 }
 
@@ -51,7 +51,7 @@ function assert(value, defs){
  * @param app
  * @param options
  */
-module.exports = function (app, options){
+module.exports = function(app, options) {
   if (app.context.render) return;
 
   options = util.extend(true, clone(defs), options);
@@ -63,7 +63,7 @@ module.exports = function (app, options){
   const engine = nunjucks.configure(options.root, clone(options));
 
   // render function
-  app.context.render = function (view, layout){
+  app.context.render = function(view, layout) {
     // assert view
     if (!view || !util.string(view)) {
       throw new TypeError('The path of view must be set.');
@@ -78,7 +78,6 @@ module.exports = function (app, options){
 
     // set layout and render view
     if (layout === false) {
-
       return engine.render(view, model);
     } else {
       model.__BODY__ = view;

@@ -16,7 +16,7 @@ module.exports = {
    * @param str
    * @returns {Number}
    */
-  utfLength: function (str){
+  utfLength: function(str) {
     return str.replace(/[\u4e00-\u9fa5]/mg, 'aa').length;
   },
   /**
@@ -25,7 +25,7 @@ module.exports = {
    * @param format
    * @returns {XML|string|void}
    */
-  dateFormat: function (date, format){
+  dateFormat: function(date, format) {
     // 参数错误
     if (!date instanceof Date) {
       throw new TypeError('Param date must be a Date');
@@ -43,7 +43,7 @@ module.exports = {
       'S': date.getMilliseconds() // 毫秒
     };
 
-    format = format.replace(/([yMdhmsqS])+/g, function (all, t){
+    format = format.replace(/([yMdhmsqS])+/g, function(all, t) {
       var v = map[t];
 
       if (v !== undefined) {
@@ -68,7 +68,7 @@ module.exports = {
    * @param end
    * @returns {*}
    */
-  dateFrom: function (start, end){
+  dateFrom: function(start, end) {
     var from, interval;
     var month, week, day, hour, minute;
 

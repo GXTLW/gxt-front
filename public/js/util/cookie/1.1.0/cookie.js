@@ -26,13 +26,12 @@ var encode = encodeURIComponent;
  *     if the cookie doesn't exist. If the converter is specified, returns
  *     the value returned from the converter.
  */
-Cookie.get = function (name, options){
+Cookie.get = function(name, options) {
   validateCookieName(name);
 
   if (typeof options === 'function') {
     options = { converter: options };
-  }
-  else {
+  } else {
     options = options || {};
   }
 
@@ -55,7 +54,7 @@ Cookie.get = function (name, options){
  *
  * @return {string} The created cookie string.
  */
-Cookie.set = function (name, value, options){
+Cookie.set = function(name, value, options) {
   validateCookieName(name);
 
   options = options || {};
@@ -111,13 +110,13 @@ Cookie.set = function (name, value, options){
  *
  * @return {string} The created cookie string.
  */
-Cookie.remove = function (name, options){
+Cookie.remove = function(name, options) {
   options = options || {};
   options['expires'] = new Date(0);
   return this.set(name, '', options);
 };
 
-function parseCookieString(text, shouldDecode){
+function parseCookieString(text, shouldDecode) {
   var cookies = {};
 
   if (isString(text) && text.length > 0) {
@@ -160,20 +159,20 @@ function parseCookieString(text, shouldDecode){
 
 // Helpers
 
-function isString(o){
+function isString(o) {
   return typeof o === 'string';
 }
 
-function isNonEmptyString(s){
+function isNonEmptyString(s) {
   return isString(s) && s !== '';
 }
 
-function validateCookieName(name){
+function validateCookieName(name) {
   if (!isNonEmptyString(name)) {
     throw new TypeError('Cookie name must be a non-empty string');
   }
 }
 
-function same(s){
+function same(s) {
   return s;
 }

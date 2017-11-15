@@ -10,7 +10,7 @@ var Accordion = Switchable.extend({
 
     autoplay: false
   },
-  switchTo: function (toIndex){
+  switchTo: function(toIndex) {
     if (this.get('multiple')) {
       this._switchTo(toIndex, toIndex);
     } else {
@@ -18,7 +18,7 @@ var Accordion = Switchable.extend({
     }
   },
 
-  _switchTrigger: function (toIndex, fromIndex){
+  _switchTrigger: function(toIndex, fromIndex) {
     if (this.get('multiple')) {
       this.get('triggers').eq(toIndex).toggleClass(this.get('activeTriggerClass'));
     } else {
@@ -26,7 +26,7 @@ var Accordion = Switchable.extend({
     }
   },
 
-  _switchPanel: function (panelInfo){
+  _switchPanel: function(panelInfo) {
     if (this.get('multiple')) {
       panelInfo.toPanels.toggle();
     } else {

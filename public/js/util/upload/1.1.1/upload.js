@@ -1,7 +1,7 @@
 var $ = require('jquery');
 var iframeCount = 0;
 
-function Uploader(options){
+function Uploader(options) {
   if (!(this instanceof Uploader)) {
     return new Uploader(options);
   }
@@ -45,7 +45,7 @@ function Uploader(options){
 
 // initialize
 // create input, form, iframe
-Uploader.prototype.setup = function (){
+Uploader.prototype.setup = function() {
   this.form = $(
     '<form method="post" enctype="multipart/form-data"'
     + 'target="" action="' + this.settings.action + '" />'
@@ -101,7 +101,7 @@ Uploader.prototype.setup = function (){
 };
 
 // reset position
-Uploader.prototype.position = function (){
+Uploader.prototype.position = function() {
   var $trigger = $(this.settings.trigger);
 
   this.form.css({
@@ -113,26 +113,26 @@ Uploader.prototype.position = function (){
 };
 
 // bind events
-Uploader.prototype.bind = function (){
+Uploader.prototype.bind = function() {
   var self = this;
   var $trigger = $(self.settings.trigger);
 
-  $trigger.mouseenter(function (){
+  $trigger.mouseenter(function() {
     self.position();
   });
 
   self.bindInput();
 };
 
-Uploader.prototype.bindInput = function (){
+Uploader.prototype.bindInput = function() {
   var self = this;
 
-  self.input.change(function (e){
+  self.input.change(function(e) {
     // ie9 don't support FileList Object
     // http://stackoverflow.com/questions/12830058/ie8-input-type-file-get-files
     self._files = this.files || [
-        {
-          name: e.target.value
+      {
+        name: e.target.value
         }
       ];
 
@@ -148,7 +148,7 @@ Uploader.prototype.bindInput = function (){
 
 // handle submit event
 // prepare for submiting form
-Uploader.prototype.submit = function (){
+Uploader.prototype.submit = function() {
   var self = this;
 
   if (window.FormData && self._files) {
@@ -163,11 +163,11 @@ Uploader.prototype.submit = function (){
       // fix the progress target file
       var files = self._files;
 
-      optionXhr = function (){
+      optionXhr = function() {
         var xhr = $.ajaxSettings.xhr();
 
         if (xhr.upload) {
-          xhr.upload.addEventListener('progress', function (event){
+          xhr.upload.addEventListener('progress', function(event) {
             var percent = 0;
             var position = event.loaded || event.position;
             /*event.position is deprecated*/
@@ -195,7 +195,7 @@ Uploader.prototype.submit = function (){
       context: this,
       success: self.settings.success,
       error: self.settings.error,
-      complete: function (){
+      complete: function() {
         self.refreshInput();
 
         if ($.isFunction(self.settings.complete)) {
@@ -211,7 +211,7 @@ Uploader.prototype.submit = function (){
     self.form.attr('target', self.iframe.attr('name'));
     $('body').append(self.iframe);
 
-    self.iframe.one('load', function (){
+    self.iframe.one('load', function() {
       // https://github.com/blueimp/jQuery-File-Upload/blob/9.5.6/js/jquery.iframe-transport.js#L102
       // Fix for IE endless progress bar activity bug
       // (happens on form submits to iframe targets):
@@ -246,7 +246,7 @@ Uploader.prototype.submit = function (){
   return this;
 };
 
-Uploader.prototype.refreshInput = function (){
+Uploader.prototype.refreshInput = function() {
   //replace the input element, or the same file can not to be uploaded
   var newInput = this.input.clone();
 
@@ -259,18 +259,18 @@ Uploader.prototype.refreshInput = function (){
 
 // handle change event
 // when value in file input changed
-Uploader.prototype.change = function (callback){
+Uploader.prototype.change = function(callback) {
   this.settings.change = callback;
 
   return this;
 };
 
 // handle when upload success, error and complete
-$.each(['success', 'error', 'complete'], function (i, method){
-  Uploader.prototype[method] = function (callback){
+$.each(['success', 'error', 'complete'], function(i, method) {
+  Uploader.prototype[method] = function(callback) {
     var me = this;
 
-    this.settings[method] = function (response){
+    this.settings[method] = function(response) {
       me.refreshInput();
 
       if ($.isFunction(callback)) {
@@ -283,38 +283,39 @@ $.each(['success', 'error', 'complete'], function (i, method){
 });
 
 // enable
-Uploader.prototype.enable = function (){
+Uploader.prototype.enable = function() {
   this.input.prop('disabled', false);
   this.input.css('cursor', 'pointer');
 };
 
 // disable
-Uploader.prototype.disable = function (){
+Uploader.prototype.disable = function() {
   this.input.prop('disabled', true);
   this.input.css('cursor', 'not-allowed');
 };
 
 // hide
-Uploader.prototype.show = function (){
+Uploader.prototype.show = function() {
   this.form.show();
 };
 
 // hide
-Uploader.prototype.hide = function (){
+Uploader.prototype.hide = function() {
   this.form.hide();
 };
 
 /**
  * Helpers
  */
-function isString(val){
+function isString(val) {
   return Object.prototype.toString.call(val) === '[object String]';
 }
 
-function createInputs(data){
+function createInputs(data) {
   if (!data) return [];
 
-  var inputs = [], i;
+  var inputs = [],
+    i;
 
   for (var name in data) {
     i = document.createElement('input');
@@ -327,13 +328,13 @@ function createInputs(data){
   return inputs;
 }
 
-function parse(str){
+function parse(str) {
   if (!str) return null;
 
   var ret = {};
   var pairs = str.split('&');
 
-  var unescape = function (s){
+  var unescape = function(s) {
     return decodeURIComponent(s.replace(/\+/g, ' '));
   };
 
@@ -347,7 +348,7 @@ function parse(str){
   return ret;
 }
 
-function findzIndex($node){
+function findzIndex($node) {
   var zIndex = 0;
   var parents = $node.parentsUntil('body');
 
@@ -362,7 +363,7 @@ function findzIndex($node){
   return zIndex;
 }
 
-function newIframe(){
+function newIframe() {
   var iframeName = 'iframe-uploader-' + iframeCount;
   var iframe = $('<iframe name="' + iframeName + '" />').hide();
 
@@ -371,7 +372,7 @@ function newIframe(){
   return iframe;
 }
 
-function MultipleUploader(options){
+function MultipleUploader(options) {
   if (!(this instanceof MultipleUploader)) {
     return new MultipleUploader(options);
   }
@@ -383,7 +384,7 @@ function MultipleUploader(options){
   var uploaders = [];
   var $trigger = $(options.trigger);
 
-  $trigger.each(function (i, item){
+  $trigger.each(function(i, item) {
     options.trigger = item;
     uploaders.push(new Uploader(options));
   });
@@ -394,9 +395,9 @@ function MultipleUploader(options){
 // add prototype
 $.each(
   ['submit', 'change', 'success', 'error', 'complete', 'enable', 'disable', 'position', 'show', 'hide'],
-  function (i, method){
-    MultipleUploader.prototype[method] = function (){
-      $.each(this._uploaders, function (i, item){
+  function(i, method) {
+    MultipleUploader.prototype[method] = function() {
+      $.each(this._uploaders, function(i, item) {
         item[method]();
       });
 

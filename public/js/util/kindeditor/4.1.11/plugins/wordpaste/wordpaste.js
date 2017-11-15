@@ -7,14 +7,15 @@
  * @licence http://www.kindsoft.net/license.php
  *******************************************************************************/
 
-KindEditor.plugin('wordpaste', function (K){
-  var self = this, name = 'wordpaste';
-  self.clickToolbar(name, function (){
+KindEditor.plugin('wordpaste', function(K) {
+  var self = this,
+    name = 'wordpaste';
+  self.clickToolbar(name, function() {
     var lang = self.lang(name + '.'),
-      html = '<div style="padding:10px 20px;">' +
-        '<div style="margin-bottom:10px;">' + lang.comment + '</div>' +
-        '<iframe class="ke-textarea" frameborder="0" style="width:408px;height:260px;"></iframe>' +
-        '</div>',
+      html = '<div style="padding:10px 20px;">'
+      + '<div style="margin-bottom:10px;">' + lang.comment + '</div>'
+      + '<iframe class="ke-textarea" frameborder="0" style="width:408px;height:260px;"></iframe>'
+      + '</div>',
       dialog = self.createDialog({
         name: name,
         width: 450,
@@ -22,7 +23,7 @@ KindEditor.plugin('wordpaste', function (K){
         body: html,
         yesBtn: {
           name: self.lang('yes'),
-          click: function (e){
+          click: function(e) {
             var str = doc.body.innerHTML;
             str = K.clearMsWord(str, self.filterMode ? self.htmlTags : K.options.htmlTags);
             self.insertHtml(str).hideDialog().focus();

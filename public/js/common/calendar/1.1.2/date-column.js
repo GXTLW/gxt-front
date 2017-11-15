@@ -8,11 +8,11 @@ var DateColumn = BaseColumn.extend({
     template: template,
     range: {
       value: null,
-      setter: function (val){
+      setter: function(val) {
         if ($.isArray(val)) {
           var format = this.get('format');
           var range = [];
-          $.each(val, function (i, date){
+          $.each(val, function(i, date) {
             date = date === null ? null : moment(date, format);
             range.push(date);
           });
@@ -23,7 +23,7 @@ var DateColumn = BaseColumn.extend({
     },
     process: null,
     model: {
-      getter: function (){
+      getter: function() {
         var date = createDateModel(
           this.get('focus'),
           this.get('startDay'),
@@ -38,26 +38,26 @@ var DateColumn = BaseColumn.extend({
   },
 
   events: {
-    'click [data-role=date]': function (ev){
+    'click [data-role=date]': function(ev) {
       var el = $(ev.target);
       var value = el.data('value');
       this.select(value, el);
     }
   },
 
-  prev: function (){
+  prev: function() {
     var prev = this.get('focus').format(this.get('format'));
     var focus = this.get('focus').add('days', -1);
     return this._sync(focus, prev);
   },
 
-  next: function (){
+  next: function() {
     var prev = this.get('focus').format(this.get('format'));
     var focus = this.get('focus').add('days', 1);
     return this._sync(focus, prev);
   },
 
-  select: function (value, el){
+  select: function(value, el) {
     if (el && el.hasClass('disabled-element')) {
       this.trigger('selectDisable', value, el);
       return value;
@@ -67,21 +67,21 @@ var DateColumn = BaseColumn.extend({
     return this._sync(this.get('focus'), prev, el);
   },
 
-  focus: function (focus){
+  focus: function(focus) {
     focus = focus || this.get('focus');
     var selector = '[data-value="' + focus.format(this.get('format')) + '"]';
     this.element.find('.focused-element').removeClass('focused-element');
     this.element.find(selector).addClass('focused-element');
   },
 
-  inRange: function (date){
+  inRange: function(date) {
     if (!moment.isMoment(date)) {
       date = moment(date, this.get('format'));
     }
     return BaseColumn.isInRange(date, this.get('range'));
   },
 
-  _sync: function (focus, prev, el){
+  _sync: function(focus, prev, el) {
     this.set('focus', focus);
     if (focus.format('YYYY-MM') !== prev) {
       this.refresh();
@@ -103,7 +103,7 @@ var DAYS = [
   'thursday', 'friday', 'saturday'
 ];
 
-function parseStartDay(startDay){
+function parseStartDay(startDay) {
   startDay = (startDay || 0).toString().toLowerCase();
 
   if ($.isNumeric(startDay)) {
@@ -122,7 +122,7 @@ function parseStartDay(startDay){
 
 var DAY_LABELS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
-function createDayModel(startDay){
+function createDayModel(startDay) {
   // Translate startDay to number. 0 is Sunday, 6 is Saturday.
   startDay = parseStartDay(startDay);
   var items = [];
@@ -140,11 +140,12 @@ function createDayModel(startDay){
   return { current: current, items: items };
 }
 
-function createDateModel(current, startDay, range, fn, format){
-  var items = [], delta, d, daysInMonth;
+function createDateModel(current, startDay, range, fn, format) {
+  var items = [],
+    delta, d, daysInMonth;
   startDay = parseStartDay(startDay);
 
-  var pushData = function (d, className){
+  var pushData = function(d, className) {
     var item = {
       value: d.format(format),
       label: d.date(),
@@ -225,7 +226,7 @@ function createDateModel(current, startDay, range, fn, format){
  </table>
  */
 
-function template(model, options){
+function template(model, options) {
   // keep the same API as handlebars
 
   var _ = options.helpers._;
@@ -233,7 +234,7 @@ function template(model, options){
 
   // day column
   html += '<tr class="ui-calendar-day-column">';
-  $.each(model.day.items, function (i, item){
+  $.each(model.day.items, function(i, item) {
     html += '<th class="ui-calendar-day ui-calendar-day-' + item.value + '" ';
     html += 'data-role="day" data-value="' + item.value + '">';
     html += _(item.label);
@@ -242,9 +243,9 @@ function template(model, options){
   html += '</tr>';
 
   // date column
-  $.each(model.date.items, function (i, items){
+  $.each(model.date.items, function(i, items) {
     html += '<tr class="ui-calendar-date-column">'
-    $.each(items, function (i, item){
+    $.each(items, function(i, item) {
       var className = [
         'ui-calendar-day-' + item.day,
         item.className || ''

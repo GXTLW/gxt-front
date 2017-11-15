@@ -29,7 +29,7 @@ var urls = [
   '/news/help',
   '/news/policy',
   '/news/trade',
-].map(function (value){
+].map(function(value) {
   return 'http://gxt.herokuapp.com' + value;
 });
 
@@ -40,7 +40,7 @@ request
   .send(urls)
   .set('Content-Type', 'text/plain')
   .set('Content-Length', new Buffer(urls).length)
-  .end(function (err, res){
+  .end(function(err, res) {
     if (err) {
       throw err;
     }

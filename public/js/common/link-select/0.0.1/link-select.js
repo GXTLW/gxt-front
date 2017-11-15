@@ -10,20 +10,20 @@ var Toast = require('toast');
 
 var SKIPATTR = 'data-skip-link';
 
-function isSkip(element){
+function isSkip(element) {
   element = $(element);
 
   return element.attr(SKIPATTR) !== undefined;
 }
 
-function LinkSelect(root, callback){
+function LinkSelect(root, callback) {
   this.children = [];
   this.root = root = $(root);
-  this.callback = $.isFunction(callback) ? callback : function (result){
+  this.callback = $.isFunction(callback) ? callback : function(result) {
     var context = this;
 
     if (result.valid) {
-      context.children.forEach(function (child){
+      context.children.forEach(function(child) {
         child.append(result.data.html);
         child.trigger('prettyform.update');
       });
@@ -37,10 +37,10 @@ function LinkSelect(root, callback){
 }
 
 LinkSelect.prototype = {
-  render: function (){
+  render: function() {
     this._onChange();
   },
-  add: function (select, frozen){
+  add: function(select, frozen) {
     select = $(select);
     frozen = parseInt(frozen);
     frozen = isNaN(frozen) ? 0 : frozen;
@@ -53,21 +53,21 @@ LinkSelect.prototype = {
 
     return this;
   },
-  remove: function (select){
+  remove: function(select) {
     select = $(select);
 
-    this.children.filter(function (child){
+    this.children.filter(function(child) {
       return child !== select;
     });
 
     return this;
   },
-  destory: function (){
+  destory: function() {
     this.root.off('change.linkselect');
     this.root.removeData('LINKSELECT-FROZEN');
     this.root.removeData('LINKSELECT-INSTANCE');
   },
-  _onChange: function (){
+  _onChange: function() {
     var data = {};
     var root = this.root;
     var frozen = root.data('LINKSELECT-FROZEN');
@@ -87,10 +87,10 @@ LinkSelect.prototype = {
       }).done(this.callback);
     }
   },
-  _resetChildren: function (){
+  _resetChildren: function() {
     var context = this;
 
-    this.children.forEach(function (child){
+    this.children.forEach(function(child) {
       if (child[0] === context.root[0]) return;
 
       var frozened = null;

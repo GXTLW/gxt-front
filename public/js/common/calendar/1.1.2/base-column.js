@@ -9,13 +9,13 @@ var BaseColumn = Widget.extend({
   attrs: {
     focus: {
       value: '',
-      getter: function (val){
+      getter: function(val) {
         if (val) {
           return val;
         }
         return current_date;
       },
-      setter: function (val){
+      setter: function(val) {
         if (!val) {
           return current_date;
         }
@@ -29,7 +29,7 @@ var BaseColumn = Widget.extend({
     format: 'YYYY-MM-DD',
     range: {
       value: '',
-      getter: function (val){
+      getter: function(val) {
         if (!val) {
           return null;
         }
@@ -50,7 +50,7 @@ var BaseColumn = Widget.extend({
     lang: {}
   },
 
-  compileTemplate: function (){
+  compileTemplate: function() {
     // the template is a runtime handlebars function
     var fn = this.get('template');
     if (!fn) {
@@ -63,28 +63,28 @@ var BaseColumn = Widget.extend({
 
     return fn(model, {
       helpers: {
-        '_': function (key){
+        '_': function(key) {
           return lang[key] || key;
         }
       }
     });
   },
 
-  parseElement: function (){
+  parseElement: function() {
     // rewrite parseElement of widget
     this.element = $(this.compileTemplate());
   },
 
-  show: function (){
+  show: function() {
     this.render();
     this.focus();
   },
 
-  hide: function (){
+  hide: function() {
     this.element.hide();
   },
 
-  refresh: function (){
+  refresh: function() {
     this.element.html($(this.compileTemplate()).html());
   }
 
@@ -92,7 +92,7 @@ var BaseColumn = Widget.extend({
 
 module.exports = BaseColumn;
 
-BaseColumn.isInRange = function (date, range){
+BaseColumn.isInRange = function(date, range) {
   if (range == null) {
     return true;
   }

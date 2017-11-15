@@ -23,20 +23,20 @@ var RE_PAIR = /^([^=]+)(?:=(.*))?$/;
 // 解析并初始化 name 数据。
 // 标准的 nameStorage 数据格式为 `name-storage:origin-name?key=value`
 // @param {String} name.
-(function parse(name){
+(function parse(name) {
   if (name && name.indexOf(SCHEME) === 0) {
     var match = name.split(/[:?]/);
 
-    match.shift();                      // scheme: match[0];
-    ORIGIN_NAME = decode(match.shift()) || '';  // match[1]
+    match.shift(); // scheme: match[0];
+    ORIGIN_NAME = decode(match.shift()) || ''; // match[1]
 
-    var params = match.join('');        // match[2,...]
+    var params = match.join(''); // match[2,...]
     var pairs = params.split(AND);
 
     for (var i = 0, pair, key, value, l = pairs.length; i < l; i++) {
       pair = pairs[i].match(RE_PAIR);
 
-      if (!pair || !pair[1]) {continue;}
+      if (!pair || !pair[1]) { continue; }
 
       key = decode(pair[1]);
       value = decode(pair[2]) || '';
@@ -50,7 +50,7 @@ var RE_PAIR = /^([^=]+)(?:=(.*))?$/;
 // 写入数据。
 // @param {String} key, 键名。
 // @param {String} value, 键值。
-nameStorage.setItem = function (key, value){
+nameStorage.setItem = function(key, value) {
   if (!key || value === undefined) {
     return;
   }
@@ -63,13 +63,13 @@ nameStorage.setItem = function (key, value){
 // 读取数据。
 // @param {String} key, 键名。
 // @return {String} 键值。如果不存在，则返回 `null`。
-nameStorage.getItem = function (key){
+nameStorage.getItem = function(key) {
   return STORAGE.hasOwnProperty(key) ? STORAGE[key] : null;
 };
 
 // 移除数据。
 // @param {String} key, 键名。
-nameStorage.removeItem = function (key){
+nameStorage.removeItem = function(key) {
   if (!STORAGE.hasOwnProperty(key)) {
     return;
   }
@@ -82,17 +82,17 @@ nameStorage.removeItem = function (key){
 };
 
 // 清空 nameStorage。
-nameStorage.clear = function (){
+nameStorage.clear = function() {
   STORAGE = {};
 
   save();
 };
 
-nameStorage.valueOf = function (){
+nameStorage.valueOf = function() {
   return STORAGE;
 };
 
-nameStorage.toString = function (){
+nameStorage.toString = function() {
   var name = window.name;
 
   return name.indexOf(SCHEME) === 0 ? name : SCHEME + name;
@@ -100,7 +100,7 @@ nameStorage.toString = function (){
 
 // 保存数据到 window.name
 // 如果没有存储数据，则恢复原始窗口名称(window.name)。
-function save(){
+function save() {
   var value;
   var pairs = [];
   var empty = true;
@@ -121,13 +121,13 @@ function save(){
 // @param {HTMLElement} element.
 // @param {String} eventName.
 // @param {Function} handler.
-function addEventListener(element, eventName, handler){
-  if (!element) {return;}
+function addEventListener(element, eventName, handler) {
+  if (!element) { return; }
 
   if (element.addEventListener) {
     element.addEventListener(eventName, handler, false);
   } else if (element.attachEvent) {
-    element.attachEvent('on' + eventName, function (evt){
+    element.attachEvent('on' + eventName, function(evt) {
       handler.call(element, evt);
     });
   }

@@ -15,7 +15,7 @@ module.exports = {
   templateObject: null,
 
   // 根据配置的模板和传入的数据，构建 this.element 和 templateElement
-  parseElementFromTemplate: function (){
+  parseElementFromTemplate: function() {
     // template 支持 id 选择器
     var t, template = this.get('template');
 
@@ -29,7 +29,7 @@ module.exports = {
   },
 
   // 编译模板，混入数据，返回 html 结果
-  compile: function (template, model){
+  compile: function(template, model) {
     template = template || this.get('template');
     model = model || this.get('model') || {};
 
@@ -87,7 +87,7 @@ module.exports = {
   },
 
   // 刷新 selector 指定的局部区域
-  renderPartial: function (selector){
+  renderPartial: function(selector) {
     if (this.templateObject) {
       var template = convertObjectToTemplate(this.templateObject, selector);
 
@@ -122,7 +122,7 @@ module.exports = {
  * @param template
  * @returns {null}
  */
-function convertTemplateToObject(template){
+function convertTemplateToObject(template) {
   return isFunction(template) ? null : $(encode(template));
 }
 
@@ -132,7 +132,7 @@ function convertTemplateToObject(template){
  * @param selector
  * @returns {*}
  */
-function convertObjectToTemplate(templateObject, selector){
+function convertObjectToTemplate(templateObject, selector) {
   if (!templateObject) return;
 
   var element;
@@ -155,9 +155,9 @@ function convertObjectToTemplate(templateObject, selector){
  * @param template
  * @returns {String}
  */
-function encode(template){
+function encode(template) {
   return template
-  // 替换 <?= xxx ?> 为 <!--<?= xxx ?>-->
+    // 替换 <?= xxx ?> 为 <!--<?= xxx ?>-->
     .replace(/(<\?.+?\?>)/g, '<!--$1-->')
     // 替换 src="<?= xxx ?>" 为 data-templatable-src="<?= xxx ?>"
     .replace(/\s(src|href)\s*=\s*(['"])(.*?\<.+?)\2/g, ' data-templatable-$1=$2$3$2');
@@ -168,7 +168,7 @@ function encode(template){
  * @param template
  * @returns {String}
  */
-function decode(template){
+function decode(template) {
   return template
     .replace(/&lt;\?/g, '<?')
     .replace(/\?&gt;/g, '?>')
@@ -176,7 +176,7 @@ function decode(template){
     .replace(/data-templatable-/ig, '')
 }
 
-function isFunction(obj){
+function isFunction(obj) {
   return typeof obj === "function";
 }
 

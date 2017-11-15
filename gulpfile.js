@@ -4,44 +4,89 @@
 
 'use strict';
 
-// 开启 DEBUG 开关
-process.env.DEBUG_FD = '1';
-process.env.DEBUG_COLORS = 'true';
-process.env.DEBUG = 'gulp-css,gulp-cmd';
+const util = require('util');
+const path = require('path');
+const join = path.join;
+const relative = path.relative;
+const dirname = path.dirname;
+const extname = path.extname;
+const resolve = path.resolve;
+const gulp = require('gulp');
+const rimraf = require('del');
+const css = require('@nuintun/gulp-css');
+const cmd = require('@nuintun/gulp-cmd');
+const cdeps = require('cmd-deps');
+const chalk = cmd.chalk;
+const holding = require('holding');
+const cssnano = require('cssnano');
+const uglify = require('uglify-es');
+const chokidar = require('chokidar');
+const concat = require('gulp-concat');
+const plumber = require('gulp-plumber');
+const cmdAddons = require('@nuintun/gulp-cmd-plugins');
+const cssAddons = require('@nuintun/gulp-css-plugins');
+const switchStream = require('@nuintun/switch-stream');
 
-// 关闭 DEBUG 开关
-//process.env.DEBUG = 'false';
-
-var path = require('path');
-var join = path.join;
-var relative = path.relative;
-var dirname = path.dirname;
-var extname = path.extname;
-var resolve = path.resolve;
-var gulp = require('gulp');
-var rimraf = require('del');
-var css = require('gulp-css');
-var cmd = require('gulp-cmd');
-var cdeps = require('cmd-deps');
-var colors = cmd.colors;
-var pedding = require('pedding');
-var cssnano = require('cssnano');
-var uglify = require('uglify-js');
-var chokidar = require('chokidar');
-var concat = require('gulp-concat');
-var plumber = require('gulp-plumber');
-var switchStream = require('switch-stream');
-var bookmark = Date.now();
-var runtime = [
+let bookmark = Date.now();
+const runtime = [
   'public/js/seajs/3.0.1/sea.js',
   'public/js/seajs/config.js',
   'public/js/base/json/1.1.2/json.js',
   'public/js/base/es5-safe/1.0.0/es5-safe.js'
 ];
 
-// compress javascript file
-function compress(){
-  return switchStream(function (vinyl){
+/**
+ * @function progress
+ * @description Show progress logger
+ * @param {Function} print
+ */
+function progress(print) {
+  return switchStream.through(function(vinyl, encoding, next) {
+    const info = chalk.reset.reset('process: ')
+      + chalk.reset.green(join(vinyl.base, vinyl.relative).replace(/\\/g, '/'));
+
+    if (print) {
+      print(info);
+    } else {
+      process.stdout.write(chalk.reset.bold.cyan('  gulp-odd ') + info + '\n');
+    }
+
+    next(null, vinyl);
+  });
+}
+
+/**
+ * @function finish
+ * @description Build finish function
+ */
+function finish() {
+  const now = new Date();
+
+  console.log(
+    '  %s [%s] build complete... %s',
+    chalk.reset.green.bold.inverse(' √ DONE '),
+    dateFormat(now),
+    chalk.reset.green('+' + (now - bookmark) + 'ms')
+  );
+}
+
+/**
+ * @function inspectError
+ * @param {Error} error
+ * @returns {string}
+ */
+function inspectError(error) {
+  return util
+    .inspect(error)
+    .replace(/^\{\s*|\}\s*$/g, '');
+}
+
+/**
+ * @function compress
+ * @description Compress javascript file
+ */
+function compress() {
+  return switchStream((vinyl) => {
     if (extname(vinyl.path) === '.js') {
       return 'js';
     }
@@ -50,181 +95,122 @@ function compress(){
       return 'css';
     }
   }, {
-    js: switchStream.through(function (vinyl, encoding, next){
-      try {
-        var result = uglify.minify(vinyl.contents.toString(), {
-          fromString: true,
-          compress: { screw_ie8: false },
-          mangle: { screw_ie8: false },
-          output: { screw_ie8: false }
-        });
+    js: switchStream.through(function(vinyl, encoding, next) {
+      const result = uglify.minify(vinyl.contents.toString(), {
+        ecma: 5,
+        ie8: true,
+        mangle: { eval: true }
+      });
 
+      if (result.error) {
+        process.stdout.write(chalk.reset.bold.cyan('  gulp-odd ') + inspectError(result.error) + '\n');
+      } else {
         vinyl.contents = new Buffer(result.code);
-      } catch (error) {
-        // no nothing
       }
 
       this.push(vinyl);
       next();
     }),
-    css: switchStream.through(function (vinyl, encoding, next){
-      var context = this;
+    css: switchStream.through(function(vinyl, encoding, next) {
+      cssnano
+        .process(vinyl.contents.toString(), { safe: true })
+        .then((result) => {
+          vinyl.contents = new Buffer(result.css);
 
-      cssnano.process(vinyl.contents.toString(), {
-        safe: true,
-        autoprefixer: {
-          browsers: ['> 1% in CN', '> 5%', 'ie >= 8'],
-          cascade: false,
-          remove: false
-        }
-      }).then(function (result){
-        vinyl.contents = new Buffer(result.css);
-
-        context.push(vinyl);
-        next();
-      });
+          context.push(vinyl);
+          next();
+        })
+        .catch((error) => {
+          process.stdout.write(chalk.reset.bold.cyan('  gulp-odd ') + inspectError(result.error) + '\n');
+          next();
+        });
     })
   });
 }
 
-// rewrite cmd plugins
-var CMDPLUGINS = {
-  css: function (vinyl, options, next){
-    var context = this;
-
-    cssnano.process(vinyl.contents.toString(), {
-      safe: true,
-      autoprefixer: {
-        browsers: ['> 1% in CN', '> 5%', 'ie >= 8'],
-        cascade: false,
-        remove: false
-      }
-    }).then(function (result){
-      vinyl.contents = new Buffer(result.css);
-
-      cmd.defaults.plugins.css.exec(vinyl, options, function (vinyl){
-        try {
-          var result = uglify.minify(vinyl.contents.toString(), {
-            fromString: true,
-            compress: { screw_ie8: false },
-            mangle: { screw_ie8: false },
-            output: { screw_ie8: false }
-          });
-
-          vinyl.contents = new Buffer(result.code);
-        } catch (error) {
-          // no nothing
-        }
-
-        context.push(vinyl);
-        next();
-      });
-    });
-  }
-};
-
-['js', 'json', 'tpl', 'html'].forEach(function (name){
-  CMDPLUGINS[name] = function (vinyl, options, next){
-    var context = this;
-    // transform
-    cmd.defaults.plugins[name].exec(vinyl, options, function (vinyl){
-      try {
-        var result = uglify.minify(vinyl.contents.toString(), {
-          fromString: true,
-          compress: { screw_ie8: false },
-          mangle: { screw_ie8: false },
-          output: { screw_ie8: false }
-        });
-
-        vinyl.contents = new Buffer(result.code);
-      } catch (error) {
-        // no nothing
-      }
-
-      context.push(vinyl);
-      next();
-    });
-  }
-});
-
-// rewrite css plugins
-var CSSPLUGINS = {
-  css: function (vinyl, options, next){
-    var context = this;
-
-    cssnano.process(vinyl.contents.toString(), {
-      safe: true,
-      autoprefixer: {
-        browsers: ['> 1% in CN', '> 5%', 'ie >= 8'],
-        cascade: false,
-        remove: false
-      }
-    }).then(function (result){
-      vinyl.contents = new Buffer(result.css);
-
-      css.defaults.plugins.css.exec(vinyl, options, function (vinyl){
-        context.push(vinyl);
-        next();
-      });
-    });
-  }
-};
-
-// file watch
-function watch(glob, options, callabck){
+/**
+ * @function watch
+ * @description Files watch
+ * @param {string|Array<string>} glob
+ * @param {Object} options
+ * @param {Function} callabck
+ */
+function watch(glob, options, callabck) {
   if (typeof options === 'function') {
     callabck = options;
     options = {};
   }
 
-  // ignore initial add event
+  // Ignore initial add event
   options.ignoreInitial = true;
-  // ignore permission errors
+  // Ignore permission errors
   options.ignorePermissionErrors = true;
 
-  // get watcher
-  var watcher = chokidar.watch(glob, options);
+  // Get watcher
+  const watcher = chokidar.watch(glob, options);
 
-  // bing event
+  // Bind event
   if (callabck) {
-    watcher.on('all', function (event, path){
-      if (path && path.lastIndexOf('___jb_tmp___') !== path.length - 12) {
-        callabck.apply(this, arguments);
-      }
-    });
+    watcher.on('all', callabck);
   }
 
-  // return watcher
+  // Return watcher
   return watcher;
 }
 
-function getAlias(){
+/**
+ * @function getAlias
+ */
+function getAlias() {
   delete require.cache[require.resolve('./alias.json')];
 
   return require('./alias.json');
 }
 
-// css resource path
-function onpath(path, property, file, wwwroot){
+/**
+ * @function resolveCSSPath
+ * @description Resolve css path
+ * @param {string} path
+ * @param {string} file
+ * @param {string} wwwroot
+ * @returns {string}
+ */
+function resolveCSSPath(path, file, wwwroot) {
   if (/^[^./\\]/.test(path)) {
     path = './' + path;
   }
 
-  if (path.indexOf('.') === 0) {
+  if (path.charAt(0) === '.') {
     path = join(dirname(file), path);
     path = relative(wwwroot, path);
     path = '/' + path;
     path = path.replace(/\\+/g, '/');
   }
 
-  path = path.replace('/public/css/', '/public/style/');
-  path = path.replace('/public/js/', '/public/script/');
-
-  return path;
+  return path
+    .replace('/public/css/', '/public/style/')
+    .replace('/public/js/', '/public/script/');
 }
 
-// date format
-function dateFormat(date, format){
+/**
+ * @function resolveMapPath
+ * @description Resolve js path
+ * @param {string} path
+ * @returns {string}
+ */
+function resolveMapPath(path) {
+  return path
+    .replace('/public/css/', '/public/style/')
+    .replace('/public/js/', '/public/script/');
+}
+
+/**
+ * @function dateFormat
+ * @param {Date} date
+ * @param {String} format
+ * @returns {String}
+ */
+function dateFormat(date, format) {
   // 参数错误
   if (!date instanceof Date) {
     throw new TypeError('Param date must be a Date');
@@ -232,7 +218,7 @@ function dateFormat(date, format){
 
   format = format || 'yyyy-MM-dd hh:mm:ss';
 
-  var map = {
+  const map = {
     'M': date.getMonth() + 1, //月份
     'd': date.getDate(), //日
     'h': date.getHours(), //小时
@@ -242,8 +228,8 @@ function dateFormat(date, format){
     'S': date.getMilliseconds() //毫秒
   };
 
-  format = format.replace(/([yMdhmsqS])+/g, function (all, t){
-    var v = map[t];
+  format = format.replace(/([yMdhmsqS])+/g, (all, t) => {
+    let v = map[t];
 
     if (v !== undefined) {
       if (all.length > 1) {
@@ -262,120 +248,142 @@ function dateFormat(date, format){
   return format;
 }
 
-// clean task
-gulp.task('clean', function (){
+// Clean task
+gulp.task('clean', () => {
   bookmark = Date.now();
 
   rimraf.sync(['public/style', 'public/script']);
 });
 
-// runtime task
-gulp.task('runtime', ['clean'], function (){
-  // loader file
-  gulp.src(runtime, { base: 'public/js', nodir: true })
+// Runtime task
+gulp.task('runtime', ['clean'], () => {
+  // Loader file
+  gulp
+    .src(runtime, { base: 'public/js', nodir: true })
     .pipe(plumber())
+    .pipe(progress())
     .pipe(concat('seajs/3.0.1/sea.js'))
     .pipe(gulp.dest('public/script'));
 });
 
-// runtime task
-gulp.task('runtime-product', ['clean'], function (){
-  // loader file
-  gulp.src(runtime, { base: 'public/js', nodir: true })
+// Runtime task
+gulp.task('runtime-product', ['clean'], () => {
+  // Loader file
+  gulp
+    .src(runtime, { base: 'public/js', nodir: true })
     .pipe(plumber())
+    .pipe(progress())
     .pipe(concat('seajs/3.0.1/sea.js'))
     .pipe(compress())
     .pipe(gulp.dest('public/script'));
 });
 
-// develop task
-gulp.task('default', ['runtime'], function (){
+// Develop task
+gulp.task('default', ['runtime'], () => {
   // complete callback
-  var complete = pedding(3, function (){
-    var now = new Date();
-
-    console.log(
-      '  %s [%s] build complete... √ %s\x07',
-      colors.green.bold('gulp-default'),
-      dateFormat(now),
-      colors.green('+' + (now - bookmark) + 'ms')
-    );
+  const complete = holding(2, () => {
+    finish();
+    process.stdout.write('\x07');
   });
 
-  // cmd js file
-  gulp.src([
-    'public/js/**/*',
-    '!public/js/seajs/**/*',
-    '!public/js/base/json/**/*',
-    '!public/js/base/es5-safe/**/*',
-    '!public/js/base/html5shiv/**/*',
-    '!public/js/util/kindeditor/*/*/**/*'
-  ], { base: 'public/js', nodir: true })
+  // Normal file
+  gulp
+    .src([
+      'public/js/base/html5shiv/**/*'
+    ], { base: 'public/js', nodir: true })
     .pipe(plumber())
+    .pipe(progress())
+    .pipe(gulp.dest('public/script'))
+    .on('finish', complete);
+
+  // CMD js file
+  gulp
+    .src([
+      'public/js/**/*',
+      '!public/js/seajs/**/*',
+      '!public/js/base/json/**/*',
+      '!public/js/base/es5-safe/**/*',
+      '!public/js/base/html5shiv/**/*'
+    ], { base: 'public/js', nodir: true })
+    .pipe(plumber())
+    .pipe(progress(cmd.print))
     .pipe(cmd({
-      alias: getAlias(),
       include: 'self',
-      css: { onpath: onpath }
+      alias: getAlias(),
+      base: 'public/js',
+      plugins: cmdAddons(),
+      map: resolveMapPath,
+      css: { onpath: resolveCSSPath }
     }))
     .pipe(gulp.dest('public/script'))
     .on('finish', complete);
 
-  // kindeditor file
-  gulp.src([
-    'public/js/base/html5shiv/**/*',
-    'public/js/util/kindeditor/*/*/**/*'
-  ], { base: 'public/js', nodir: true })
+  // CSS file
+  gulp
+    .src('public/css/**/*', { base: 'public/css', nodir: true })
     .pipe(plumber())
-    .pipe(gulp.dest('public/script'))
-    .on('finish', complete);
-
-  // css file
-  gulp.src('public/css/**/*', { base: 'public/css', nodir: true })
-    .pipe(plumber())
-    .pipe(css({ onpath: onpath }))
+    .pipe(progress(css.print))
+    .pipe(css({
+      map: resolveMapPath,
+      onpath: resolveCSSPath,
+      plugins: cssAddons()
+    }))
     .pipe(gulp.dest('public/style'))
     .on('finish', complete);
 });
 
-// develop watch task
-gulp.task('watch', ['default'], function (){
-  var base = join(process.cwd(), 'public');
+// Develop watch task
+gulp.task('watch', ['default'], () => {
+  const base = join(process.cwd(), 'Assets');
 
-  // debug watcher
-  function debugWatcher(event, path){
-    var now = new Date();
+  /**
+   * @function debugWatcher
+   * @param {string} event
+   * @param {string} path
+   */
+  function debugWatcher(event, path) {
+    const now = new Date();
 
     console.log(
-      '  %s %s: %s %s',
-      colors.green.bold('gulp-watch'),
+      '  %s %s: %s',
+      chalk.reset.green.bold.inverse(' • WAIT '),
       event,
-      colors.magenta(join('public', path).replace(/\\/g, '/')),
-      colors.green('+' + (now - bookmark) + 'ms')
+      chalk.reset.green(join('Assets', path).replace(/\\/g, '/'))
     );
   }
 
-  // complete callback
-  function complete(){
-    var now = new Date();
+  // Noraml file
+  watch([
+    'public/js/base/html5shiv'
+  ], (event, path) => {
+    const rpath = relative(join(base, 'js'), path);
 
-    console.log(
-      '  %s [%s] build complete... √ %s',
-      colors.green.bold('gulp-watch'),
-      dateFormat(now),
-      colors.green('+' + (now - bookmark) + 'ms')
-    );
-  }
+    bookmark = Date.now();
+    event = event.toLowerCase();
 
-  // watch js file
+    debugWatcher(event, join('js', rpath));
+
+    if (event === 'unlink' || event === 'unlinkdir') {
+      rimraf.sync(resolve('public/script', rpath));
+      finish();
+    } else {
+      gulp
+        .src(path, { base: 'public/js' })
+        .pipe(plumber())
+        .pipe(gulp.dest('public/script'))
+        .on('finish', finish);
+    }
+  });
+
+  // Watch js file
   watch([
     'public/js',
     '!public/js/seajs',
     '!public/js/base/json',
     '!public/js/base/es5-safe',
-    '!public/js/base/html5shiv',
-    'public/js/util/kindeditor/*/kindeditor.js'
-  ], function (event, path){
-    var rpath = relative(join(base, 'js'), path);
+    '!public/js/base/html5shiv'
+  ], (event, path) => {
+    const rpath = relative(join(base, 'js'), path);
 
     bookmark = Date.now();
     event = event.toLowerCase();
@@ -384,48 +392,28 @@ gulp.task('watch', ['default'], function (){
 
     if (event === 'unlink' || event === 'unlinkdir') {
       rimraf.sync(resolve('public/script', rpath));
-      complete();
+      finish();
     } else {
-      gulp.src(path, { base: 'public/js' })
+      gulp
+        .src(path, { base: 'public/js' })
         .pipe(plumber())
         .pipe(cmd({
-          alias: getAlias(),
-          include: 'self',
           cache: false,
-          css: { onpath: onpath }
+          include: 'self',
+          alias: getAlias(),
+          base: 'public/js',
+          plugins: cmdAddons(),
+          map: resolveMapPath,
+          css: { onpath: resolveCSSPath }
         }))
         .pipe(gulp.dest('public/script'))
-        .on('finish', complete);
+        .on('finish', finish);
     }
   });
 
-  // kindeditor file
-  watch([
-    'public/js/base/html5shiv',
-    'public/js/util/kindeditor',
-    '!public/js/util/kindeditor/*/kindeditor.js'
-  ], function (event, path){
-    var rpath = relative(join(base, 'js'), path);
-
-    bookmark = Date.now();
-    event = event.toLowerCase();
-
-    debugWatcher(event, join('js', rpath));
-
-    if (event === 'unlink' || event === 'unlinkdir') {
-      rimraf.sync(resolve('public/script', rpath));
-      complete();
-    } else {
-      gulp.src(path, { base: 'public/js' })
-        .pipe(plumber())
-        .pipe(gulp.dest('public/script'))
-        .on('finish', complete);
-    }
-  });
-
-  // watch css file
-  watch('public/css', function (event, path){
-    var rpath = relative(join(base, 'css'), path);
+  // Watch css file
+  watch('public/css', (event, path) => {
+    const rpath = relative(join(base, 'css'), path);
 
     bookmark = Date.now();
     event = event.toLowerCase();
@@ -434,107 +422,118 @@ gulp.task('watch', ['default'], function (){
 
     if (event === 'unlink' || event === 'unlinkdir') {
       rimraf.sync(resolve('public/style', rpath));
-      complete();
+      finish();
     } else {
-      gulp.src(path, { base: 'public/css' })
+      gulp
+        .src(path, { base: 'public/css' })
         .pipe(plumber())
         .pipe(css({
-          onpath: function (path){
-            return path.replace('public/css/', 'public/style/')
-          }
+          map: resolveMapPath,
+          onpath: resolveCSSPath,
+          plugins: cssAddons()
         }))
         .pipe(gulp.dest('public/style'))
-        .on('finish', complete);
+        .on('finish', finish);
     }
   });
 });
 
-// product task
-gulp.task('product', ['runtime-product'], function (){
-  var ignore = ['jquery'];
+// Product task
+gulp.task('product', ['runtime-product'], () => {
+  const ignore = ['jquery'];
+  const smartIgnore = ignore.slice();
   // complete callback
-  var complete = pedding(3, function (){
-    var now = new Date();
-
-    console.log(
-      '  %s [%s] build complete... √ %s\x07',
-      colors.green.bold('gulp-product'),
-      dateFormat(now),
-      colors.green('+' + (now - bookmark) + 'ms')
-    );
+  const complete = holding(3, () => {
+    finish();
+    process.stdout.write('\x07');
   });
 
-  gulp.src('public/js/apps/common.js', { base: 'public/js', nodir: true })
+  // Normal file
+  gulp
+    .src([
+      'public/js/base/html5shiv/**/*'
+    ], { base: 'public/js', nodir: true })
+    .pipe(plumber())
+    .pipe(progress())
+    .pipe(compress())
+    .pipe(gulp.dest('public/script'))
+    .on('finish', complete);
+
+  gulp
+    .src('public/js/view/common.js', { base: 'public/js', nodir: true })
     .pipe(plumber())
     .pipe(cmd({
       cache: false,
-      alias: getAlias(),
-      ignore: ignore,
-      plugins: {
-        css: CMDPLUGINS.css,
-        html: CMDPLUGINS.html,
-        json: CMDPLUGINS.json,
-        tpl: CMDPLUGINS.tpl
-      },
       include: 'all',
-      css: {
-        onpath: onpath
-      }
+      ignore: ignore,
+      alias: getAlias(),
+      base: 'public/js',
+      map: resolveMapPath,
+      css: { onpath: resolveCSSPath }
     }))
-    .pipe(switchStream.through(function (vinyl, encoding, next){
-      cdeps(vinyl.contents.toString()).forEach(function (item){
-        ignore.push(item.path);
+    .pipe(switchStream.through(function(vinyl, encoding, next) {
+      cdeps(vinyl.contents).forEach((item) => {
+        smartIgnore.push(item.path);
       });
 
       this.push(vinyl);
       next();
     }))
-    .pipe(compress())
-    .pipe(gulp.dest('public/script'))
-    .on('finish', function (){
-      // cmd js file
-      gulp.src([
-        'public/js/**/*',
-        '!public/js/seajs/**/*',
-        '!public/js/apps/common.js',
-        '!public/js/base/json/**/*',
-        '!public/js/base/es5-safe/**/*',
-        '!public/js/base/html5shiv/**/*',
-        '!public/js/util/kindeditor/*/*/**/*'
-      ], { base: 'public/js', nodir: true })
+    .on('finish', () => {
+      // Common js
+      gulp
+        .src('public/js/view/common.js', { base: 'public/js', nodir: true })
         .pipe(plumber())
+        .pipe(progress(cmd.print))
+        .pipe(cmd({
+          include: 'all',
+          ignore: ignore,
+          alias: getAlias(),
+          base: 'public/js',
+          plugins: cmdAddons({ minify: true }),
+          map: resolveMapPath,
+          css: { onpath: resolveCSSPath }
+        }))
+        .pipe(gulp.dest('public/script'))
+        .on('finish', complete);
+
+      // CMD js file
+      gulp
+        .src([
+          'public/js/**/*',
+          '!public/js/seajs/**/*',
+          '!public/js/view/common.js',
+          '!public/js/base/json/**/*',
+          '!public/js/base/es5-safe/**/*',
+          '!public/js/base/html5shiv/**/*'
+        ], { base: 'public/js', nodir: true })
+        .pipe(plumber())
+        .pipe(progress(cmd.print))
         .pipe(cmd({
           alias: getAlias(),
-          ignore: ignore,
-          plugins: CMDPLUGINS,
-          include: function (id){
-            return id && id.indexOf('apps') === 0 ? 'all' : 'self';
-          },
-          css: {
-            onpath: onpath
+          base: 'public/js',
+          ignore: smartIgnore,
+          plugins: cmdAddons({ minify: true }),
+          map: resolveMapPath,
+          css: { onpath: resolveCSSPath },
+          include: (id) => {
+            return id && id.indexOf('view') === 0 ? 'all' : 'self';
           }
         }))
         .pipe(gulp.dest('public/script'))
         .on('finish', complete);
     });
 
-  // kindeditor file
-  gulp.src([
-    'public/js/base/html5shiv/**/*',
-    'public/js/util/kindeditor/*/*/**/*'
-  ], { base: 'public/js', nodir: true })
+  // CSS file
+  gulp
+    .src('public/css/?(default|fonts)/**/*', { base: 'public/css', nodir: true })
     .pipe(plumber())
-    .pipe(compress())
-    .pipe(gulp.dest('public/script'))
-    .on('finish', complete);
-
-  // css file
-  gulp.src('public/css/?(default|fonts)/**/*', { base: 'public/css', nodir: true })
-    .pipe(plumber())
+    .pipe(progress(css.print))
     .pipe(css({
       include: true,
-      onpath: onpath,
-      plugins: CSSPLUGINS
+      map: resolveMapPath,
+      onpath: resolveCSSPath,
+      plugins: cssAddons({ minify: true })
     }))
     .pipe(gulp.dest('public/style'))
     .on('finish', complete);

@@ -16,7 +16,7 @@
 
 var MicroPlugin = {};
 
-MicroPlugin.mixin = function (Interface){
+MicroPlugin.mixin = function(Interface) {
   Interface.plugins = {};
 
   /**
@@ -34,7 +34,7 @@ MicroPlugin.mixin = function (Interface){
    *
    * @param {mixed} plugins
    */
-  Interface.prototype.initializePlugins = function (plugins){
+  Interface.prototype.initializePlugins = function(plugins) {
     var i, n, key;
     var self = this;
     var queue = [];
@@ -69,7 +69,7 @@ MicroPlugin.mixin = function (Interface){
     }
   };
 
-  Interface.prototype.loadPlugin = function (name){
+  Interface.prototype.loadPlugin = function(name) {
     var self = this;
     var plugins = self.plugins;
     var plugin = Interface.plugins[name];
@@ -88,7 +88,7 @@ MicroPlugin.mixin = function (Interface){
    *
    * @param {string} name
    */
-  Interface.prototype.require = function (name){
+  Interface.prototype.require = function(name) {
     var self = this;
     var plugins = self.plugins;
 
@@ -108,7 +108,7 @@ MicroPlugin.mixin = function (Interface){
    * @param {string} name
    * @param {function} fn
    */
-  Interface.define = function (name, fn){
+  Interface.define = function(name, fn) {
     Interface.plugins[name] = {
       'name': name,
       'fn': fn
@@ -117,7 +117,7 @@ MicroPlugin.mixin = function (Interface){
 };
 
 var utils = {
-  isArray: Array.isArray || function (vArg){
+  isArray: Array.isArray || function(vArg) {
     return Object.prototype.toString.call(vArg) === '[object Array]';
   }
 };

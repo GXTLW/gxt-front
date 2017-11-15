@@ -7,17 +7,17 @@
  * @licence http://www.kindsoft.net/license.php
  *******************************************************************************/
 
-(function (K){
-  function KSWFUpload(options){
+(function(K) {
+  function KSWFUpload(options) {
     this.init(options);
   }
 
   K.extend(KSWFUpload, {
-    init: function (options){
+    init: function(options) {
       var self = this;
-      options.afterError = options.afterError || function (str){
-          alert(str);
-        };
+      options.afterError = options.afterError || function(str) {
+        alert(str);
+      };
       self.options = options;
       self.progressbars = {};
       // template
@@ -37,7 +37,7 @@
       ].join(''));
       self.bodyDiv = K('.ke-swfupload-body', self.div);
 
-      function showError(itemDiv, msg){
+      function showError(itemDiv, msg) {
         K('.ke-status > div', itemDiv).hide();
         K('.ke-message', itemDiv).addClass('ke-error').show().html(K.escape(msg));
       }
@@ -57,11 +57,11 @@
         file_upload_limit: options.fileUploadLimit,
         file_size_limit: options.fileSizeLimit,
         post_params: options.postParams,
-        file_queued_handler: function (file){
+        file_queued_handler: function(file) {
           file.url = self.options.fileIconUrl;
           self.appendFile(file);
         },
-        file_queue_error_handler: function (file, errorCode, message){
+        file_queue_error_handler: function(file, errorCode, message) {
           var errorName = '';
           switch (errorCode) {
             case SWFUpload.QUEUE_ERROR.QUEUE_LIMIT_EXCEEDED:
@@ -82,25 +82,25 @@
           }
           K.DEBUG && alert(errorName);
         },
-        upload_start_handler: function (file){
+        upload_start_handler: function(file) {
           var self = this;
           var itemDiv = K('div[data-id="' + file.id + '"]', self.bodyDiv);
           K('.ke-status > div', itemDiv).hide();
           K('.ke-progressbar', itemDiv).show();
         },
-        upload_progress_handler: function (file, bytesLoaded, bytesTotal){
+        upload_progress_handler: function(file, bytesLoaded, bytesTotal) {
           var percent = Math.round(bytesLoaded * 100 / bytesTotal);
           var progressbar = self.progressbars[file.id];
           progressbar.bar.css('width', Math.round(percent * 80 / 100) + 'px');
           progressbar.percent.html(percent + '%');
         },
-        upload_error_handler: function (file, errorCode, message){
+        upload_error_handler: function(file, errorCode, message) {
           if (file && file.filestatus == SWFUpload.FILE_STATUS.ERROR) {
             var itemDiv = K('div[data-id="' + file.id + '"]', self.bodyDiv).eq(0);
             showError(itemDiv, self.options.errorMessage);
           }
         },
-        upload_success_handler: function (file, serverData){
+        upload_success_handler: function(file, serverData) {
           var itemDiv = K('div[data-id="' + file.id + '"]', self.bodyDiv).eq(0);
           var data = {};
           try {
@@ -119,13 +119,13 @@
       };
       self.swfu = new SWFUpload(settings);
 
-      K('.ke-swfupload-startupload input', self.div).click(function (){
+      K('.ke-swfupload-startupload input', self.div).click(function() {
         self.swfu.startUpload();
       });
     },
-    getUrlList: function (){
+    getUrlList: function() {
       var list = [];
-      K('.ke-img', self.bodyDiv).each(function (){
+      K('.ke-img', self.bodyDiv).each(function() {
         var img = K(this);
         var status = img.attr('data-status');
         if (status == SWFUpload.FILE_STATUS.COMPLETE) {
@@ -134,7 +134,7 @@
       });
       return list;
     },
-    removeFile: function (fileId){
+    removeFile: function(fileId) {
       var self = this;
       self.swfu.cancelUpload(fileId);
       var itemDiv = K('div[data-id="' + fileId + '"]', self.bodyDiv);
@@ -142,28 +142,28 @@
       K('.ke-delete', itemDiv).unbind();
       itemDiv.remove();
     },
-    removeFiles: function (){
+    removeFiles: function() {
       var self = this;
-      K('.ke-item', self.bodyDiv).each(function (){
+      K('.ke-item', self.bodyDiv).each(function() {
         self.removeFile(K(this).attr('data-id'));
       });
     },
-    appendFile: function (file){
+    appendFile: function(file) {
       var self = this;
       var itemDiv = K('<div class="ke-inline-block ke-item" data-id="' + file.id + '"></div>');
       self.bodyDiv.append(itemDiv);
       var photoDiv = K('<div class="ke-inline-block ke-photo"></div>')
-        .mouseover(function (e){
+        .mouseover(function(e) {
           K(this).addClass('ke-on');
         })
-        .mouseout(function (e){
+        .mouseout(function(e) {
           K(this).removeClass('ke-on');
         });
       itemDiv.append(photoDiv);
 
       var img = K('<img src="' + file.url + '" class="ke-img" data-status="' + file.filestatus + '" width="80" height="80" alt="' + file.name + '" />');
       photoDiv.append(img);
-      K('<span class="ke-delete"></span>').appendTo(photoDiv).click(function (){
+      K('<span class="ke-delete"></span>').appendTo(photoDiv).click(function() {
         self.removeFile(file.id);
       });
       var statusDiv = K('<div class="ke-status"></div>').appendTo(photoDiv);
@@ -183,21 +183,22 @@
         percent: K('.ke-progressbar-percent', photoDiv)
       };
     },
-    remove: function (){
+    remove: function() {
       this.removeFiles();
       this.swfu.destroy();
       this.div.html('');
     }
   });
 
-  K.swfupload = function (element, options){
+  K.swfupload = function(element, options) {
     return new KSWFUpload(element, options);
   };
 
 })(KindEditor);
 
-KindEditor.plugin('multiimage', function (K){
-  var self = this, name = 'multiimage',
+KindEditor.plugin('multiimage', function(K) {
+  var self = this,
+    name = 'multiimage',
     formatUploadUrl = K.undef(self.formatUploadUrl, true),
     uploadJson = K.undef(self.uploadJson, self.basePath + 'php/upload_json.php'),
     imgPath = self.pluginsPath + 'multiimage/images/',
@@ -207,7 +208,7 @@ KindEditor.plugin('multiimage', function (K){
     filePostName = K.undef(self.filePostName, 'imgFile'),
     lang = self.lang(name + '.');
 
-  self.plugin.multiImageDialog = function (options){
+  self.plugin.multiImageDialog = function(options) {
     var clickFn = options.clickFn,
       uploadDesc = K.tmpl(lang.uploadDesc, { uploadLimit: imageUploadLimit, sizeLimit: imageSizeLimit });
     var html = [
@@ -224,17 +225,17 @@ KindEditor.plugin('multiimage', function (K){
         body: html,
         previewBtn: {
           name: lang.insertAll,
-          click: function (e){
+          click: function(e) {
             clickFn.call(self, swfupload.getUrlList());
           }
         },
         yesBtn: {
           name: lang.clearAll,
-          click: function (e){
+          click: function(e) {
             swfupload.removeFiles();
           }
         },
-        beforeRemove: function (){
+        beforeRemove: function() {
           // IE9 bugfix: https://github.com/kindsoft/kindeditor/issues/72
           if (!K.IE || K.V <= 8) {
             swfupload.remove();
@@ -266,27 +267,27 @@ KindEditor.plugin('multiimage', function (K){
       unknownError: lang.unknownError,
       pendingMessage: lang.pending,
       errorMessage: lang.uploadError,
-      afterError: function (html){
+      afterError: function(html) {
         self.errorDialog(html);
       }
     });
 
     return dialog;
   };
-  self.clickToolbar(name, function (){
+  self.clickToolbar(name, function() {
     self.plugin.multiImageDialog({
-      clickFn: function (urlList){
+      clickFn: function(urlList) {
         if (urlList.length === 0) {
           return;
         }
-        K.each(urlList, function (i, data){
+        K.each(urlList, function(i, data) {
           if (self.afterUpload) {
             self.afterUpload.call(self, data.url, data, 'multiimage');
           }
           self.exec('insertimage', data.url, data.title, data.width, data.height, data.border, data.align);
         });
         // Bugfix: [Firefox] 上传图片后，总是出现正在加载的样式，需要延迟执行hideDialog
-        setTimeout(function (){
+        setTimeout(function() {
           self.hideDialog().focus();
         }, 0);
       }
@@ -307,20 +308,19 @@ KindEditor.plugin('multiimage', function (K){
  *
  */
 
-
 /* ******************* */
 /* Constructor & Init  */
 /* ******************* */
 
-(function (){
+(function() {
 
-  window.SWFUpload = function (settings){
+  window.SWFUpload = function(settings) {
     this.initSWFUpload(settings);
   };
 
-  SWFUpload.prototype.initSWFUpload = function (settings){
+  SWFUpload.prototype.initSWFUpload = function(settings) {
     try {
-      this.customSettings = {};	// A container where developers can place their own settings associated with this instance.
+      this.customSettings = {}; // A container where developers can place their own settings associated with this instance.
       this.settings = settings;
       this.eventQueue = [];
       this.movieName = "KindEditor_SWFUpload_" + SWFUpload.movieCount++;
@@ -387,7 +387,7 @@ KindEditor.plugin('multiimage', function (K){
 
   // Private: takes a URL, determines if it is relative and converts to an absolute URL
   // using the current site. Only processes the URL if it can, otherwise returns the URL untouched
-  SWFUpload.completeURL = function (url){
+  SWFUpload.completeURL = function(url) {
     if (typeof(url) !== "string" || url.match(/^https?:\/\//i) || url.match(/^\//)) {
       return url;
     }
@@ -411,8 +411,8 @@ KindEditor.plugin('multiimage', function (K){
 
   // Private: initSettings ensures that all the
   // settings are set, getting a default value if one was not assigned.
-  SWFUpload.prototype.initSettings = function (){
-    this.ensureDefault = function (settingName, defaultValue){
+  SWFUpload.prototype.initSettings = function() {
+    this.ensureDefault = function(settingName, defaultValue) {
       this.settings[settingName] = (this.settings[settingName] == undefined) ? defaultValue : this.settings[settingName];
     };
 
@@ -429,7 +429,7 @@ KindEditor.plugin('multiimage', function (K){
     // File Settings
     this.ensureDefault("file_types", "*.*");
     this.ensureDefault("file_types_description", "All Files");
-    this.ensureDefault("file_size_limit", 0);	// Default zero means "unlimited"
+    this.ensureDefault("file_size_limit", 0); // Default zero means "unlimited"
     this.ensureDefault("file_upload_limit", 0);
     this.ensureDefault("file_queue_limit", 0);
 
@@ -454,7 +454,7 @@ KindEditor.plugin('multiimage', function (K){
 
     // Debug Settings
     this.ensureDefault("debug", false);
-    this.settings.debug_enabled = this.settings.debug;	// Here to maintain v2 API
+    this.settings.debug_enabled = this.settings.debug; // Here to maintain v2 API
 
     // Event Handlers
     this.settings.return_upload_start_handler = this.returnUploadStart;
@@ -492,7 +492,7 @@ KindEditor.plugin('multiimage', function (K){
   };
 
   // Private: loadFlash replaces the button_placeholder element with the flash movie.
-  SWFUpload.prototype.loadFlash = function (){
+  SWFUpload.prototype.loadFlash = function() {
     var targetElement, tempParent;
 
     // Make sure an element with the ID we are going to use doesn't already exist
@@ -509,7 +509,7 @@ KindEditor.plugin('multiimage', function (K){
 
     // Append the container and load the flash
     tempParent = document.createElement("div");
-    tempParent.innerHTML = this.getFlashHTML();	// Using innerHTML is non-standard but the only sensible way to dynamically add Flash in IE (and maybe other browsers)
+    tempParent.innerHTML = this.getFlashHTML(); // Using innerHTML is non-standard but the only sensible way to dynamically add Flash in IE (and maybe other browsers)
     targetElement.parentNode.replaceChild(tempParent.firstChild, targetElement);
 
     // Fix IE Flash/Form bug
@@ -520,7 +520,7 @@ KindEditor.plugin('multiimage', function (K){
   };
 
   // Private: getFlashHTML generates the object tag needed to embed the flash in to the document
-  SWFUpload.prototype.getFlashHTML = function (){
+  SWFUpload.prototype.getFlashHTML = function() {
     // Flash Satay object syntax: http://www.alistapart.com/articles/flashsatay
     // Fix bug for IE9
     // http://www.kindsoft.net/view.php?bbsid=7&postid=5825&pagenum=1
@@ -542,7 +542,7 @@ KindEditor.plugin('multiimage', function (K){
 
   // Private: getFlashVars builds the parameter string that will be passed
   // to flash in the flashvars param.
-  SWFUpload.prototype.getFlashVars = function (){
+  SWFUpload.prototype.getFlashVars = function() {
     // Build a string from the post param object
     var paramString = this.buildParamString();
     var httpSuccessString = this.settings.http_success.join(",");
@@ -578,7 +578,7 @@ KindEditor.plugin('multiimage', function (K){
 
   // Public: getMovieElement retrieves the DOM reference to the Flash element added by SWFUpload
   // The element is cached after the first lookup
-  SWFUpload.prototype.getMovieElement = function (){
+  SWFUpload.prototype.getMovieElement = function() {
     if (this.movieElement == undefined) {
       this.movieElement = document.getElementById(this.movieName);
     }
@@ -592,7 +592,7 @@ KindEditor.plugin('multiimage', function (K){
 
   // Private: buildParamString takes the name/value pairs in the post_params setting object
   // and joins them up in to a string formatted "name=value&amp;name=value"
-  SWFUpload.prototype.buildParamString = function (){
+  SWFUpload.prototype.buildParamString = function() {
     var postParams = this.settings.post_params;
     var paramStringPairs = [];
 
@@ -611,7 +611,7 @@ KindEditor.plugin('multiimage', function (K){
   // all references to the SWF, and other objects so memory is properly freed.
   // Returns true if everything was destroyed. Returns a false if a failure occurs leaving SWFUpload in an inconsistant state.
   // Credits: Major improvements provided by steffen
-  SWFUpload.prototype.destroy = function (){
+  SWFUpload.prototype.destroy = function() {
     try {
       // Make sure Flash is done before we try to remove it
       this.cancelUpload(null, false);
@@ -659,7 +659,7 @@ KindEditor.plugin('multiimage', function (K){
   // information about this SWFUpload instance.
   // This function (and any references to it) can be deleted when placing
   // SWFUpload in production.
-  SWFUpload.prototype.displayDebugInfo = function (){
+  SWFUpload.prototype.displayDebugInfo = function() {
     this.debug(
       [
         "---SWFUpload Instance Info---\n",
@@ -715,7 +715,7 @@ KindEditor.plugin('multiimage', function (K){
    the maintain v2 API compatibility
    */
   // Public: (Deprecated) addSetting adds a setting value. If the value given is undefined or null then the default_value is used.
-  SWFUpload.prototype.addSetting = function (name, value, default_value){
+  SWFUpload.prototype.addSetting = function(name, value, default_value) {
     if (value == undefined) {
       return (this.settings[name] = default_value);
     } else {
@@ -724,7 +724,7 @@ KindEditor.plugin('multiimage', function (K){
   };
 
   // Public: (Deprecated) getSetting gets a setting. Returns an empty string if the setting was not found.
-  SWFUpload.prototype.getSetting = function (name){
+  SWFUpload.prototype.getSetting = function(name) {
     if (this.settings[name] != undefined) {
       return this.settings[name];
     }
@@ -735,7 +735,7 @@ KindEditor.plugin('multiimage', function (K){
   // Private: callFlash handles function calls made to the Flash element.
   // Calls are made with a setTimeout for some functions to work around
   // bugs in the ExternalInterface library.
-  SWFUpload.prototype.callFlash = function (functionName, argumentArray){
+  SWFUpload.prototype.callFlash = function(functionName, argumentArray) {
     argumentArray = argumentArray || [];
 
     var movieElement = this.getMovieElement();
@@ -766,7 +766,7 @@ KindEditor.plugin('multiimage', function (K){
   // WARNING: this function does not work in Flash Player 10
   // Public: selectFile causes a File Selection Dialog window to appear.  This
   // dialog only allows 1 file to be selected.
-  SWFUpload.prototype.selectFile = function (){
+  SWFUpload.prototype.selectFile = function() {
     this.callFlash("SelectFile");
   };
 
@@ -776,20 +776,20 @@ KindEditor.plugin('multiimage', function (K){
   // Flash Bug Warning: Flash limits the number of selectable files based on the combined length of the file names.
   // If the selection name length is too long the dialog will fail in an unpredictable manner.  There is no work-around
   // for this bug.
-  SWFUpload.prototype.selectFiles = function (){
+  SWFUpload.prototype.selectFiles = function() {
     this.callFlash("SelectFiles");
   };
 
   // Public: startUpload starts uploading the first file in the queue unless
   // the optional parameter 'fileID' specifies the ID
-  SWFUpload.prototype.startUpload = function (fileID){
+  SWFUpload.prototype.startUpload = function(fileID) {
     this.callFlash("StartUpload", [fileID]);
   };
 
   // Public: cancelUpload cancels any queued file.  The fileID parameter may be the file ID or index.
   // If you do not specify a fileID the current uploading file or first file in the queue is cancelled.
   // If you do not want the uploadError event to trigger you can specify false for the triggerErrorEvent parameter.
-  SWFUpload.prototype.cancelUpload = function (fileID, triggerErrorEvent){
+  SWFUpload.prototype.cancelUpload = function(fileID, triggerErrorEvent) {
     if (triggerErrorEvent !== false) {
       triggerErrorEvent = true;
     }
@@ -798,7 +798,7 @@ KindEditor.plugin('multiimage', function (K){
 
   // Public: stopUpload stops the current upload and requeues the file at the beginning of the queue.
   // If nothing is currently uploading then nothing happens.
-  SWFUpload.prototype.stopUpload = function (){
+  SWFUpload.prototype.stopUpload = function() {
     this.callFlash("StopUpload");
   };
 
@@ -811,7 +811,7 @@ KindEditor.plugin('multiimage', function (K){
    * *********************** */
 
   // Public: getStats gets the file statistics object.
-  SWFUpload.prototype.getStats = function (){
+  SWFUpload.prototype.getStats = function() {
     return this.callFlash("GetStats");
   };
 
@@ -819,13 +819,13 @@ KindEditor.plugin('multiimage', function (K){
   // change the statistics but you can.  Changing the statistics does not
   // affect SWFUpload accept for the successful_uploads count which is used
   // by the upload_limit setting to determine how many files the user may upload.
-  SWFUpload.prototype.setStats = function (statsObject){
+  SWFUpload.prototype.setStats = function(statsObject) {
     this.callFlash("SetStats", [statsObject]);
   };
 
   // Public: getFile retrieves a File object by ID or Index.  If the file is
   // not found then 'null' is returned.
-  SWFUpload.prototype.getFile = function (fileID){
+  SWFUpload.prototype.getFile = function(fileID) {
     if (typeof(fileID) === "number") {
       return this.callFlash("GetFileByIndex", [fileID]);
     } else {
@@ -836,85 +836,85 @@ KindEditor.plugin('multiimage', function (K){
   // Public: addFileParam sets a name/value pair that will be posted with the
   // file specified by the Files ID.  If the name already exists then the
   // exiting value will be overwritten.
-  SWFUpload.prototype.addFileParam = function (fileID, name, value){
+  SWFUpload.prototype.addFileParam = function(fileID, name, value) {
     return this.callFlash("AddFileParam", [fileID, name, value]);
   };
 
   // Public: removeFileParam removes a previously set (by addFileParam) name/value
   // pair from the specified file.
-  SWFUpload.prototype.removeFileParam = function (fileID, name){
+  SWFUpload.prototype.removeFileParam = function(fileID, name) {
     this.callFlash("RemoveFileParam", [fileID, name]);
   };
 
   // Public: setUploadUrl changes the upload_url setting.
-  SWFUpload.prototype.setUploadURL = function (url){
+  SWFUpload.prototype.setUploadURL = function(url) {
     this.settings.upload_url = url.toString();
     this.callFlash("SetUploadURL", [url]);
   };
 
   // Public: setPostParams changes the post_params setting
-  SWFUpload.prototype.setPostParams = function (paramsObject){
+  SWFUpload.prototype.setPostParams = function(paramsObject) {
     this.settings.post_params = paramsObject;
     this.callFlash("SetPostParams", [paramsObject]);
   };
 
   // Public: addPostParam adds post name/value pair.  Each name can have only one value.
-  SWFUpload.prototype.addPostParam = function (name, value){
+  SWFUpload.prototype.addPostParam = function(name, value) {
     this.settings.post_params[name] = value;
     this.callFlash("SetPostParams", [this.settings.post_params]);
   };
 
   // Public: removePostParam deletes post name/value pair.
-  SWFUpload.prototype.removePostParam = function (name){
+  SWFUpload.prototype.removePostParam = function(name) {
     delete this.settings.post_params[name];
     this.callFlash("SetPostParams", [this.settings.post_params]);
   };
 
   // Public: setFileTypes changes the file_types setting and the file_types_description setting
-  SWFUpload.prototype.setFileTypes = function (types, description){
+  SWFUpload.prototype.setFileTypes = function(types, description) {
     this.settings.file_types = types;
     this.settings.file_types_description = description;
     this.callFlash("SetFileTypes", [types, description]);
   };
 
   // Public: setFileSizeLimit changes the file_size_limit setting
-  SWFUpload.prototype.setFileSizeLimit = function (fileSizeLimit){
+  SWFUpload.prototype.setFileSizeLimit = function(fileSizeLimit) {
     this.settings.file_size_limit = fileSizeLimit;
     this.callFlash("SetFileSizeLimit", [fileSizeLimit]);
   };
 
   // Public: setFileUploadLimit changes the file_upload_limit setting
-  SWFUpload.prototype.setFileUploadLimit = function (fileUploadLimit){
+  SWFUpload.prototype.setFileUploadLimit = function(fileUploadLimit) {
     this.settings.file_upload_limit = fileUploadLimit;
     this.callFlash("SetFileUploadLimit", [fileUploadLimit]);
   };
 
   // Public: setFileQueueLimit changes the file_queue_limit setting
-  SWFUpload.prototype.setFileQueueLimit = function (fileQueueLimit){
+  SWFUpload.prototype.setFileQueueLimit = function(fileQueueLimit) {
     this.settings.file_queue_limit = fileQueueLimit;
     this.callFlash("SetFileQueueLimit", [fileQueueLimit]);
   };
 
   // Public: setFilePostName changes the file_post_name setting
-  SWFUpload.prototype.setFilePostName = function (filePostName){
+  SWFUpload.prototype.setFilePostName = function(filePostName) {
     this.settings.file_post_name = filePostName;
     this.callFlash("SetFilePostName", [filePostName]);
   };
 
   // Public: setUseQueryString changes the use_query_string setting
-  SWFUpload.prototype.setUseQueryString = function (useQueryString){
+  SWFUpload.prototype.setUseQueryString = function(useQueryString) {
     this.settings.use_query_string = useQueryString;
     this.callFlash("SetUseQueryString", [useQueryString]);
   };
 
   // Public: setRequeueOnError changes the requeue_on_error setting
-  SWFUpload.prototype.setRequeueOnError = function (requeueOnError){
+  SWFUpload.prototype.setRequeueOnError = function(requeueOnError) {
     this.settings.requeue_on_error = requeueOnError;
     this.callFlash("SetRequeueOnError", [requeueOnError]);
   };
 
   // Public: setHTTPSuccess changes the http_success setting
-  SWFUpload.prototype.setHTTPSuccess = function (http_status_codes){
+  SWFUpload.prototype.setHTTPSuccess = function(http_status_codes) {
     if (typeof http_status_codes === "string") {
       http_status_codes = http_status_codes.replace(" ", "").split(",");
     }
@@ -924,19 +924,19 @@ KindEditor.plugin('multiimage', function (K){
   };
 
   // Public: setHTTPSuccess changes the http_success setting
-  SWFUpload.prototype.setAssumeSuccessTimeout = function (timeout_seconds){
+  SWFUpload.prototype.setAssumeSuccessTimeout = function(timeout_seconds) {
     this.settings.assume_success_timeout = timeout_seconds;
     this.callFlash("SetAssumeSuccessTimeout", [timeout_seconds]);
   };
 
   // Public: setDebugEnabled changes the debug_enabled setting
-  SWFUpload.prototype.setDebugEnabled = function (debugEnabled){
+  SWFUpload.prototype.setDebugEnabled = function(debugEnabled) {
     this.settings.debug_enabled = debugEnabled;
     this.callFlash("SetDebugEnabled", [debugEnabled]);
   };
 
   // Public: setButtonImageURL loads a button image sprite
-  SWFUpload.prototype.setButtonImageURL = function (buttonImageURL){
+  SWFUpload.prototype.setButtonImageURL = function(buttonImageURL) {
     if (buttonImageURL == undefined) {
       buttonImageURL = "";
     }
@@ -946,7 +946,7 @@ KindEditor.plugin('multiimage', function (K){
   };
 
   // Public: setButtonDimensions resizes the Flash Movie and button
-  SWFUpload.prototype.setButtonDimensions = function (width, height){
+  SWFUpload.prototype.setButtonDimensions = function(width, height) {
     this.settings.button_width = width;
     this.settings.button_height = height;
 
@@ -959,35 +959,35 @@ KindEditor.plugin('multiimage', function (K){
     this.callFlash("SetButtonDimensions", [width, height]);
   };
   // Public: setButtonText Changes the text overlaid on the button
-  SWFUpload.prototype.setButtonText = function (html){
+  SWFUpload.prototype.setButtonText = function(html) {
     this.settings.button_text = html;
     this.callFlash("SetButtonText", [html]);
   };
   // Public: setButtonTextPadding changes the top and left padding of the text overlay
-  SWFUpload.prototype.setButtonTextPadding = function (left, top){
+  SWFUpload.prototype.setButtonTextPadding = function(left, top) {
     this.settings.button_text_top_padding = top;
     this.settings.button_text_left_padding = left;
     this.callFlash("SetButtonTextPadding", [left, top]);
   };
 
   // Public: setButtonTextStyle changes the CSS used to style the HTML/Text overlaid on the button
-  SWFUpload.prototype.setButtonTextStyle = function (css){
+  SWFUpload.prototype.setButtonTextStyle = function(css) {
     this.settings.button_text_style = css;
     this.callFlash("SetButtonTextStyle", [css]);
   };
   // Public: setButtonDisabled disables/enables the button
-  SWFUpload.prototype.setButtonDisabled = function (isDisabled){
+  SWFUpload.prototype.setButtonDisabled = function(isDisabled) {
     this.settings.button_disabled = isDisabled;
     this.callFlash("SetButtonDisabled", [isDisabled]);
   };
   // Public: setButtonAction sets the action that occurs when the button is clicked
-  SWFUpload.prototype.setButtonAction = function (buttonAction){
+  SWFUpload.prototype.setButtonAction = function(buttonAction) {
     this.settings.button_action = buttonAction;
     this.callFlash("SetButtonAction", [buttonAction]);
   };
 
   // Public: setButtonCursor changes the mouse cursor displayed when hovering over the button
-  SWFUpload.prototype.setButtonCursor = function (cursor){
+  SWFUpload.prototype.setButtonCursor = function(cursor) {
     this.settings.button_cursor = cursor;
     this.callFlash("SetButtonCursor", [cursor]);
   };
@@ -1005,7 +1005,7 @@ KindEditor.plugin('multiimage', function (K){
    the ExternalInterface bugs are avoided.
    ******************************* */
 
-  SWFUpload.prototype.queueEvent = function (handlerName, argumentArray){
+  SWFUpload.prototype.queueEvent = function(handlerName, argumentArray) {
     // Warning: Don't call this.debug inside here or you'll create an infinite loop
 
     if (argumentArray == undefined) {
@@ -1017,12 +1017,12 @@ KindEditor.plugin('multiimage', function (K){
     var self = this;
     if (typeof this.settings[handlerName] === "function") {
       // Queue the event
-      this.eventQueue.push(function (){
+      this.eventQueue.push(function() {
         this.settings[handlerName].apply(this, argumentArray);
       });
 
       // Execute the next queued event
-      setTimeout(function (){
+      setTimeout(function() {
         self.executeNextEvent();
       }, 0);
 
@@ -1033,7 +1033,7 @@ KindEditor.plugin('multiimage', function (K){
 
   // Private: Causes the next event in the queue to be executed.  Since events are queued using a setTimeout
   // we must queue them in order to garentee that they are executed in order.
-  SWFUpload.prototype.executeNextEvent = function (){
+  SWFUpload.prototype.executeNextEvent = function() {
     // Warning: Don't call this.debug inside here or you'll create an infinite loop
 
     var f = this.eventQueue ? this.eventQueue.shift() : null;
@@ -1045,7 +1045,7 @@ KindEditor.plugin('multiimage', function (K){
   // Private: unescapeFileParams is part of a workaround for a flash bug where objects passed through ExternalInterface cannot have
   // properties that contain characters that are not valid for JavaScript identifiers. To work around this
   // the Flash Component escapes the parameter names and we must unescape again before passing them along.
-  SWFUpload.prototype.unescapeFilePostParams = function (file){
+  SWFUpload.prototype.unescapeFilePostParams = function(file) {
     var reg = /[$]([0-9a-f]{4})/i;
     var unescapedPost = {};
     var uk;
@@ -1069,7 +1069,7 @@ KindEditor.plugin('multiimage', function (K){
   };
 
   // Private: Called by Flash to see if JS can call in to Flash (test if External Interface is working)
-  SWFUpload.prototype.testExternalInterface = function (){
+  SWFUpload.prototype.testExternalInterface = function() {
     try {
       return this.callFlash("TestExternalInterface");
     } catch (ex) {
@@ -1079,7 +1079,7 @@ KindEditor.plugin('multiimage', function (K){
 
   // Private: This event is called by Flash when it has finished loading. Don't modify this.
   // Use the swfupload_loaded_handler event setting to execute custom code when SWFUpload has loaded.
-  SWFUpload.prototype.flashReady = function (){
+  SWFUpload.prototype.flashReady = function() {
     // Check that the movie element is loaded correctly with its ExternalInterface methods defined
     var movieElement = this.getMovieElement();
 
@@ -1095,7 +1095,7 @@ KindEditor.plugin('multiimage', function (K){
 
   // Private: removes Flash added fuctions to the DOM node to prevent memory leaks in IE.
   // This function is called by Flash each time the ExternalInterface functions are created.
-  SWFUpload.prototype.cleanUp = function (movieElement){
+  SWFUpload.prototype.cleanUp = function(movieElement) {
     // Pro-actively unhook all the Flash functions
     try {
       if (this.movieElement && typeof(movieElement.CallFunction) === "unknown") { // We only want to do this in IE
@@ -1105,8 +1105,7 @@ KindEditor.plugin('multiimage', function (K){
             if (typeof(movieElement[key]) === "function") {
               movieElement[key] = null;
             }
-          } catch (ex) {
-          }
+          } catch (ex) {}
         }
       }
     } catch (ex1) {
@@ -1115,7 +1114,7 @@ KindEditor.plugin('multiimage', function (K){
 
     // Fix Flashes own cleanup code so if the SWFMovie was removed from the page
     // it doesn't display errors.
-    window["__flash__removeCallback"] = function (instance, name){
+    window["__flash__removeCallback"] = function(instance, name) {
       try {
         if (instance) {
           instance[name] = null;
@@ -1128,34 +1127,34 @@ KindEditor.plugin('multiimage', function (K){
   };
 
   /* This is a chance to do something before the browse window opens */
-  SWFUpload.prototype.fileDialogStart = function (){
+  SWFUpload.prototype.fileDialogStart = function() {
     this.queueEvent("file_dialog_start_handler");
   };
 
   /* Called when a file is successfully added to the queue. */
-  SWFUpload.prototype.fileQueued = function (file){
+  SWFUpload.prototype.fileQueued = function(file) {
     file = this.unescapeFilePostParams(file);
     this.queueEvent("file_queued_handler", file);
   };
 
   /* Handle errors that occur when an attempt to queue a file fails. */
-  SWFUpload.prototype.fileQueueError = function (file, errorCode, message){
+  SWFUpload.prototype.fileQueueError = function(file, errorCode, message) {
     file = this.unescapeFilePostParams(file);
     this.queueEvent("file_queue_error_handler", [file, errorCode, message]);
   };
 
   /* Called after the file dialog has closed and the selected files have been queued.
    You could call startUpload here if you want the queued files to begin uploading immediately. */
-  SWFUpload.prototype.fileDialogComplete = function (numFilesSelected, numFilesQueued, numFilesInQueue){
+  SWFUpload.prototype.fileDialogComplete = function(numFilesSelected, numFilesQueued, numFilesInQueue) {
     this.queueEvent("file_dialog_complete_handler", [numFilesSelected, numFilesQueued, numFilesInQueue]);
   };
 
-  SWFUpload.prototype.uploadStart = function (file){
+  SWFUpload.prototype.uploadStart = function(file) {
     file = this.unescapeFilePostParams(file);
     this.queueEvent("return_upload_start_handler", file);
   };
 
-  SWFUpload.prototype.returnUploadStart = function (file){
+  SWFUpload.prototype.returnUploadStart = function(file) {
     var returnValue;
     if (typeof this.settings.upload_start_handler === "function") {
       file = this.unescapeFilePostParams(file);
@@ -1175,29 +1174,29 @@ KindEditor.plugin('multiimage', function (K){
     this.callFlash("ReturnUploadStart", [returnValue]);
   };
 
-  SWFUpload.prototype.uploadProgress = function (file, bytesComplete, bytesTotal){
+  SWFUpload.prototype.uploadProgress = function(file, bytesComplete, bytesTotal) {
     file = this.unescapeFilePostParams(file);
     this.queueEvent("upload_progress_handler", [file, bytesComplete, bytesTotal]);
   };
 
-  SWFUpload.prototype.uploadError = function (file, errorCode, message){
+  SWFUpload.prototype.uploadError = function(file, errorCode, message) {
     file = this.unescapeFilePostParams(file);
     this.queueEvent("upload_error_handler", [file, errorCode, message]);
   };
 
-  SWFUpload.prototype.uploadSuccess = function (file, serverData, responseReceived){
+  SWFUpload.prototype.uploadSuccess = function(file, serverData, responseReceived) {
     file = this.unescapeFilePostParams(file);
     this.queueEvent("upload_success_handler", [file, serverData, responseReceived]);
   };
 
-  SWFUpload.prototype.uploadComplete = function (file){
+  SWFUpload.prototype.uploadComplete = function(file) {
     file = this.unescapeFilePostParams(file);
     this.queueEvent("upload_complete_handler", file);
   };
 
   /* Called by SWFUpload JavaScript and Flash functions when debug is enabled. By default it writes messages to the
    internal debug console.  You can override this event and have messages written where you want. */
-  SWFUpload.prototype.debug = function (message){
+  SWFUpload.prototype.debug = function(message) {
     this.queueEvent("debug_handler", message);
   };
 
@@ -1217,7 +1216,7 @@ KindEditor.plugin('multiimage', function (K){
   // Private: debugMessage is the default debug_handler.  If you want to print debug messages
   // call the debug() function.  When overriding the function your own function should
   // check to see if the debug setting is true before outputting debug information.
-  SWFUpload.prototype.debugMessage = function (message){
+  SWFUpload.prototype.debugMessage = function(message) {
     if (this.settings.debug) {
       var exceptionMessage, exceptionValues = [];
 
@@ -1239,7 +1238,7 @@ KindEditor.plugin('multiimage', function (K){
   };
 
   SWFUpload.Console = {};
-  SWFUpload.Console.writeLine = function (message){
+  SWFUpload.Console.writeLine = function(message) {
     var console, documentForm;
 
     try {
@@ -1270,7 +1269,7 @@ KindEditor.plugin('multiimage', function (K){
   };
 })();
 
-(function (){
+(function() {
   /*
    Queue Plug-in
 
@@ -1287,8 +1286,8 @@ KindEditor.plugin('multiimage', function (K){
   if (typeof(SWFUpload) === "function") {
     SWFUpload.queue = {};
 
-    SWFUpload.prototype.initSettings = (function (oldInitSettings){
-      return function (){
+    SWFUpload.prototype.initSettings = (function(oldInitSettings) {
+      return function() {
         if (typeof(oldInitSettings) === "function") {
           oldInitSettings.call(this);
         }
@@ -1307,12 +1306,12 @@ KindEditor.plugin('multiimage', function (K){
       };
     })(SWFUpload.prototype.initSettings);
 
-    SWFUpload.prototype.startUpload = function (fileID){
+    SWFUpload.prototype.startUpload = function(fileID) {
       this.queueSettings.queue_cancelled_flag = false;
       this.callFlash("StartUpload", [fileID]);
     };
 
-    SWFUpload.prototype.cancelQueue = function (){
+    SWFUpload.prototype.cancelQueue = function() {
       this.queueSettings.queue_cancelled_flag = true;
       this.stopUpload();
 
@@ -1323,7 +1322,7 @@ KindEditor.plugin('multiimage', function (K){
       }
     };
 
-    SWFUpload.queue.uploadStartHandler = function (file){
+    SWFUpload.queue.uploadStartHandler = function(file) {
       var returnValue;
       if (typeof(this.queueSettings.user_upload_start_handler) === "function") {
         returnValue = this.queueSettings.user_upload_start_handler.call(this, file);
@@ -1337,7 +1336,7 @@ KindEditor.plugin('multiimage', function (K){
       return returnValue;
     };
 
-    SWFUpload.queue.uploadCompleteHandler = function (file){
+    SWFUpload.queue.uploadCompleteHandler = function(file) {
       var user_upload_complete_handler = this.queueSettings.user_upload_complete_handler;
       var continueUpload;
 

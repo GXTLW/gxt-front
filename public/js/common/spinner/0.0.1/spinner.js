@@ -6,10 +6,10 @@
 
 var $ = require('inputfix');
 
-function Spinner(value, options){
+function Spinner(value, options) {
   var __EMITTERS__ = {};
 
-  this.__EventEmitter__ = function (event){
+  this.__EventEmitter__ = function(event) {
     var callbacks;
     var emitter = __EMITTERS__[event];
 
@@ -46,22 +46,22 @@ Spinner.INCREMENT = 1;
 Spinner.DECREMENT = -1;
 
 Spinner.prototype = {
-  on: function (event, callback){
+  on: function(event, callback) {
     this.__EventEmitter__(event).on(callback);
 
     return this;
   },
-  off: function (event, callback){
+  off: function(event, callback) {
     this.__EventEmitter__(event).off(callback);
 
     return this;
   },
-  emit: function (event){
+  emit: function(event) {
     this.__EventEmitter__(event).emit.apply(this, [].slice.call(arguments, 1));
 
     return this;
   },
-  val: function (value){
+  val: function(value) {
     if ($.isNumeric(value)) {
       value = +value;
 
@@ -90,12 +90,12 @@ Spinner.prototype = {
 
     return this;
   },
-  step: function (step){
+  step: function(step) {
     this.options.step = Math.abs($.isNumeric(step) ? step : 1);
 
     return this;
   },
-  range: function (range){
+  range: function(range) {
     range = Array.isArray(range) ? range : [];
 
     var min = range[0];
@@ -119,7 +119,7 @@ Spinner.prototype = {
 
     return this;
   },
-  spin: function (direction){
+  spin: function(direction) {
     if (direction === Spinner.INCREMENT || direction === Spinner.DECREMENT) {
       var value = this.value;
       var options = this.options;
@@ -131,11 +131,11 @@ Spinner.prototype = {
   }
 };
 
-$.fn.spinner = function (){
+$.fn.spinner = function() {
   var args = arguments;
   var options = args.length >= 2 ? args[0] : $.extend({}, args[0]);
 
-  return this.each(function (){
+  return this.each(function() {
     var input = $(this);
 
     var spinner = input.data('data-spinner');
@@ -172,7 +172,7 @@ $.fn.spinner = function (){
         ? options.increment.call(this)
         : options.increment;
 
-      var syncInput = function (value, origin){
+      var syncInput = function(value, origin) {
         if (value !== +input.val()) {
           input.val(value);
           input.trigger('spin', [value, origin]);
@@ -190,7 +190,7 @@ $.fn.spinner = function (){
 
       spinner.on('max', syncInput);
 
-      input.on('keypress', function (e){
+      input.on('keypress', function(e) {
         var keyCode = e.keyCode;
 
         //codes for 0-9
@@ -202,7 +202,7 @@ $.fn.spinner = function (){
         }
       });
 
-      input.on('keydown', function (e){
+      input.on('keydown', function(e) {
         var keyCode = e.keyCode;
 
         if (keyCode === 38) {
@@ -212,7 +212,7 @@ $.fn.spinner = function (){
         }
       });
 
-      input.on('input', function (){
+      input.on('input', function() {
         if (!this.value.length) {
           spinner.val(spinner.options.range[0] || 0);
 
@@ -240,13 +240,13 @@ $.fn.spinner = function (){
       decrement = $(decrement);
       increment = $(increment);
 
-      increment.on('click', function (e){
+      increment.on('click', function(e) {
         e.preventDefault();
 
         spinner.spin(Spinner.INCREMENT);
       });
 
-      decrement.on('click', function (e){
+      decrement.on('click', function(e) {
         e.preventDefault();
 
         spinner.spin(Spinner.DECREMENT);

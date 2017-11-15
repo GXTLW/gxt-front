@@ -15,13 +15,13 @@ const util = require('../lib/util');
  * @param options
  * @returns {Function}
  */
-module.exports = function serve(path, root, options){
+module.exports = function serve(path, root, options) {
   // remove / begin
   path = path.replace(/^\/+/, '');
   options = options || {};
   options.root = root || util.cwd;
 
-  return function (ctx, next){
+  return function(ctx, next) {
     if (ctx.method === 'HEAD' || ctx.method === 'GET') {
       let req_path_array = ctx.path.slice(1).split('/');
 
@@ -33,7 +33,7 @@ module.exports = function serve(path, root, options){
           req_path_array = req_path_array.slice(1);
         }
 
-        return send(ctx, req_path_array.join('/') || '/', options).then(()=>{
+        return send(ctx, req_path_array.join('/') || '/', options).then(() => {
           return next();
         });
       }

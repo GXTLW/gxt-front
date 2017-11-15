@@ -1,6 +1,6 @@
 'use strict';
 
-(function (win){
+(function(win) {
   var store = {},
     doc = win.document,
     localStorageName = 'localStorage',
@@ -10,17 +10,17 @@
   store.disabled = false;
   store.version = '1.3.17';
 
-  store.set = function (key, value){};
+  store.set = function(key, value) {};
 
-  store.get = function (key, defaultVal){};
+  store.get = function(key, defaultVal) {};
 
-  store.has = function (key){ return store.get(key) !== undefined; };
+  store.has = function(key) { return store.get(key) !== undefined; };
 
-  store.remove = function (key){};
+  store.remove = function(key) {};
 
-  store.clear = function (){};
+  store.clear = function() {};
 
-  store.transact = function (key, defaultVal, transactionFn){
+  store.transact = function(key, defaultVal, transactionFn) {
     if (transactionFn == null) {
       transactionFn = defaultVal;
       defaultVal = null;
@@ -35,15 +35,15 @@
     store.set(key, val);
   };
 
-  store.getAll = function (){};
+  store.getAll = function() {};
 
-  store.forEach = function (){};
+  store.forEach = function() {};
 
-  store.serialize = function (value){
+  store.serialize = function(value) {
     return JSON.stringify(value);
   };
 
-  store.deserialize = function (value){
+  store.deserialize = function(value) {
     if (typeof value != 'string') {
       return undefined;
     }
@@ -58,42 +58,41 @@
   // Functions to encapsulate questionable FireFox 3.6.13 behavior
   // when about.config::dom.storage.enabled === false
   // See https://github.com/marcuswestin/store.js/issues#issue/13
-  function isLocalStorageNameSupported(){
-    try { return (localStorageName in win && win[localStorageName]) }
-    catch (err) { return false }
+  function isLocalStorageNameSupported() {
+    try { return (localStorageName in win && win[localStorageName]) } catch (err) { return false }
   }
 
   if (isLocalStorageNameSupported()) {
     storage = win[localStorageName];
 
-    store.set = function (key, val){
+    store.set = function(key, val) {
       if (val === undefined) { return store.remove(key) }
       storage.setItem(key, store.serialize(val));
 
       return val;
     };
 
-    store.get = function (key, defaultVal){
+    store.get = function(key, defaultVal) {
       var val = store.deserialize(storage.getItem(key));
 
       return (val === undefined ? defaultVal : val);
     };
 
-    store.remove = function (key){ storage.removeItem(key) };
+    store.remove = function(key) { storage.removeItem(key) };
 
-    store.clear = function (){ storage.clear() };
+    store.clear = function() { storage.clear() };
 
-    store.getAll = function (){
+    store.getAll = function() {
       var ret = {};
 
-      store.forEach(function (key, val){
+      store.forEach(function(key, val) {
         ret[key] = val;
       });
 
       return ret;
     };
 
-    store.forEach = function (callback){
+    store.forEach = function(callback) {
       for (var i = 0; i < storage.length; i++) {
         var key = storage.key(i);
 
@@ -127,8 +126,8 @@
       storageOwner = doc.body;
     }
 
-    var withIEStorage = function (storeFunction){
-      return function (){
+    var withIEStorage = function(storeFunction) {
+      return function() {
         var args = Array.prototype.slice.call(arguments, 0);
         args.unshift(storage);
         // See http://msdn.microsoft.com/en-us/library/ms531081(v=VS.85).aspx
@@ -148,11 +147,11 @@
     // See https://github.com/marcuswestin/store.js/issues/83
     var forbiddenCharsRegex = new RegExp("[!\"#$%&'()*+,/\\\\:;<=>?@[\\]^`{|}~]", "g");
 
-    var ieKeyFix = function (key){
+    var ieKeyFix = function(key) {
       return key.replace(/^d/, '___$&').replace(forbiddenCharsRegex, '___');
     };
 
-    store.set = withIEStorage(function (storage, key, val){
+    store.set = withIEStorage(function(storage, key, val) {
       key = ieKeyFix(key);
 
       if (val === undefined) {
@@ -165,20 +164,20 @@
       return val;
     });
 
-    store.get = withIEStorage(function (storage, key, defaultVal){
+    store.get = withIEStorage(function(storage, key, defaultVal) {
       key = ieKeyFix(key);
       var val = store.deserialize(storage.getAttribute(key));
 
       return (val === undefined ? defaultVal : val);
     });
 
-    store.remove = withIEStorage(function (storage, key){
+    store.remove = withIEStorage(function(storage, key) {
       key = ieKeyFix(key);
       storage.removeAttribute(key);
       storage.save(localStorageName);
     });
 
-    store.clear = withIEStorage(function (storage){
+    store.clear = withIEStorage(function(storage) {
       var attributes = storage.XMLDocument.documentElement.attributes;
 
       storage.load(localStorageName);
@@ -190,17 +189,17 @@
       storage.save(localStorageName);
     });
 
-    store.getAll = function (){
+    store.getAll = function() {
       var ret = {};
 
-      store.forEach(function (key, val){
+      store.forEach(function(key, val) {
         ret[key] = val;
       });
 
       return ret;
     };
 
-    store.forEach = withIEStorage(function (storage, callback){
+    store.forEach = withIEStorage(function(storage, callback) {
       var attributes = storage.XMLDocument.documentElement.attributes;
 
       for (var i = 0, attr; attr = attributes[i]; ++i) {

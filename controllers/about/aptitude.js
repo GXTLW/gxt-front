@@ -5,7 +5,7 @@
 'use strict';
 
 module.exports = {
-  index: ctx=>{
+  index: ctx => {
     ctx.state.title = '公司资质';
 
     ctx.body = ctx.render('apps/about/aptitude');

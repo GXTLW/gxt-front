@@ -7,10 +7,11 @@
  * @licence http://www.kindsoft.net/license.php
  *******************************************************************************/
 
-KindEditor.plugin('clearhtml', function (K){
-  var self = this, name = 'clearhtml';
+KindEditor.plugin('clearhtml', function(K) {
+  var self = this,
+    name = 'clearhtml';
 
-  self.clickToolbar(name, function (){
+  self.clickToolbar(name, function() {
     self.focus();
 
     var html = self.html();

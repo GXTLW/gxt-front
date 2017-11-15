@@ -11,11 +11,11 @@ module.exports = {
     interval: 5000
   },
 
-  isNeeded: function (){
+  isNeeded: function() {
     return this.get('autoplay');
   },
 
-  install: function (){
+  install: function() {
     var element = this.element;
     var EVENT_NS = '.' + this.cid;
     var timer;
@@ -25,7 +25,7 @@ module.exports = {
     // start autoplay
     start();
 
-    function start(){
+    function start() {
       // 停止之前的
       stop();
 
@@ -33,13 +33,13 @@ module.exports = {
       that.paused = false;
 
       // 开始现在的
-      timer = setInterval(function (){
+      timer = setInterval(function() {
         if (that.paused) return;
         that.next();
       }, interval);
     }
 
-    function stop(){
+    function stop() {
       if (timer) {
         clearInterval(timer);
         timer = null;
@@ -52,7 +52,7 @@ module.exports = {
     this.start = start;
 
     // 滚出可视区域后，停止自动播放
-    this._scrollDetect = throttle(function (){
+    this._scrollDetect = throttle(function() {
       that[isInViewport(element) ? 'start' : 'stop']();
     });
     win.on('scroll' + EVENT_NS, this._scrollDetect);
@@ -61,7 +61,7 @@ module.exports = {
     this.element.hover(stop, start);
   },
 
-  destroy: function (){
+  destroy: function() {
     var EVENT_NS = '.' + this.cid;
 
     this.stop && this.stop();
@@ -76,16 +76,16 @@ module.exports = {
 // Helpers
 // -------
 
-function throttle(fn, ms){
+function throttle(fn, ms) {
   ms = ms || 200;
   var throttleTimer;
 
-  function f(){
+  function f() {
     f.stop();
     throttleTimer = setTimeout(fn, ms);
   }
 
-  f.stop = function (){
+  f.stop = function() {
     if (throttleTimer) {
       clearTimeout(throttleTimer);
       throttleTimer = 0;
@@ -95,7 +95,7 @@ function throttle(fn, ms){
   return f;
 }
 
-function isInViewport(element){
+function isInViewport(element) {
   var scrollTop = win.scrollTop();
   var scrollBottom = scrollTop + win.height();
   var elementTop = element.offset().top;

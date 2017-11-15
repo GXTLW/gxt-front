@@ -38,17 +38,13 @@ var Calendar = BaseCalendar.extend({
   },
 
   events: {
-    'click [data-role=prev-year]': function (ev){
-    },
-    'click [data-role=next-year]': function (ev){
-    },
-    'click [data-role=prev-month]': function (ev){
-    },
-    'click [data-role=next-month]': function (ev){
-    }
+    'click [data-role=prev-year]': function(ev) {},
+    'click [data-role=next-year]': function(ev) {},
+    'click [data-role=prev-month]': function(ev) {},
+    'click [data-role=next-month]': function(ev) {}
   },
 
-  setup: function (){
+  setup: function() {
     Calendar.superclass.setup.call(this);
     this.renderPannel();
 
@@ -72,7 +68,7 @@ var Calendar = BaseCalendar.extend({
     this.element.find('.ui-calendar-end .ui-calendar-container').append(this.endDates.element);
   },
 
-  renderPannel: function (){
+  renderPannel: function() {
     var focus = this.get('focus');
 
     var startMonth = this.element.find('[data-role=start-month]');
@@ -102,7 +98,7 @@ var Calendar = BaseCalendar.extend({
     endYear.text(focus.year());
   },
 
-  destroy: function (){
+  destroy: function() {
     this.startDates.destroy();
     this.endDates.destroy();
     Calendar.superclass.destroy.call(this);

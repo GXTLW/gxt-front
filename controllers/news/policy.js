@@ -5,7 +5,7 @@
 'use strict';
 
 module.exports = {
-  index: ctx=>{
+  index: ctx => {
     ctx.state.title = '政策法规';
 
     ctx.body = ctx.render('apps/news/policy');

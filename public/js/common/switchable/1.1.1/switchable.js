@@ -18,14 +18,14 @@ var Switchable = Widget.extend({
     // 可以是 Selector、jQuery 对象、或 DOM 元素集
     triggers: {
       value: [],
-      getter: function (val){
+      getter: function(val) {
         return $(val);
       }
     },
 
     panels: {
       value: [],
-      getter: function (val){
+      getter: function(val) {
         return $(val);
       }
     },
@@ -43,7 +43,7 @@ var Switchable = Widget.extend({
     // 初始切换到哪个面板
     activeIndex: {
       value: 0,
-      setter: function (val){
+      setter: function(val) {
         return parseInt(val) || 0;
       }
     },
@@ -53,7 +53,7 @@ var Switchable = Widget.extend({
     // 有多少屏
     length: {
       readOnly: true,
-      getter: function (){
+      getter: function() {
         return Math.ceil(this.get('panels').length / this.get('step'));
       }
     },
@@ -62,13 +62,13 @@ var Switchable = Widget.extend({
     viewSize: [],
 
     activeTriggerClass: {
-      getter: function (val){
+      getter: function(val) {
         return val ? val : this.get("classPrefix") + '-active';
       }
     }
   },
 
-  setup: function (){
+  setup: function() {
     this._initConstClass();
     this._initElement();
 
@@ -83,19 +83,19 @@ var Switchable = Widget.extend({
     this.render();
   },
 
-  _initConstClass: function (){
+  _initConstClass: function() {
     this.CONST = constClass(this.get('classPrefix'));
   },
-  _initElement: function (){
+  _initElement: function() {
     this.element.addClass(this.CONST.UI_SWITCHABLE);
   },
 
   // 从 HTML 标记中获取各个 role, 替代原来的 markupType
-  _getDatasetRole: function (){
+  _getDatasetRole: function() {
     var self = this;
     var role = {};
     var roles = ['trigger', 'panel', 'nav', 'content'];
-    $.each(roles, function (index, key){
+    $.each(roles, function(index, key) {
       var elems = self.$('[data-role=' + key + ']');
       if (elems.length) {
         role[key] = elems;
@@ -104,7 +104,7 @@ var Switchable = Widget.extend({
     return role;
   },
 
-  _initPanels: function (role){
+  _initPanels: function(role) {
     var panels = this.get('panels');
 
     // 先获取 panels 和 content
@@ -125,7 +125,7 @@ var Switchable = Widget.extend({
     this.get('panels').addClass(this.CONST.PANEL_CLASS);
   },
 
-  _initTriggers: function (role){
+  _initTriggers: function(role) {
     var triggers = this.get('triggers');
 
     // 再获取 triggers 和 nav
@@ -158,12 +158,12 @@ var Switchable = Widget.extend({
     }
 
     this.nav && this.nav.addClass(this.CONST.NAV_CLASS);
-    triggers.addClass(this.CONST.TRIGGER_CLASS).each(function (i, trigger){
+    triggers.addClass(this.CONST.TRIGGER_CLASS).each(function(i, trigger) {
       $(trigger).data('value', i);
     });
   },
 
-  _bindTriggers: function (){
+  _bindTriggers: function() {
     var that = this,
       triggers = this.get('triggers');
 
@@ -175,16 +175,16 @@ var Switchable = Widget.extend({
       triggers.hover(focus, leave);
     }
 
-    function focus(ev){
+    function focus(ev) {
       that._onFocusTrigger(ev.type, $(this).data('value'));
     }
 
-    function leave(){
+    function leave() {
       clearTimeout(that._switchTimer);
     }
   },
 
-  _onFocusTrigger: function (type, index){
+  _onFocusTrigger: function(type, index) {
     var that = this;
 
     // click or tab 键激活时
@@ -194,13 +194,13 @@ var Switchable = Widget.extend({
 
     // hover
     else {
-      this._switchTimer = setTimeout(function (){
+      this._switchTimer = setTimeout(function() {
         that.switchTo(index);
       }, this.get('delay'));
     }
   },
 
-  _initPlugins: function (){
+  _initPlugins: function() {
     this._plugins = [];
 
     this._plug(Effects);
@@ -208,16 +208,16 @@ var Switchable = Widget.extend({
     this._plug(Circular);
   },
   // 切换到指定 index
-  switchTo: function (toIndex){
+  switchTo: function(toIndex) {
     this.set('activeIndex', toIndex);
   },
 
   // change 事件触发的前提是当前值和先前值不一致, 所以无需验证 toIndex !== fromIndex
-  _onRenderActiveIndex: function (toIndex, fromIndex){
+  _onRenderActiveIndex: function(toIndex, fromIndex) {
     this._switchTo(toIndex, fromIndex);
   },
 
-  _switchTo: function (toIndex, fromIndex){
+  _switchTo: function(toIndex, fromIndex) {
     this.trigger('switch', toIndex, fromIndex);
     this._switchTrigger(toIndex, fromIndex);
     this._switchPanel(this._getPanelInfo(toIndex, fromIndex));
@@ -227,7 +227,7 @@ var Switchable = Widget.extend({
     this._isBackward = undefined;
   },
 
-  _switchTrigger: function (toIndex, fromIndex){
+  _switchTrigger: function(toIndex, fromIndex) {
     var triggers = this.get('triggers');
     if (triggers.length < 1) return;
 
@@ -235,13 +235,13 @@ var Switchable = Widget.extend({
     triggers.eq(toIndex).addClass(this.get('activeTriggerClass'));
   },
 
-  _switchPanel: function (panelInfo){
+  _switchPanel: function(panelInfo) {
     // 默认是最简单的切换效果：直接隐藏/显示
     panelInfo.fromPanels.hide();
     panelInfo.toPanels.show();
   },
 
-  _getPanelInfo: function (toIndex, fromIndex){
+  _getPanelInfo: function(toIndex, fromIndex) {
     var panels = this.get('panels').get();
     var step = this.get('step');
 
@@ -263,7 +263,7 @@ var Switchable = Widget.extend({
   },
 
   // 切换到上一视图
-  prev: function (){
+  prev: function() {
     //  设置手工向后切换标识, 外部调用 prev 一样
     this._isBackward = true;
 
@@ -274,7 +274,7 @@ var Switchable = Widget.extend({
   },
 
   // 切换到下一视图
-  next: function (){
+  next: function() {
     this._isBackward = false;
 
     var fromIndex = this.get('activeIndex');
@@ -282,12 +282,13 @@ var Switchable = Widget.extend({
     this.switchTo(index);
   },
 
-  _plug: function (plugin){
+  _plug: function(plugin) {
     var pluginAttrs = plugin.attrs;
 
     if (pluginAttrs) {
       for (var key in pluginAttrs) {
-        if (pluginAttrs.hasOwnProperty(key) &&
+        if (pluginAttrs.hasOwnProperty(key)
+          &&
           // 不覆盖用户传入的配置
           !(key in this.attrs)) {
           this.set(key, pluginAttrs[key]);
@@ -303,11 +304,11 @@ var Switchable = Widget.extend({
     this._plugins.push(plugin);
   },
 
-  destroy: function (){
+  destroy: function() {
     // todo: events
     var that = this;
 
-    $.each(this._plugins, function (i, plugin){
+    $.each(this._plugins, function(i, plugin) {
       if (plugin.destroy) {
         plugin.destroy.call(that);
       }
@@ -322,7 +323,7 @@ module.exports = Switchable;
 // Helpers
 // -------
 
-function generateTriggersMarkup(length, activeIndex, activeTriggerClass, justChildren){
+function generateTriggersMarkup(length, activeIndex, activeTriggerClass, justChildren) {
   var nav = $('<ul>');
 
   for (var i = 0; i < length; i++) {
@@ -339,7 +340,7 @@ function generateTriggersMarkup(length, activeIndex, activeTriggerClass, justChi
 
 // 内部默认的 className
 
-function constClass(classPrefix){
+function constClass(classPrefix) {
   return {
     UI_SWITCHABLE: classPrefix || '',
     NAV_CLASS: classPrefix ? classPrefix + '-nav' : '',

@@ -10,17 +10,17 @@ var $ = require('jquery');
 // 检查是否为可输入元素浏览器
 var INPUTRE = /^INPUT|TEXTAREA$/,
   ISIE9 = /MSIE 9.0;/i.test(navigator.appVersion || ''),
-  isInput = function (elem){
+  isInput = function(elem) {
     return INPUTRE.test(elem.nodeName);
   };
 
 if ('oninput' in document.createElement('input')) {
-  var handler = function (event){
+  var handler = function(event) {
       event = $.event.fix(event || window.event);
       event.type = 'input';
       return $.event.dispatch.call(this, event);
     },
-    bind = function (){
+    bind = function() {
       if (this.addEventListener) {
         this.addEventListener('input', handler, false);
       } else if (this.attachEvent) {
@@ -28,7 +28,7 @@ if ('oninput' in document.createElement('input')) {
       }
 
     },
-    unbind = function (){
+    unbind = function() {
       if (this.removeEventListener) {
         this.removeEventListener('input', handler, false);
       } else if (this.detachEvent) {
@@ -42,11 +42,11 @@ if ('oninput' in document.createElement('input')) {
      * 初始化事件
      * @returns {*}
      */
-    setup: function (){
+    setup: function() {
       var elem = this;
       if (!isInput(elem)) return false;
       bind.call(this);
-      ISIE9 && $.event.add(elem, 'keydown.ie9-input-fix', function (event){
+      ISIE9 && $.event.add(elem, 'keydown.ie9-input-fix', function(event) {
         event.keyCode === 8 && $.event.trigger('input', null, this);
       });
     },
@@ -54,7 +54,7 @@ if ('oninput' in document.createElement('input')) {
      * 卸载事件
      * @returns {*}
      */
-    teardown: function (){
+    teardown: function() {
       var elem = this;
       if (!isInput(elem)) return false;
       unbind.call(this);
@@ -68,11 +68,11 @@ if ('oninput' in document.createElement('input')) {
      * 初始化事件
      * @returns {*}
      */
-    setup: function (){
+    setup: function() {
       var elem = this;
       if (!isInput(elem)) return false;
 
-      $.event.add(elem, 'propertychange', function (event){
+      $.event.add(elem, 'propertychange', function(event) {
         // 元素属性任何变化都会触发propertychange事件，需要屏蔽掉非value的改变，以便接近标准的onput事件
         event.originalEvent.propertyName === 'value' && $.event.trigger('input', null, this);
       });
@@ -81,7 +81,7 @@ if ('oninput' in document.createElement('input')) {
      * 卸载事件
      * @returns {*}
      */
-    teardown: function (){
+    teardown: function() {
       var elem = this;
       if (!isInput(elem)) return false;
       $.event.remove(elem, 'propertychange');
@@ -91,10 +91,10 @@ if ('oninput' in document.createElement('input')) {
 
 // 函数接口
 $.fn.extend({
-  input: function (fn){
+  input: function(fn) {
     return fn ? this.on('input', fn) : this.trigger('input');
   },
-  uninput: function (fn){
+  uninput: function(fn) {
     return this.off('input', fn);
   }
 });

@@ -19,7 +19,7 @@ var global = window;
  * @see https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Array/forEach#Compatibility
  */
 if (!Array.prototype.forEach) {
-  Array.prototype.forEach = function (fn, scope){
+  Array.prototype.forEach = function(fn, scope) {
     for (var i = 0, len = this.length; i < len; ++i) {
       fn.call(scope || this, this[i], i, this);
     }
@@ -31,7 +31,7 @@ if (!Array.prototype.forEach) {
  * @param  {string} s encoded value
  * @return {string}   decoded value
  */
-function decode(s){
+function decode(s) {
   s = decodeURIComponent(s);
   s = s.replace('+', ' ');
   return s;
@@ -42,13 +42,13 @@ function decode(s){
  * @param  {string} str uri
  * @return {object}     parts
  */
-function parseUri(str){
+function parseUri(str) {
   var parser = /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/)?((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/,
     parserKeys = ["source", "protocol", "authority", "userInfo", "user", "password", "host", "port", "relative", "path", "directory", "file", "query", "anchor"],
     m = parser.exec(str || ''),
     parts = {};
 
-  parserKeys.forEach(function (key, i){
+  parserKeys.forEach(function(key, i) {
     parts[key] = m[i] || '';
   });
   return parts;
@@ -59,7 +59,7 @@ function parseUri(str){
  * @param  {string} str query
  * @return {array}      array of arrays (key/value pairs)
  */
-function parseQuery(str){
+function parseQuery(str) {
   var i, ps, p, kvp, k, v,
     pairs = [];
 
@@ -88,7 +88,7 @@ function parseQuery(str){
  * @constructor
  * @param {string} str
  */
-function Uri(str){
+function Uri(str) {
   this.uriParts = parseUri(str);
   this.queryPairs = parseQuery(this.uriParts.query);
   this.hasAuthorityPrefixUserPref = null;
@@ -97,8 +97,8 @@ function Uri(str){
 /**
  * Define getter/setter methods
  */
-['protocol', 'userInfo', 'host', 'port', 'path', 'anchor'].forEach(function (key){
-  Uri.prototype[key] = function (val){
+['protocol', 'userInfo', 'host', 'port', 'path', 'anchor'].forEach(function(key) {
+  Uri.prototype[key] = function(val) {
     if (typeof val !== 'undefined') {
       this.uriParts[key] = val;
     }
@@ -111,7 +111,7 @@ function Uri(str){
  * @param  {Boolean}  val
  * @return {Boolean}
  */
-Uri.prototype.hasAuthorityPrefix = function (val){
+Uri.prototype.hasAuthorityPrefix = function(val) {
   if (typeof val !== 'undefined') {
     this.hasAuthorityPrefixUserPref = val;
   }
@@ -128,7 +128,7 @@ Uri.prototype.hasAuthorityPrefix = function (val){
  * @param  {string} [val]   set a new query string
  * @return {string}         query string
  */
-Uri.prototype.query = function (val){
+Uri.prototype.query = function(val) {
   var s = '',
     i, param;
 
@@ -159,7 +159,7 @@ Uri.prototype.query = function (val){
  * @param  {string} key query key
  * @return {string}     first value found for key
  */
-Uri.prototype.getQueryParamValue = function (key){
+Uri.prototype.getQueryParamValue = function(key) {
   var param, i;
   for (i = 0; i < this.queryPairs.length; i++) {
     param = this.queryPairs[i];
@@ -174,7 +174,7 @@ Uri.prototype.getQueryParamValue = function (key){
  * @param  {string} key query key
  * @return {array}      array of values
  */
-Uri.prototype.getQueryParamValues = function (key){
+Uri.prototype.getQueryParamValues = function(key) {
   var arr = [],
     i, param;
   for (i = 0; i < this.queryPairs.length; i++) {
@@ -192,7 +192,7 @@ Uri.prototype.getQueryParamValues = function (key){
  * @param  {val}    [val]   remove a specific value, otherwise removes all
  * @return {Uri}            returns self for fluent chaining
  */
-Uri.prototype.deleteQueryParam = function (key, val){
+Uri.prototype.deleteQueryParam = function(key, val) {
   var arr = [],
     i, param, keyMatchesFilter, valMatchesFilter;
 
@@ -219,7 +219,7 @@ Uri.prototype.deleteQueryParam = function (key, val){
  * @param  {integer} [index]    specific index to add the value at
  * @return {Uri}                returns self for fluent chaining
  */
-Uri.prototype.addQueryParam = function (key, val, index){
+Uri.prototype.addQueryParam = function(key, val, index) {
   if (arguments.length === 3 && index !== -1) {
     index = Math.min(index, this.queryPairs.length);
     this.queryPairs.splice(index, 0, [key, val]);
@@ -236,7 +236,7 @@ Uri.prototype.addQueryParam = function (key, val, index){
  * @param  {string} [oldVal]    replace only one specific value (otherwise replaces all)
  * @return {Uri}                returns self for fluent chaining
  */
-Uri.prototype.replaceQueryParam = function (key, newVal, oldVal){
+Uri.prototype.replaceQueryParam = function(key, newVal, oldVal) {
 
   var index = -1,
     i, param;
@@ -267,9 +267,9 @@ Uri.prototype.replaceQueryParam = function (key, newVal, oldVal){
 /**
  * Define fluent setter methods (setProtocol, setHasAuthorityPrefix, etc)
  */
-['protocol', 'hasAuthorityPrefix', 'userInfo', 'host', 'port', 'path', 'query', 'anchor'].forEach(function (key){
+['protocol', 'hasAuthorityPrefix', 'userInfo', 'host', 'port', 'path', 'query', 'anchor'].forEach(function(key) {
   var method = 'set' + key.charAt(0).toUpperCase() + key.slice(1);
-  Uri.prototype[method] = function (val){
+  Uri.prototype[method] = function(val) {
     this[key](val);
     return this;
   };
@@ -279,7 +279,7 @@ Uri.prototype.replaceQueryParam = function (key, newVal, oldVal){
  * Scheme name, colon and doubleslash, as required
  * @return {string} http:// or possibly just //
  */
-Uri.prototype.scheme = function (){
+Uri.prototype.scheme = function() {
 
   var s = '';
 
@@ -303,7 +303,7 @@ Uri.prototype.scheme = function (){
  * @return {string} scheme://user:password@host:port
  * @see  https://developer.mozilla.org/en/nsIURI
  */
-Uri.prototype.origin = function (){
+Uri.prototype.origin = function() {
 
   var s = this.scheme();
 
@@ -328,7 +328,7 @@ Uri.prototype.origin = function (){
  * Serializes the internal state of the Uri object
  * @return {string}
  */
-Uri.prototype.toString = function (){
+Uri.prototype.toString = function() {
 
   var s = this.origin();
 
@@ -360,7 +360,7 @@ Uri.prototype.toString = function (){
  * Clone a Uri object
  * @return {Uri} duplicate copy of the Uri
  */
-Uri.prototype.clone = function (){
+Uri.prototype.clone = function() {
   return new Uri(this.toString());
 };
 

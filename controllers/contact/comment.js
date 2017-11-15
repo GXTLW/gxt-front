@@ -5,7 +5,7 @@
 'use strict';
 
 module.exports = {
-  index: ctx=>{
+  index: ctx => {
     ctx.state.title = '在线留言';
 
     ctx.body = ctx.render('apps/contact/comment');

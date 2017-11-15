@@ -8,7 +8,7 @@
 var $ = require('jquery'),
   Uri = require('jsuri');
 
-function Captcha(captcha, key){
+function Captcha(captcha, key) {
   if (!(this instanceof Captcha))
     return new Captcha(captcha);
 
@@ -19,13 +19,13 @@ function Captcha(captcha, key){
 }
 
 Captcha.prototype = {
-  initialize: function (){
+  initialize: function() {
     var that = this;
-    this.captcha.on('click.captcha', function (){
+    this.captcha.on('click.captcha', function() {
       that.update();
     }).css('cursor', 'pointer');
   },
-  update: function (){
+  update: function() {
     var src = new Uri(this.src)
       .replaceQueryParam(this.key, Date.now())
       .toString();

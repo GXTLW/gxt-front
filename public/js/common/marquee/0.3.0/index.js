@@ -7,8 +7,8 @@
 
 var $ = require('./pause');
 
-$.fn.marquee = function (options){
-  return this.each(function (){
+$.fn.marquee = function(options) {
+  return this.each(function() {
     // Extend the options if any provided
     var loopCount = 3;
     var $this = $(this);
@@ -18,7 +18,7 @@ $.fn.marquee = function (options){
     var $marqueeWrapper, containerWidth, animationCss, verticalDir, elWidth;
 
     // Private methods
-    var _prefixedEvent = function (element, type, callback){
+    var _prefixedEvent = function(element, type, callback) {
       var pfx = ['webkit', 'moz', 'MS', 'o', ''];
 
       for (var p = 0; p < pfx.length; p++) {
@@ -28,7 +28,7 @@ $.fn.marquee = function (options){
       }
     };
 
-    var _objToString = function (obj){
+    var _objToString = function(obj) {
       var tabjson = [];
 
       for (var p in obj) {
@@ -42,13 +42,13 @@ $.fn.marquee = function (options){
       return '{' + tabjson.join(',') + '}';
     };
 
-    var _startAnimationWithDelay = function (){
+    var _startAnimationWithDelay = function() {
       $this.timer = setTimeout(animate, o.delayBeforeStart);
     };
 
     // Public methods
     var methods = {
-      pause: function (){
+      pause: function() {
         if (css3AnimationIsSupported && o.allowCss3Support) {
           $marqueeWrapper.css(playState, 'paused');
         } else {
@@ -64,7 +64,7 @@ $.fn.marquee = function (options){
         $this.trigger('paused');
       },
 
-      resume: function (){
+      resume: function() {
         // resume using css3
         if (css3AnimationIsSupported && o.allowCss3Support) {
           $marqueeWrapper.css(playState, 'running');
@@ -81,11 +81,11 @@ $.fn.marquee = function (options){
         $this.trigger('resumed');
       },
 
-      toggle: function (){
+      toggle: function() {
         methods[$this.data('runningStatus') == 'resumed' ? 'pause' : 'resume']();
       },
 
-      destroy: function (){
+      destroy: function() {
         // Clear timer
         clearTimeout($this.timer);
         // Unbind all events
@@ -117,7 +117,7 @@ $.fn.marquee = function (options){
      jQuery 1.3.2 doesn't support $.data().KEY hence writting the following */
     var attr;
 
-    $.each(o, function (key){
+    $.each(o, function(key) {
       // Check if element has this data attribute
       attr = $this.attr('data-' + key);
 
@@ -258,11 +258,11 @@ $.fn.marquee = function (options){
       }
     }
 
-    var _rePositionVertically = function (){
+    var _rePositionVertically = function() {
       $marqueeWrapper.css('margin-top', o.direction == 'up' ? containerHeight + 'px' : '-' + elHeight + 'px');
     };
 
-    var _rePositionHorizontally = function (){
+    var _rePositionHorizontally = function() {
       $marqueeWrapper.css('margin-left', o.direction == 'left' ? containerWidth + 'px' : '-' + elWidth + 'px');
     };
 
@@ -298,7 +298,7 @@ $.fn.marquee = function (options){
     }
 
     // Animate recursive method
-    var animate = function (){
+    var animate = function() {
       if (o.duplicated) {
         // When duplicated, the first loop will be scroll longer so double the duration
         if (loopCount === 1) {
@@ -441,18 +441,18 @@ $.fn.marquee = function (options){
         }
 
         // Animation iteration event
-        _prefixedEvent($marqueeWrapper[0], 'AnimationIteration', function (){
+        _prefixedEvent($marqueeWrapper[0], 'AnimationIteration', function() {
           $this.trigger('finished');
         });
 
         // Animation stopped
-        _prefixedEvent($marqueeWrapper[0], 'AnimationEnd', function (){
+        _prefixedEvent($marqueeWrapper[0], 'AnimationEnd', function() {
           animate();
           $this.trigger('finished');
         });
       } else {
         // Start animating
-        $marqueeWrapper.animate(animationCss, o.duration, o.easing, function (){
+        $marqueeWrapper.animate(animationCss, o.duration, o.easing, function() {
           // fire event
           $this.trigger('finished');
 

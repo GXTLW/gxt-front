@@ -7,11 +7,12 @@
  * @licence http://www.kindsoft.net/license.php
  *******************************************************************************/
 
-KindEditor.plugin('quickformat', function (K){
-  var self = this, name = 'quickformat',
+KindEditor.plugin('quickformat', function(K) {
+  var self = this,
+    name = 'quickformat',
     blockMap = K.toMap('blockquote,center,div,h1,h2,h3,h4,h5,h6,p');
 
-  function getFirstChild(knode){
+  function getFirstChild(knode) {
     var child = knode.first();
     while (child && child.first()) {
       child = child.first();
@@ -19,12 +20,14 @@ KindEditor.plugin('quickformat', function (K){
     return child;
   }
 
-  self.clickToolbar(name, function (){
+  self.clickToolbar(name, function() {
     self.focus();
     var doc = self.edit.doc,
       range = self.cmd.range,
-      child = K(doc.body).first(), next,
-      nodeList = [], subList = [],
+      child = K(doc.body).first(),
+      next,
+      nodeList = [],
+      subList = [],
       bookmark = range.createBookmark(true);
     while (child) {
       next = child.next();
@@ -45,10 +48,10 @@ KindEditor.plugin('quickformat', function (K){
       }
       child = next;
     }
-    K.each(nodeList, function (i, subList){
+    K.each(nodeList, function(i, subList) {
       var wrapper = K('<p style="text-indent:2em;"></p>', doc);
       subList[0].before(wrapper);
-      K.each(subList, function (i, knode){
+      K.each(subList, function(i, knode) {
         wrapper.append(knode);
       });
     });

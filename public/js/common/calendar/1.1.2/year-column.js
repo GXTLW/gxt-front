@@ -6,7 +6,7 @@ var YearColumn = BaseColumn.extend({
     process: null,
     template: template,
     model: {
-      getter: function (){
+      getter: function() {
         return createYearModel(
           this.get('focus'), this.get('range'), this.get('process')
         );
@@ -15,31 +15,31 @@ var YearColumn = BaseColumn.extend({
   },
 
   events: {
-    'click [data-role=year],[data-role=previous-10-year],[data-role=next-10-year]': function (ev){
+    'click [data-role=year],[data-role=previous-10-year],[data-role=next-10-year]': function(ev) {
       var el = $(ev.target);
       var value = el.data('value');
       this.select(value, el);
     }
   },
 
-  setup: function (){
+  setup: function() {
     YearColumn.superclass.setup.call(this);
-    this.on('change:range', function (){
+    this.on('change:range', function() {
       this.element.html($(this.compileTemplate()).html());
     });
   },
 
-  prev: function (){
+  prev: function() {
     var focus = this.get('focus').add('years', -1);
     return this._sync(focus);
   },
 
-  next: function (){
+  next: function() {
     var focus = this.get('focus').add('years', 1);
     return this._sync(focus);
   },
 
-  select: function (value, el){
+  select: function(value, el) {
     if (el && el.hasClass('disabled-element')) {
       this.trigger('selectDisable', value, el);
       return value;
@@ -53,14 +53,14 @@ var YearColumn = BaseColumn.extend({
     return this._sync(focus, el);
   },
 
-  focus: function (focus){
+  focus: function(focus) {
     focus = focus || this.get('focus');
     var selector = '[data-value="' + focus.year() + '"]';
     this.element.find('.focused-element').removeClass('focused-element');
     this.element.find(selector).addClass('focused-element');
   },
 
-  refresh: function (){
+  refresh: function() {
     var focus = this.get('focus').year();
     var years = this.element.find('[data-role=year]');
     if (focus < years.first().data('value') || focus > years.last().data('value')) {
@@ -68,11 +68,11 @@ var YearColumn = BaseColumn.extend({
     }
   },
 
-  inRange: function (date){
+  inRange: function(date) {
     return isInRange(date, this.get('range'));
   },
 
-  _sync: function (focus, el){
+  _sync: function(focus, el) {
     this.set('focus', focus);
     this.refresh();
     this.focus(focus);
@@ -86,7 +86,7 @@ var YearColumn = BaseColumn.extend({
 module.exports = YearColumn;
 
 // helpers
-function createYearModel(time, range, fn){
+function createYearModel(time, range, fn) {
   var year = time.year();
 
   var items = [
@@ -127,7 +127,7 @@ function createYearModel(time, range, fn){
   return { current: current, items: list };
 }
 
-function process(item, fn){
+function process(item, fn) {
   if (!fn) {
     return item;
   }
@@ -135,7 +135,7 @@ function process(item, fn){
   return fn(item);
 }
 
-function isInRange(date, range){
+function isInRange(date, range) {
   if (range == null) {
     return true;
   }
@@ -174,13 +174,13 @@ function isInRange(date, range){
  </table>
  */
 
-function template(model, options){
+function template(model, options) {
   var _ = options.helpers._;
   var html = '<table class="ui-calendar-year" data-role="year-column">';
 
-  $.each(model.items, function (i, items){
+  $.each(model.items, function(i, items) {
     html += '<tr class="ui-calendar-year-column">';
-    $.each(items, function (i, item){
+    $.each(items, function(i, item) {
       html += '<td data-role="' + item.role + '"';
       if (!item.available) {
         html += ' class="disabled-element"';

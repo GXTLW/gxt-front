@@ -7,15 +7,17 @@
  * @licence http://www.kindsoft.net/license.php
  *******************************************************************************/
 
-KindEditor.plugin('template', function (K){
-  var self = this, name = 'template', lang = self.lang(name + '.'),
+KindEditor.plugin('template', function(K) {
+  var self = this,
+    name = 'template',
+    lang = self.lang(name + '.'),
     htmlPath = self.pluginsPath + name + '/html/';
 
-  function getFilePath(fileName){
+  function getFilePath(fileName) {
     return htmlPath + fileName + '?ver=' + encodeURIComponent(K.DEBUG ? K.TIME : K.VERSION);
   }
 
-  self.clickToolbar(name, function (){
+  self.clickToolbar(name, function() {
     var lang = self.lang(name + '.'),
       arr = [
         '<div style="padding:10px 20px;">',
@@ -24,7 +26,7 @@ KindEditor.plugin('template', function (K){
         '<div class="ke-left">',
         lang.selectTemplate + ' <select>'
       ];
-    K.each(lang.fileList, function (key, val){
+    K.each(lang.fileList, function(key, val) {
       arr.push('<option value="' + key + '">' + val + '</option>');
     });
     html = [
@@ -46,7 +48,7 @@ KindEditor.plugin('template', function (K){
       body: html,
       yesBtn: {
         name: self.lang('yes'),
-        click: function (e){
+        click: function(e) {
           var doc = K.iframeDoc(iframe);
           self[checkbox[0].checked ? 'html' : 'insertHtml'](doc.body.innerHTML).hideDialog().focus();
         }
@@ -57,7 +59,7 @@ KindEditor.plugin('template', function (K){
       iframe = K('iframe', dialog.div);
     checkbox[0].checked = true;
     iframe.attr('src', getFilePath(selectBox.val()));
-    selectBox.change(function (){
+    selectBox.change(function() {
       iframe.attr('src', getFilePath(this.value));
     });
   });

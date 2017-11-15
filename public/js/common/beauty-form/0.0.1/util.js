@@ -11,7 +11,7 @@
 
 module.exports = {
   // 获取当前焦点的元素
-  activeElement: function (){
+  activeElement: function() {
     try {
       // try: ie8~9, iframe #26
       var activeElement = document.activeElement;

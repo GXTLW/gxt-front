@@ -17,7 +17,7 @@ const fstat = thunkify(fs.stat);
  * @param src
  * @returns {boolean}
  */
-function* fexists(src){
+function* fexists(src) {
   try {
     var stats = yield fstat(path.join(util.cwd, src));
 
@@ -37,7 +37,7 @@ function* fexists(src){
  * @param controller_base
  * @returns {string}
  */
-function controller2id(controller, controller_base){
+function controller2id(controller, controller_base) {
   return path.relative(controller_base, controller).slice(0, -3);
 }
 
@@ -48,7 +48,7 @@ function controller2id(controller, controller_base){
  * @param ext
  * @returns {string}
  */
-function id2path(src, src_base, ext){
+function id2path(src, src_base, ext) {
   return util.path2cwd(path.join(src_base, src + ext));
 }
 
@@ -57,7 +57,7 @@ function id2path(src, src_base, ext){
  * @param value
  * @param defs
  */
-function assert(value, defs){
+function assert(value, defs) {
   if (!value || util.string(value)) {
     return defs;
   } else {
@@ -66,7 +66,7 @@ function assert(value, defs){
 }
 
 // exports
-module.exports = function (config){
+module.exports = function(config) {
   config = config || {};
 
   var controller_base = util.realpath(assert(config.controller_base, '/controllers'));
@@ -74,7 +74,7 @@ module.exports = function (config){
   var script_base = util.realpath(assert(config.script_base, '/public/script/apps'));
 
   // middleware
-  return convert(function*(next){
+  return convert(function*(next) {
     var ctx = this;
     var model = ctx.state || {};
     var routeData = ctx.routeData;
@@ -109,10 +109,10 @@ module.exports = function (config){
     // set title
     Object.defineProperty(model, 'title', {
       enumerable: true,
-      set: function (value){
+      set: function(value) {
         title = (value ? value + ' - ' : '') + config.title;
       },
-      get: function (){
+      get: function() {
         return title;
       }
     });

@@ -6,7 +6,7 @@
  * http://zeroclipboard.org/
  * v1.3.2
  */
-(function (){
+(function() {
   "use strict";
   var currentElement;
   var flashState = {
@@ -23,7 +23,7 @@
   var _elementMeta = {};
   var _amdModuleId = null;
   var _cjsModuleId = null;
-  var _swfPath = function (){
+  var _swfPath = function() {
     var i, jsDir, tmpJsPath, jsPath, swfPath = "zeroclipboard.swf";
     if (document.currentScript && (jsPath = document.currentScript.src)) {} else {
       var scripts = document.getElementsByTagName("script");
@@ -62,15 +62,16 @@
     }
     return swfPath;
   }();
-  var _camelizeCssPropName = function (){
-    var matcherRegex = /\-([a-z])/g, replacerFn = function (match, group){
-      return group.toUpperCase();
-    };
-    return function (prop){
+  var _camelizeCssPropName = function() {
+    var matcherRegex = /\-([a-z])/g,
+      replacerFn = function(match, group) {
+        return group.toUpperCase();
+      };
+    return function(prop) {
       return prop.replace(matcherRegex, replacerFn);
     };
   }();
-  var _getStyle = function (el, prop){
+  var _getStyle = function(el, prop) {
     var value, camelProp, tagName, possiblePointers, i, len;
     if (window.getComputedStyle) {
       value = window.getComputedStyle(el, null).getPropertyValue(prop);
@@ -92,7 +93,7 @@
     }
     return value;
   };
-  var _elementMouseOver = function (event){
+  var _elementMouseOver = function(event) {
     if (!event) {
       event = window.event;
     }
@@ -106,7 +107,7 @@
     }
     ZeroClipboard.activate(target);
   };
-  var _addEventHandler = function (element, method, func){
+  var _addEventHandler = function(element, method, func) {
     if (!element || element.nodeType !== 1) {
       return;
     }
@@ -116,7 +117,7 @@
       element.attachEvent("on" + method, func);
     }
   };
-  var _removeEventHandler = function (element, method, func){
+  var _removeEventHandler = function(element, method, func) {
     if (!element || element.nodeType !== 1) {
       return;
     }
@@ -126,7 +127,7 @@
       element.detachEvent("on" + method, func);
     }
   };
-  var _addClass = function (element, value){
+  var _addClass = function(element, value) {
     if (!element || element.nodeType !== 1) {
       return element;
     }
@@ -142,7 +143,8 @@
         if (!element.className) {
           element.className = value;
         } else {
-          var className = " " + element.className + " ", setClass = element.className;
+          var className = " " + element.className + " ",
+            setClass = element.className;
           for (var c = 0, cl = classNames.length; c < cl; c++) {
             if (className.indexOf(" " + classNames[c] + " ") < 0) {
               setClass += " " + classNames[c];
@@ -154,7 +156,7 @@
     }
     return element;
   };
-  var _removeClass = function (element, value){
+  var _removeClass = function(element, value) {
     if (!element || element.nodeType !== 1) {
       return element;
     }
@@ -180,7 +182,7 @@
     }
     return element;
   };
-  var _getZoomFactor = function (){
+  var _getZoomFactor = function() {
     var rect, physicalWidth, logicalWidth, zoomFactor = 1;
     if (typeof document.body.getBoundingClientRect === "function") {
       rect = document.body.getBoundingClientRect();
@@ -190,7 +192,7 @@
     }
     return zoomFactor;
   };
-  var _getDOMObjectPosition = function (obj, defaultZIndex){
+  var _getDOMObjectPosition = function(obj, defaultZIndex) {
     var info = {
       left: 0,
       top: 0,
@@ -218,7 +220,7 @@
     }
     return info;
   };
-  var _cacheBust = function (path, options){
+  var _cacheBust = function(path, options) {
     var cacheBust = options == null || options && options.cacheBust === true && options.useNoCache === true;
     if (cacheBust) {
       return (path.indexOf("?") === -1 ? "?" : "&") + "noCache=" + new Date().getTime();
@@ -226,8 +228,10 @@
       return "";
     }
   };
-  var _vars = function (options){
-    var i, len, domain, str = [], domains = [], trustedOriginsExpanded = [];
+  var _vars = function(options) {
+    var i, len, domain, str = [],
+      domains = [],
+      trustedOriginsExpanded = [];
     if (options.trustedOrigins) {
       if (typeof options.trustedOrigins === "string") {
         domains.push(options.trustedOrigins);
@@ -265,7 +269,7 @@
     }
     return str.join("&");
   };
-  var _inArray = function (elem, array, fromIndex){
+  var _inArray = function(elem, array, fromIndex) {
     if (typeof array.indexOf === "function") {
       return array.indexOf(elem, fromIndex);
     }
@@ -282,21 +286,21 @@
     }
     return -1;
   };
-  var _prepClip = function (elements){
+  var _prepClip = function(elements) {
     if (typeof elements === "string") throw new TypeError("ZeroClipboard doesn't accept query strings.");
     if (!elements.length) return [elements];
     return elements;
   };
-  var _dispatchCallback = function (func, context, args, async){
+  var _dispatchCallback = function(func, context, args, async) {
     if (async) {
-      window.setTimeout(function (){
+      window.setTimeout(function() {
         func.apply(context, args);
       }, 0);
     } else {
       func.apply(context, args);
     }
   };
-  var _getSafeZIndex = function (val){
+  var _getSafeZIndex = function(val) {
     var zIndex, tmp;
     if (val) {
       if (typeof val === "number" && val > 0) {
@@ -314,7 +318,7 @@
     }
     return zIndex || 0;
   };
-  var _deprecationWarning = function (deprecatedApiName, debugEnabled){
+  var _deprecationWarning = function(deprecatedApiName, debugEnabled) {
     if (deprecatedApiName && debugEnabled !== false && typeof console !== "undefined" && console && (console.warn || console.log)) {
       var deprecationWarning = "`" + deprecatedApiName + "` is deprecated. See docs for more info:\n" + "    https://github.com/zeroclipboard/zeroclipboard/blob/master/docs/instructions.md#deprecations";
       if (console.warn) {
@@ -324,7 +328,7 @@
       }
     }
   };
-  var _extend = function (){
+  var _extend = function() {
     var i, len, arg, prop, src, copy, target = arguments[0] || {};
     for (i = 1, len = arguments.length; i < len; i++) {
       if ((arg = arguments[i]) != null) {
@@ -344,7 +348,7 @@
     }
     return target;
   };
-  var _extractDomain = function (originOrUrl){
+  var _extractDomain = function(originOrUrl) {
     if (originOrUrl == null || originOrUrl === "") {
       return null;
     }
@@ -361,8 +365,8 @@
     }
     return originOrUrl || null;
   };
-  var _determineScriptAccess = function (){
-    var _extractAllDomains = function (origins, resultsArray){
+  var _determineScriptAccess = function() {
+    var _extractAllDomains = function(origins, resultsArray) {
       var i, len, tmp;
       if (origins != null && resultsArray[0] !== "*") {
         if (typeof origins === "string") {
@@ -392,7 +396,7 @@
       samedomain: "sameDomain",
       never: "never"
     };
-    return function (currentDomain, configOptions){
+    return function(currentDomain, configOptions) {
       var asaLower, allowScriptAccess = configOptions.allowScriptAccess;
       if (typeof allowScriptAccess === "string" && (asaLower = allowScriptAccess.toLowerCase()) && /^always|samedomain|never$/.test(asaLower)) {
         return _accessLevelLookup[asaLower];
@@ -419,7 +423,7 @@
       return "never";
     };
   }();
-  var _objectKeys = function (obj){
+  var _objectKeys = function(obj) {
     if (obj == null) {
       return [];
     }
@@ -434,7 +438,7 @@
     }
     return keys;
   };
-  var _deleteOwnProperties = function (obj){
+  var _deleteOwnProperties = function(obj) {
     if (obj) {
       for (var prop in obj) {
         if (obj.hasOwnProperty(prop)) {
@@ -444,7 +448,7 @@
     }
     return obj;
   };
-  var _detectFlashSupport = function (){
+  var _detectFlashSupport = function() {
     var hasFlash = false;
     if (typeof flashState.disabled === "boolean") {
       hasFlash = flashState.disabled === false;
@@ -463,15 +467,15 @@
     return hasFlash;
   };
 
-  function _parseFlashVersion(flashVersion){
+  function _parseFlashVersion(flashVersion) {
     return flashVersion.replace(/,/g, ".").replace(/[^0-9\.]/g, "");
   }
 
-  function _isFlashVersionSupported(flashVersion){
+  function _isFlashVersionSupported(flashVersion) {
     return parseFloat(_parseFlashVersion(flashVersion)) >= 10;
   }
 
-  var ZeroClipboard = function (elements, options){
+  var ZeroClipboard = function(elements, options) {
     if (!(this instanceof ZeroClipboard)) {
       return new ZeroClipboard(elements, options);
     }
@@ -500,7 +504,7 @@
       }
     }
   };
-  ZeroClipboard.prototype.setText = function (newText){
+  ZeroClipboard.prototype.setText = function(newText) {
     if (newText && newText !== "") {
       _clipData["text/plain"] = newText;
       if (flashState.ready === true && flashState.bridge) {
@@ -509,24 +513,25 @@
     }
     return this;
   };
-  ZeroClipboard.prototype.setSize = function (width, height){
+  ZeroClipboard.prototype.setSize = function(width, height) {
     if (flashState.ready === true && flashState.bridge) {
       flashState.bridge.setSize(width, height);
     } else {}
     return this;
   };
-  var _setHandCursor = function (enabled){
+  var _setHandCursor = function(enabled) {
     if (flashState.ready === true && flashState.bridge) {
       flashState.bridge.setHandCursor(enabled);
     } else {}
   };
-  ZeroClipboard.prototype.destroy = function (){
+  ZeroClipboard.prototype.destroy = function() {
     this.unclip();
     this.off();
     delete _clientMeta[this.id];
   };
-  var _getAllClients = function (){
-    var i, len, client, clients = [], clientIds = _objectKeys(_clientMeta);
+  var _getAllClients = function() {
+    var i, len, client, clients = [],
+      clientIds = _objectKeys(_clientMeta);
     for (i = 0, len = clientIds.length; i < len; i++) {
       client = _clientMeta[clientIds[i]].instance;
       if (client && client instanceof ZeroClipboard) {
@@ -546,7 +551,7 @@
     title: null,
     autoActivate: true
   };
-  ZeroClipboard.config = function (options){
+  ZeroClipboard.config = function(options) {
     if (typeof options === "object" && options !== null) {
       _extend(_globalConfig, options);
     }
@@ -572,7 +577,7 @@
     }
     return copy;
   };
-  ZeroClipboard.destroy = function (){
+  ZeroClipboard.destroy = function() {
     ZeroClipboard.deactivate();
     for (var clientId in _clientMeta) {
       if (_clientMeta.hasOwnProperty(clientId) && _clientMeta[clientId]) {
@@ -589,7 +594,7 @@
       flashState.bridge = null;
     }
   };
-  ZeroClipboard.activate = function (element){
+  ZeroClipboard.activate = function(element) {
     if (currentElement) {
       _removeClass(currentElement, _globalConfig.hoverClass);
       _removeClass(currentElement, _globalConfig.activeClass);
@@ -607,7 +612,7 @@
     var useHandCursor = _globalConfig.forceHandCursor === true || _getStyle(element, "cursor") === "pointer";
     _setHandCursor(useHandCursor);
   };
-  ZeroClipboard.deactivate = function (){
+  ZeroClipboard.deactivate = function() {
     var htmlBridge = _getHtmlBridge(flashState.bridge);
     if (htmlBridge) {
       htmlBridge.style.left = "0px";
@@ -620,7 +625,7 @@
       currentElement = null;
     }
   };
-  var _bridge = function (){
+  var _bridge = function() {
     var flashBridge, len;
     var container = document.getElementById("global-zeroclipboard-html-bridge");
     if (!container) {
@@ -648,7 +653,7 @@
     }
     flashState.bridge = flashBridge || container.children[0].lastElementChild;
   };
-  var _getHtmlBridge = function (flashBridge){
+  var _getHtmlBridge = function(flashBridge) {
     var isFlashElement = /^OBJECT|EMBED$/;
     var htmlBridge = flashBridge && flashBridge.parentNode;
     while (htmlBridge && isFlashElement.test(htmlBridge.nodeName) && htmlBridge.parentNode) {
@@ -656,7 +661,7 @@
     }
     return htmlBridge || null;
   };
-  var _reposition = function (){
+  var _reposition = function() {
     if (currentElement) {
       var pos = _getDOMObjectPosition(currentElement, _globalConfig.zIndex);
       var htmlBridge = _getHtmlBridge(flashState.bridge);
@@ -673,8 +678,9 @@
     }
     return this;
   };
-  ZeroClipboard.prototype.on = function (eventName, func){
-    var i, len, events, added = {}, handlers = _clientMeta[this.id] && _clientMeta[this.id].handlers;
+  ZeroClipboard.prototype.on = function(eventName, func) {
+    var i, len, events, added = {},
+      handlers = _clientMeta[this.id] && _clientMeta[this.id].handlers;
     if (typeof eventName === "string" && eventName) {
       events = eventName.toLowerCase().split(/\s+/);
     } else if (typeof eventName === "object" && eventName && typeof func === "undefined") {
@@ -709,7 +715,7 @@
     }
     return this;
   };
-  ZeroClipboard.prototype.off = function (eventName, func){
+  ZeroClipboard.prototype.off = function(eventName, func) {
     var i, len, foundIndex, events, perEventHandlers, handlers = _clientMeta[this.id] && _clientMeta[this.id].handlers;
     if (arguments.length === 0) {
       events = _objectKeys(handlers);
@@ -741,8 +747,9 @@
     }
     return this;
   };
-  ZeroClipboard.prototype.handlers = function (eventName){
-    var prop, copy = null, handlers = _clientMeta[this.id] && _clientMeta[this.id].handlers;
+  ZeroClipboard.prototype.handlers = function(eventName) {
+    var prop, copy = null,
+      handlers = _clientMeta[this.id] && _clientMeta[this.id].handlers;
     if (handlers) {
       if (typeof eventName === "string" && eventName) {
         return handlers[eventName] ? handlers[eventName].slice(0) : null;
@@ -756,7 +763,7 @@
     }
     return copy;
   };
-  var _dispatchClientCallbacks = function (eventName, context, args, async){
+  var _dispatchClientCallbacks = function(eventName, context, args, async) {
     var handlers = _clientMeta[this.id] && _clientMeta[this.id].handlers[eventName];
     if (handlers && handlers.length) {
       var i, len, func, originalContext = context || this;
@@ -777,7 +784,7 @@
     }
     return this;
   };
-  ZeroClipboard.prototype.clip = function (elements){
+  ZeroClipboard.prototype.clip = function(elements) {
     elements = _prepClip(elements);
     for (var i = 0; i < elements.length; i++) {
       if (elements.hasOwnProperty(i) && elements[i] && elements[i].nodeType === 1) {
@@ -798,7 +805,7 @@
     }
     return this;
   };
-  ZeroClipboard.prototype.unclip = function (elements){
+  ZeroClipboard.prototype.unclip = function(elements) {
     var meta = _clientMeta[this.id];
     if (meta) {
       var clippedElements = meta.elements;
@@ -832,11 +839,11 @@
     }
     return this;
   };
-  ZeroClipboard.prototype.elements = function (){
+  ZeroClipboard.prototype.elements = function() {
     var meta = _clientMeta[this.id];
     return meta && meta.elements ? meta.elements.slice(0) : [];
   };
-  var _getAllClientsClippedToElement = function (element){
+  var _getAllClientsClippedToElement = function(element) {
     var elementMetaId, clientIds, i, len, client, clients = [];
     if (element && element.nodeType === 1 && (elementMetaId = element.zcClippingId) && _elementMeta.hasOwnProperty(elementMetaId)) {
       clientIds = _elementMeta[elementMetaId];
@@ -856,11 +863,11 @@
   _globalConfig.trustedOrigins = null;
   _globalConfig.allowScriptAccess = null;
   _globalConfig.useNoCache = true;
-  ZeroClipboard.detectFlashSupport = function (){
+  ZeroClipboard.detectFlashSupport = function() {
     _deprecationWarning("ZeroClipboard.detectFlashSupport", _globalConfig.debug);
     return _detectFlashSupport();
   };
-  ZeroClipboard.dispatch = function (eventName, args){
+  ZeroClipboard.dispatch = function(eventName, args) {
     if (typeof eventName === "string" && eventName) {
       var cleanEventName = eventName.toLowerCase().replace(/^on/, "");
       if (cleanEventName) {
@@ -871,18 +878,18 @@
       }
     }
   };
-  ZeroClipboard.prototype.setHandCursor = function (enabled){
+  ZeroClipboard.prototype.setHandCursor = function(enabled) {
     _deprecationWarning("ZeroClipboard.prototype.setHandCursor", _globalConfig.debug);
     enabled = typeof enabled === "boolean" ? enabled : !!enabled;
     _setHandCursor(enabled);
     _globalConfig.forceHandCursor = enabled;
     return this;
   };
-  ZeroClipboard.prototype.reposition = function (){
+  ZeroClipboard.prototype.reposition = function() {
     _deprecationWarning("ZeroClipboard.prototype.reposition", _globalConfig.debug);
     return _reposition();
   };
-  ZeroClipboard.prototype.receiveEvent = function (eventName, args){
+  ZeroClipboard.prototype.receiveEvent = function(eventName, args) {
     _deprecationWarning("ZeroClipboard.prototype.receiveEvent", _globalConfig.debug);
     if (typeof eventName === "string" && eventName) {
       var cleanEventName = eventName.toLowerCase().replace(/^on/, "");
@@ -891,17 +898,17 @@
       }
     }
   };
-  ZeroClipboard.prototype.setCurrent = function (element){
+  ZeroClipboard.prototype.setCurrent = function(element) {
     _deprecationWarning("ZeroClipboard.prototype.setCurrent", _globalConfig.debug);
     ZeroClipboard.activate(element);
     return this;
   };
-  ZeroClipboard.prototype.resetBridge = function (){
+  ZeroClipboard.prototype.resetBridge = function() {
     _deprecationWarning("ZeroClipboard.prototype.resetBridge", _globalConfig.debug);
     ZeroClipboard.deactivate();
     return this;
   };
-  ZeroClipboard.prototype.setTitle = function (newTitle){
+  ZeroClipboard.prototype.setTitle = function(newTitle) {
     _deprecationWarning("ZeroClipboard.prototype.setTitle", _globalConfig.debug);
     newTitle = newTitle || _globalConfig.title || currentElement && currentElement.getAttribute("title");
     if (newTitle) {
@@ -912,23 +919,23 @@
     }
     return this;
   };
-  ZeroClipboard.setDefaults = function (options){
+  ZeroClipboard.setDefaults = function(options) {
     _deprecationWarning("ZeroClipboard.setDefaults", _globalConfig.debug);
     ZeroClipboard.config(options);
   };
-  ZeroClipboard.prototype.addEventListener = function (eventName, func){
+  ZeroClipboard.prototype.addEventListener = function(eventName, func) {
     _deprecationWarning("ZeroClipboard.prototype.addEventListener", _globalConfig.debug);
     return this.on(eventName, func);
   };
-  ZeroClipboard.prototype.removeEventListener = function (eventName, func){
+  ZeroClipboard.prototype.removeEventListener = function(eventName, func) {
     _deprecationWarning("ZeroClipboard.prototype.removeEventListener", _globalConfig.debug);
     return this.off(eventName, func);
   };
-  ZeroClipboard.prototype.ready = function (){
+  ZeroClipboard.prototype.ready = function() {
     _deprecationWarning("ZeroClipboard.prototype.ready", _globalConfig.debug);
     return flashState.ready === true;
   };
-  var _receiveEvent = function (eventName, args){
+  var _receiveEvent = function(eventName, args) {
     eventName = eventName.toLowerCase().replace(/^on/, "");
     var cleanVersion = args && args.flashVersion && _parseFlashVersion(args.flashVersion) || null;
     var element = currentElement;
@@ -975,7 +982,8 @@
         break;
 
       case "datarequested":
-        var targetId = element.getAttribute("data-clipboard-target"), targetEl = !targetId ? null : document.getElementById(targetId);
+        var targetId = element.getAttribute("data-clipboard-target"),
+          targetEl = !targetId ? null : document.getElementById(targetId);
         if (targetEl) {
           var textContent = targetEl.value || targetEl.textContent || targetEl.innerText;
           if (textContent) {
@@ -1000,7 +1008,7 @@
   };
 
   if (typeof define === "function" && define.cmd) {
-    define(function (require, exports, module){
+    define(function(require, exports, module) {
       _cjsModuleId = module.id;
       module.exports = ZeroClipboard;
     });

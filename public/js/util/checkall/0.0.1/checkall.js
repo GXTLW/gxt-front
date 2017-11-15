@@ -10,7 +10,7 @@ var $ = require('jquery'),
     filter: ':checkbox'
   };
 
-function CheckAll(options){
+function CheckAll(options) {
   if (!(this instanceof CheckAll)) return new CheckAll(options);
 
   options = $.extend({}, config, options);
@@ -22,17 +22,17 @@ function CheckAll(options){
 }
 
 CheckAll.prototype = {
-  initialize: function (){
+  initialize: function() {
     this.initEvents();
   },
-  initEvents: function (){
+  initEvents: function() {
     var self = this,
       trigger = self.trigger,
       range = self.range,
       filter = self.filter;
 
     // 全选
-    trigger.on('change', function (e, namespace){
+    trigger.on('change', function(e, namespace) {
       var state = self.state();
 
       // 如果是子项触发的不做处理
@@ -40,13 +40,13 @@ CheckAll.prototype = {
 
       // 根据选中情况处理自项
       if (trigger.prop('checked')) {
-        state.checkbox.each(function (){
+        state.checkbox.each(function() {
           var item = $(this);
 
           !item.prop('checked') && item.prop('checked', true).trigger('change');
         });
       } else {
-        state.checkbox.each(function (){
+        state.checkbox.each(function() {
           var item = $(this);
 
           item.prop('checked') && item.prop('checked', false).trigger('change');
@@ -55,11 +55,11 @@ CheckAll.prototype = {
     });
 
     // 子项
-    range.on('change.checkall', ':checkbox:not(:disabled)', function (e){
+    range.on('change.checkall', ':checkbox:not(:disabled)', function(e) {
       $(e.target).is(filter) && self.update();
     });
   },
-  state: function (){
+  state: function() {
     var checkbox,
       self = this,
       checked = 0,
@@ -68,7 +68,7 @@ CheckAll.prototype = {
     // 过滤复选框
     checkbox = self.range
       .find(':checkbox:not(:disabled)')
-      .filter(function (){
+      .filter(function() {
         var item = $(this);
 
         if (item[0] !== self.trigger[0] && item.is(self.filter)) {
@@ -89,7 +89,7 @@ CheckAll.prototype = {
       unchecked: unchecked
     }
   },
-  update: function (){
+  update: function() {
     var state = this.state(),
       trigger = this.trigger;
 
@@ -99,13 +99,13 @@ CheckAll.prototype = {
       trigger.prop('checked') && trigger.prop('checked', false).trigger('change', 'checkall');
     }
   },
-  value: function (){
+  value: function() {
     var self = this,
       value = [];
 
     self.range
       .find(':checkbox:checked:not(:disabled)')
-      .each(function (){
+      .each(function() {
         var item = $(this);
 
         if (item[0] !== self.trigger[0] && item.is(self.filter)) {

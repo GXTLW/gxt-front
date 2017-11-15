@@ -7,19 +7,19 @@ var Effects = require('./effects').Effects;
 // 无缝循环滚动插件
 module.exports = {
   // 仅在开启滚动效果时需要
-  isNeeded: function (){
+  isNeeded: function() {
     var effect = this.get('effect');
     var circular = this.get('circular');
     return circular && (effect === SCROLLX || effect === SCROLLY);
   },
 
-  install: function (){
+  install: function() {
     this._scrollType = this.get('effect');
     this.set('effect', 'scrollCircular');
   }
 };
 
-Effects.scrollCircular = function (panelInfo){
+Effects.scrollCircular = function(panelInfo) {
   var toIndex = panelInfo.toIndex;
   var fromIndex = panelInfo.fromIndex;
   var isX = this._scrollType === SCROLLX;
@@ -62,7 +62,7 @@ Effects.scrollCircular = function (panelInfo){
     var easing = this.get('easing');
     var that = this;
 
-    this.anim = this.content.animate(props, duration, easing, function (){
+    this.anim = this.content.animate(props, duration, easing, function() {
       that.anim = null; // free
       // 复原位置
       if (isCritical) {
@@ -78,7 +78,7 @@ Effects.scrollCircular = function (panelInfo){
 
 // 调整位置
 
-function adjustPosition(isBackward, prop, viewDiff){
+function adjustPosition(isBackward, prop, viewDiff) {
   var step = this.get('step');
   var len = this.get('length');
   var start = isBackward ? len - 1 : 0;
@@ -98,7 +98,7 @@ function adjustPosition(isBackward, prop, viewDiff){
 
 // 复原位置
 
-function resetPosition(isBackward, prop, viewDiff){
+function resetPosition(isBackward, prop, viewDiff) {
   var step = this.get('step');
   var len = this.get('length');
   var start = isBackward ? len - 1 : 0;

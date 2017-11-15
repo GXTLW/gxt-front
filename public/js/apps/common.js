@@ -7,7 +7,7 @@
 var $ = require('marquee');
 var Carousel = require('carousel');
 
-$(function (){
+$(function() {
   var banner = $('.ui-banner');
   var panels = banner.find('.ui-slider li');
 

@@ -30,7 +30,7 @@ var Mask = Overlay.extend({
     }
   },
 
-  show: function (){
+  show: function() {
     if (isIE6) {
       this.set('width', doc.outerWidth(true));
       this.set('height', doc.outerHeight(true));
@@ -38,11 +38,11 @@ var Mask = Overlay.extend({
     return Mask.superclass.show.call(this);
   },
 
-  _onRenderBackgroundColor: function (val){
+  _onRenderBackgroundColor: function(val) {
     this.element.css('backgroundColor', val);
   },
 
-  _onRenderOpacity: function (val){
+  _onRenderOpacity: function(val) {
     this.element.css('opacity', val);
   }
 });

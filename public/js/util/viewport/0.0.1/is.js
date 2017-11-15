@@ -23,7 +23,7 @@ var is = {
    * @param type
    * @returns {boolean}
    */
-  type: function (value, type){
+  type: function(value, type) {
     // format type
     type = (type + '').toLowerCase();
 
@@ -40,7 +40,7 @@ var is = {
       case 'nan':
         // nan
         return realType === '[object number]' && value !== value;
-      default :
+      default:
         // other
         return realType === '[object ' + type + ']';
     }
@@ -50,7 +50,7 @@ var is = {
    * @param value
    * @returns {boolean}
    */
-  string: function (value){
+  string: function(value) {
     return is.type(value, 'string');
   },
   /**
@@ -58,7 +58,7 @@ var is = {
    * @param value
    * @returns {boolean}
    */
-  array: function (value){
+  array: function(value) {
     return is.type(value, 'array');
   },
   /**
@@ -66,7 +66,7 @@ var is = {
    * @param value
    * @returns {boolean}
    */
-  number: function (value){
+  number: function(value) {
     return is.type(value, 'number');
   },
   /**
@@ -74,7 +74,7 @@ var is = {
    * @param value
    * @returns {boolean}
    */
-  nan: function (value){
+  nan: function(value) {
     return is.number(value) && value !== value;
   },
   /**
@@ -82,7 +82,7 @@ var is = {
    * @param value
    * @returns {boolean}
    */
-  infinite: function (value){
+  infinite: function(value) {
     return value === Infinity || value === -Infinity;
   },
   /**
@@ -90,7 +90,7 @@ var is = {
    * @param value
    * @returns {boolean}
    */
-  element: function (value){
+  element: function(value) {
     return value !== undefined
       && typeof HTMLElement !== 'undefined'
       && value instanceof HTMLElement

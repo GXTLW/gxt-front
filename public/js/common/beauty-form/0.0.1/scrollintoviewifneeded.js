@@ -9,10 +9,10 @@
 
 'use strict';
 
-module.exports = function (element, centerIfNeeded){
+module.exports = function(element, centerIfNeeded) {
   if (!element) throw new Error('Element is required in scrollIntoViewIfNeeded');
 
-  function withinBounds(value, min, max, extent){
+  function withinBounds(value, min, max, extent) {
     if (false === centerIfNeeded || max <= value + extent && value <= min + extent) {
       return Math.min(max, Math.max(min, value));
     } else {
@@ -20,7 +20,7 @@ module.exports = function (element, centerIfNeeded){
     }
   }
 
-  function makeArea(left, top, width, height){
+  function makeArea(left, top, width, height) {
     return {
       left: left,
       top: top,
@@ -28,11 +28,12 @@ module.exports = function (element, centerIfNeeded){
       height: height,
       right: left + width,
       bottom: top + height,
-      translate: function (x, y){
+      translate: function(x, y) {
         return makeArea(x + left, y + top, width, height);
       },
-      relativeFromTo: function (lhs, rhs){
-        var newLeft = left, newTop = top;
+      relativeFromTo: function(lhs, rhs) {
+        var newLeft = left,
+          newTop = top;
 
         lhs = lhs.offsetParent;
         rhs = rhs.offsetParent;

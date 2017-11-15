@@ -23,7 +23,7 @@
  * @param {array|object} items
  * @param {object} items
  */
-var Sifter = function (items, settings){
+var Sifter = function(items, settings) {
   this.items = items;
   this.settings = settings || { diacritics: true };
 };
@@ -35,7 +35,7 @@ var Sifter = function (items, settings){
  * @param {string} query
  * @returns {array}
  */
-Sifter.prototype.tokenize = function (query){
+Sifter.prototype.tokenize = function(query) {
   query = trim(String(query || '').toLowerCase());
   if (!query || !query.length) return [];
 
@@ -66,22 +66,22 @@ Sifter.prototype.tokenize = function (query){
  *
  * ```
  * this.iterator(this.items, function(item, id) {
-	 *    // invoked for each item
-	 * });
+ *    // invoked for each item
+ * });
  * ```
  *
  * @param {array|object} object
  */
-Sifter.prototype.iterator = function (object, callback){
+Sifter.prototype.iterator = function(object, callback) {
   var iterator;
   if (is_array(object)) {
-    iterator = Array.prototype.forEach || function (callback){
-        for (var i = 0, n = this.length; i < n; i++) {
-          callback(this[i], i, this);
-        }
-      };
+    iterator = Array.prototype.forEach || function(callback) {
+      for (var i = 0, n = this.length; i < n; i++) {
+        callback(this[i], i, this);
+      }
+    };
   } else {
-    iterator = function (callback){
+    iterator = function(callback) {
       for (var key in this) {
         if (this.hasOwnProperty(key)) {
           callback(this[key], key, this);
@@ -103,7 +103,7 @@ Sifter.prototype.iterator = function (object, callback){
  * @param {object} options (optional)
  * @returns {function}
  */
-Sifter.prototype.getScoreFunction = function (search, options){
+Sifter.prototype.getScoreFunction = function(search, options) {
   var self, fields, tokens, token_count;
 
   self = this;
@@ -120,7 +120,7 @@ Sifter.prototype.getScoreFunction = function (search, options){
    * @param {object} token
    * @return {number}
    */
-  var scoreValue = function (value, token){
+  var scoreValue = function(value, token) {
     var score, pos;
 
     if (!value) return 0;
@@ -140,17 +140,17 @@ Sifter.prototype.getScoreFunction = function (search, options){
    * @param {object} data
    * @return {number}
    */
-  var scoreObject = (function (){
+  var scoreObject = (function() {
     var field_count = fields.length;
     if (!field_count) {
-      return function (){ return 0; };
+      return function() { return 0; };
     }
     if (field_count === 1) {
-      return function (token, data){
+      return function(token, data) {
         return scoreValue(data[fields[0]], token);
       };
     }
-    return function (token, data){
+    return function(token, data) {
       for (var i = 0, sum = 0; i < field_count; i++) {
         sum += scoreValue(data[fields[i]], token);
       }
@@ -159,16 +159,16 @@ Sifter.prototype.getScoreFunction = function (search, options){
   })();
 
   if (!token_count) {
-    return function (){ return 0; };
+    return function() { return 0; };
   }
   if (token_count === 1) {
-    return function (data){
+    return function(data) {
       return scoreObject(tokens[0], data);
     };
   }
 
   if (search.options.conjunction === 'and') {
-    return function (data){
+    return function(data) {
       var score;
       for (var i = 0, sum = 0; i < token_count; i++) {
         score = scoreObject(tokens[i], data);
@@ -178,7 +178,7 @@ Sifter.prototype.getScoreFunction = function (search, options){
       return sum / token_count;
     };
   } else {
-    return function (data){
+    return function(data) {
       for (var i = 0, sum = 0; i < token_count; i++) {
         sum += scoreObject(tokens[i], data);
       }
@@ -196,7 +196,7 @@ Sifter.prototype.getScoreFunction = function (search, options){
  * @param {object} options
  * @return function(a,b)
  */
-Sifter.prototype.getSortFunction = function (search, options){
+Sifter.prototype.getSortFunction = function(search, options) {
   var i, n, self, field, fields, fields_count, multiplier, multipliers, get_field, implicit_score, sort;
 
   self = this;
@@ -211,7 +211,7 @@ Sifter.prototype.getSortFunction = function (search, options){
    * @param  {object} result
    * @return {mixed}
    */
-  get_field = function (name, result){
+  get_field = function(name, result) {
     if (name === '$score') return result.score;
     return self.items[result.id][name];
   };
@@ -260,21 +260,21 @@ Sifter.prototype.getSortFunction = function (search, options){
   } else if (fields_count === 1) {
     field = fields[0].field;
     multiplier = multipliers[0];
-    return function (a, b){
+    return function(a, b) {
       return multiplier * cmp(
-          get_field(field, a),
-          get_field(field, b)
-        );
+        get_field(field, a),
+        get_field(field, b)
+      );
     };
   } else {
-    return function (a, b){
+    return function(a, b) {
       var i, result, a_value, b_value, field;
       for (i = 0; i < fields_count; i++) {
         field = fields[i].field;
         result = multipliers[i] * cmp(
-            get_field(field, a),
-            get_field(field, b)
-          );
+          get_field(field, a),
+          get_field(field, b)
+        );
         if (result) return result;
       }
       return 0;
@@ -291,7 +291,7 @@ Sifter.prototype.getSortFunction = function (search, options){
  * @param {object} options
  * @returns {object}
  */
-Sifter.prototype.prepareSearch = function (query, options){
+Sifter.prototype.prepareSearch = function(query, options) {
   if (typeof query === 'object') return query;
 
   options = extend({}, options);
@@ -336,8 +336,9 @@ Sifter.prototype.prepareSearch = function (query, options){
  * @param {object} options
  * @returns {object}
  */
-Sifter.prototype.search = function (query, options){
-  var self = this, value, score, search, calculateScore;
+Sifter.prototype.search = function(query, options) {
+  var self = this,
+    value, score, search, calculateScore;
   var fn_sort;
   var fn_score;
 
@@ -350,14 +351,14 @@ Sifter.prototype.search = function (query, options){
 
   // perform search and sort
   if (query.length) {
-    self.iterator(self.items, function (item, id){
+    self.iterator(self.items, function(item, id) {
       score = fn_score(item);
       if (options.filter === false || score > 0) {
         search.items.push({ 'score': score, 'id': id });
       }
     });
   } else {
-    self.iterator(self.items, function (item, id){
+    self.iterator(self.items, function(item, id) {
       search.items.push({ 'score': 1, 'id': id });
     });
   }
@@ -377,7 +378,7 @@ Sifter.prototype.search = function (query, options){
 // utilities
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-var cmp = function (a, b){
+var cmp = function(a, b) {
   if (typeof a === 'number' && typeof b === 'number') {
     return a > b ? 1 : (a < b ? -1 : 0);
   }
@@ -388,7 +389,7 @@ var cmp = function (a, b){
   return 0;
 };
 
-var extend = function (a, b){
+var extend = function(a, b) {
   var i, n, k, object;
   for (i = 1, n = arguments.length; i < n; i++) {
     object = arguments[i];
@@ -402,17 +403,17 @@ var extend = function (a, b){
   return a;
 };
 
-var trim = function (str){
+var trim = function(str) {
   return (str + '').replace(/^\s+|\s+$|/g, '');
 };
 
-var escape_regex = function (str){
+var escape_regex = function(str) {
   return (str + '').replace(/([.?*+^$[\]\\(){}|-])/g, '\\$1');
 };
 
-var is_array = Array.isArray || ($ && $.isArray) || function (object){
-    return Object.prototype.toString.call(object) === '[object Array]';
-  };
+var is_array = Array.isArray || ($ && $.isArray) || function(object) {
+  return Object.prototype.toString.call(object) === '[object Array]';
+};
 
 var DIACRITICS = {
   'a': '[aÀÁÂÃÄÅàáâãäåĀā]',

@@ -10,9 +10,10 @@
 // google code prettify: http://google-code-prettify.googlecode.com/
 // http://google-code-prettify.googlecode.com/
 
-KindEditor.plugin('code', function (K){
-  var self = this, name = 'code';
-  self.clickToolbar(name, function (){
+KindEditor.plugin('code', function(K) {
+  var self = this,
+    name = 'code';
+  self.clickToolbar(name, function() {
     var lang = self.lang(name + '.'),
       html = [
         '<div style="padding:10px 20px;">',
@@ -44,7 +45,7 @@ KindEditor.plugin('code', function (K){
         body: html,
         yesBtn: {
           name: self.lang('yes'),
-          click: function (e){
+          click: function(e) {
             var type = K('.ke-code-type', dialog.div).val(),
               code = textarea.val(),
               cls = type === '' ? '' : ' lang-' + type,

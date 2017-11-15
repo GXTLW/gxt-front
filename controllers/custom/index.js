@@ -5,7 +5,7 @@
 'use strict';
 
 module.exports = {
-  index: ctx=>{
+  index: ctx => {
     ctx.state.title = '合作客户';
 
     ctx.body = ctx.render('apps/custom/index');

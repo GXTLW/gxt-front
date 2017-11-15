@@ -7,11 +7,14 @@
  * @licence http://www.kindsoft.net/license.php
  *******************************************************************************/
 
-KindEditor.plugin('table', function (K){
-  var self = this, name = 'table', lang = self.lang(name + '.'), zeroborder = 'ke-zeroborder';
+KindEditor.plugin('table', function(K) {
+  var self = this,
+    name = 'table',
+    lang = self.lang(name + '.'),
+    zeroborder = 'ke-zeroborder';
 
   // 设置颜色
-  function _setColor(box, color){
+  function _setColor(box, color) {
     color = color.toUpperCase();
     box.css('background-color', color);
     box.css('color', color === '#000000' ? '#FFFFFF' : '#000000');
@@ -21,13 +24,13 @@ KindEditor.plugin('table', function (K){
   // 初始化取色器
   var pickerList = [];
 
-  function _initColorPicker(dialogDiv, colorBox){
-    colorBox.bind('click,mousedown', function (e){
+  function _initColorPicker(dialogDiv, colorBox) {
+    colorBox.bind('click,mousedown', function(e) {
       e.stopPropagation();
     });
 
-    function removePicker(){
-      K.each(pickerList, function (){
+    function removePicker() {
+      K.each(pickerList, function() {
         this.remove();
       });
       pickerList = [];
@@ -35,7 +38,7 @@ KindEditor.plugin('table', function (K){
       dialogDiv.unbind('click,mousedown', removePicker);
     }
 
-    colorBox.click(function (e){
+    colorBox.click(function(e) {
       removePicker();
       var box = K(this),
         pos = box.pos(),
@@ -47,7 +50,7 @@ KindEditor.plugin('table', function (K){
           colors: self.colorTable,
           noColor: self.lang('noColor'),
           shadowMode: self.shadowMode,
-          click: function (color){
+          click: function(color) {
             _setColor(box, color);
             removePicker();
           }
@@ -60,7 +63,7 @@ KindEditor.plugin('table', function (K){
   }
 
   // 取得下一行cell的index
-  function _getCellIndex(table, row, cell){
+  function _getCellIndex(table, row, cell) {
     var rowSpanCount = 0;
 
     for (var i = 0, len = row.cells.length; i < len; i++) {
@@ -75,7 +78,7 @@ KindEditor.plugin('table', function (K){
 
   self.plugin.table = {
     //insert or modify table
-    prop: function (isInsert){
+    prop: function(isInsert) {
       var html = [
         '<div style="padding:20px;">',
         //rows, cols
@@ -134,12 +137,12 @@ KindEditor.plugin('table', function (K){
           width: 500,
           title: self.lang(name),
           body: html,
-          beforeRemove: function (){
+          beforeRemove: function() {
             colorBox.unbind();
           },
           yesBtn: {
             name: self.lang('yes'),
-            click: function (e){
+            click: function(e) {
               var rows = rowsBox.val(),
                 cols = colsBox.val(),
                 width = widthBox.val(),
@@ -404,7 +407,7 @@ KindEditor.plugin('table', function (K){
       }
     },
     //modify cell
-    cellprop: function (){
+    cellprop: function() {
       var html = [
         '<div style="padding:20px;">',
         //width, height
@@ -457,12 +460,12 @@ KindEditor.plugin('table', function (K){
           width: 500,
           title: self.lang('tablecell'),
           body: html,
-          beforeRemove: function (){
+          beforeRemove: function() {
             colorBox.unbind();
           },
           yesBtn: {
             name: self.lang('yes'),
-            click: function (e){
+            click: function(e) {
               var width = widthBox.val(),
                 height = heightBox.val(),
                 widthType = widthTypeBox.val(),
@@ -560,17 +563,17 @@ KindEditor.plugin('table', function (K){
       widthBox[0].focus();
       widthBox[0].select();
     },
-    insert: function (){
+    insert: function() {
       this.prop(true);
     },
-    'delete': function (){
+    'delete': function() {
       var table = self.plugin.getSelectedTable();
       self.cmd.range.setStartBefore(table[0]).collapse(true);
       self.cmd.select();
       table.remove();
       self.addBookmark();
     },
-    colinsert: function (offset){
+    colinsert: function(offset) {
       var table = self.plugin.getSelectedTable()[0],
         row = self.plugin.getSelectedRow()[0],
         cell = self.plugin.getSelectedCell()[0],
@@ -589,13 +592,13 @@ KindEditor.plugin('table', function (K){
       self.cmd.select();
       self.addBookmark();
     },
-    colinsertleft: function (){
+    colinsertleft: function() {
       this.colinsert(0);
     },
-    colinsertright: function (){
+    colinsertright: function() {
       this.colinsert(1);
     },
-    rowinsert: function (offset){
+    rowinsert: function(offset) {
       var table = self.plugin.getSelectedTable()[0],
         row = self.plugin.getSelectedRow()[0],
         cell = self.plugin.getSelectedCell()[0];
@@ -637,13 +640,13 @@ KindEditor.plugin('table', function (K){
       self.cmd.select();
       self.addBookmark();
     },
-    rowinsertabove: function (){
+    rowinsertabove: function() {
       this.rowinsert(0);
     },
-    rowinsertbelow: function (){
+    rowinsertbelow: function() {
       this.rowinsert(1);
     },
-    rowmerge: function (){
+    rowmerge: function() {
       var table = self.plugin.getSelectedTable()[0],
         row = self.plugin.getSelectedRow()[0],
         cell = self.plugin.getSelectedCell()[0],
@@ -674,7 +677,7 @@ KindEditor.plugin('table', function (K){
       self.cmd.select();
       self.addBookmark();
     },
-    colmerge: function (){
+    colmerge: function() {
       var table = self.plugin.getSelectedTable()[0],
         row = self.plugin.getSelectedRow()[0],
         cell = self.plugin.getSelectedCell()[0],
@@ -700,7 +703,7 @@ KindEditor.plugin('table', function (K){
       self.cmd.select();
       self.addBookmark();
     },
-    rowsplit: function (){
+    rowsplit: function() {
       var table = self.plugin.getSelectedTable()[0],
         row = self.plugin.getSelectedRow()[0],
         cell = self.plugin.getSelectedCell()[0],
@@ -731,7 +734,7 @@ KindEditor.plugin('table', function (K){
       self.cmd.select();
       self.addBookmark();
     },
-    colsplit: function (){
+    colsplit: function() {
       var table = self.plugin.getSelectedTable()[0],
         row = self.plugin.getSelectedRow()[0],
         cell = self.plugin.getSelectedCell()[0],
@@ -756,7 +759,7 @@ KindEditor.plugin('table', function (K){
       self.cmd.select();
       self.addBookmark();
     },
-    coldelete: function (){
+    coldelete: function() {
       var table = self.plugin.getSelectedTable()[0],
         row = self.plugin.getSelectedRow()[0],
         cell = self.plugin.getSelectedCell()[0],
@@ -790,7 +793,7 @@ KindEditor.plugin('table', function (K){
       }
       self.addBookmark();
     },
-    rowdelete: function (){
+    rowdelete: function() {
       var table = self.plugin.getSelectedTable()[0],
         row = self.plugin.getSelectedRow()[0],
         cell = self.plugin.getSelectedCell()[0],

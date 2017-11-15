@@ -18,17 +18,17 @@ var attrs = [
 ];
 
 // Is function
-function isFn(fn){
+function isFn(fn) {
   return Object.prototype.toString.call(fn) === '[object Function]';
 }
 
 // Is string
-function isStr(str){
+function isStr(str) {
   return Object.prototype.toString.call(str) === '[object String]';
 }
 
 // Update state
-function updateState(jqXHR, XHR){
+function updateState(jqXHR, XHR) {
   jqXHR.readyState = XHR.readyState;
   jqXHR.responseText = XHR.responseText;
   jqXHR.status = XHR.status;
@@ -36,7 +36,7 @@ function updateState(jqXHR, XHR){
 }
 
 // Exports
-module.exports = function (options){
+module.exports = function(options) {
   // 默认参数
   var defaults = {
     url: '',
@@ -44,7 +44,7 @@ module.exports = function (options){
     beforeSend: $.noop,
     success: $.noop,
     error: $.noop,
-    auth: function (result){
+    auth: function(result) {
       // 显示消息
       Toast({
         msg: result.msg
@@ -54,8 +54,8 @@ module.exports = function (options){
       top.location.href = '/Login/';
     },
     loading: '<span style="padding:0 6px 0 0;">正在'
-    + (options.type && options.type.trim().toUpperCase() === 'POST' ? '传送' : '加载')
-    + '数据&nbsp;&nbsp;<img src="/Assets/images/loading.gif"/></span>',
+      + (options.type && options.type.trim().toUpperCase() === 'POST' ? '传送' : '加载')
+      + '数据&nbsp;&nbsp;<img src="/Assets/images/loading.gif"/></span>',
     lock: false,
     timeOut: 60000,
     cache: false
@@ -91,7 +91,7 @@ module.exports = function (options){
    * Before send
    * @returns {*}
    */
-  options.beforeSend = function (XHR){
+  options.beforeSend = function(XHR) {
     // 脚本URL或者没设置链接跳出
     if (!GXT.DEBUG && (!options.url || SCRIPTURLRE.test(options.url))) return false;
 
@@ -119,7 +119,7 @@ module.exports = function (options){
    * @param textStatus
    * @param XHR
    */
-  options.success = function (data, textStatus, XHR){
+  options.success = function(data, textStatus, XHR) {
     var result;
 
     // Parse JSON
@@ -149,8 +149,8 @@ module.exports = function (options){
           auth.apply(this, arguments);
           authDeferred.fireWith(this, arguments);
           break;
-        // Success callback
-        default :
+          // Success callback
+        default:
           success.apply(this, arguments);
           deferred.resolveWith(this, arguments);
           break;
@@ -167,7 +167,7 @@ module.exports = function (options){
    * @param textStatus
    * @param errorThrown
    */
-  options.error = function (XHR, textStatus, errorThrown){
+  options.error = function(XHR, textStatus, errorThrown) {
     var groupName;
 
     // Update state
@@ -193,14 +193,14 @@ module.exports = function (options){
 
     // Show error info in toast
     Toast({
-      msg: GXT.DEBUG ?
-      '<span>请求状态 : </span><span style="color: #f00;">'
-      + XHR.status + '</span><br/>'
-      + '<span>错误类型 : </span><span style="color: #f00;">'
-      + textStatus + '</span><br/>'
-      + '<span>错误消息 : </span><span style="color: #f00;">'
-      + (errorThrown.message || errorThrown) + '</span>' :
-        '哎呀，出错了，如果一直出现错误请联系客服 T_T',
+      msg: GXT.DEBUG
+        ? '<span>请求状态 : </span><span style="color: #f00;">'
+        + XHR.status + '</span><br/>'
+        + '<span>错误类型 : </span><span style="color: #f00;">'
+        + textStatus + '</span><br/>'
+        + '<span>错误消息 : </span><span style="color: #f00;">'
+        + (errorThrown.message || errorThrown) + '</span>'
+        : '哎呀，出错了，如果一直出现错误请联系客服 T_T',
       theme: GXT.DEBUG ? 'error' : 'sad'
     });
 
@@ -214,7 +214,7 @@ module.exports = function (options){
    * @param XHR
    * @param textStatus
    */
-  options.complete = function (XHR, textStatus){
+  options.complete = function(XHR, textStatus) {
     // Update state
     updateState(jqXHR, XHR);
 
@@ -233,7 +233,7 @@ module.exports = function (options){
   originXHR = $.ajax(options);
 
   // Add attrs
-  attrs.forEach(function (item){
+  attrs.forEach(function(item) {
     if (originXHR.hasOwnProperty(item)) {
       jqXHR[item] = originXHR[item];
     }

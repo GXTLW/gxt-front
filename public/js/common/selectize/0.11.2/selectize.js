@@ -25,11 +25,11 @@ var $ = require('jquery');
 var Sifter = require('./sifter');
 var MicroPlugin = require('./microplugin');
 
-var highlight = function ($element, pattern){
+var highlight = function($element, pattern) {
   if (typeof pattern === 'string' && !pattern.length) return;
   var regex = (typeof pattern === 'string') ? new RegExp(pattern, 'i') : pattern;
 
-  var highlight = function (node){
+  var highlight = function(node) {
     var skip = 0;
     if (node.nodeType === 3) {
       var pos = node.data.search(regex);
@@ -52,19 +52,19 @@ var highlight = function ($element, pattern){
     return skip;
   };
 
-  return $element.each(function (){
+  return $element.each(function() {
     highlight(this);
   });
 };
 
-var MicroEvent = function (){};
+var MicroEvent = function() {};
 MicroEvent.prototype = {
-  on: function (event, fct){
+  on: function(event, fct) {
     this._events = this._events || {};
     this._events[event] = this._events[event] || [];
     this._events[event].push(fct);
   },
-  off: function (event, fct){
+  off: function(event, fct) {
     var n = arguments.length;
     if (n === 0) return delete this._events;
     if (n === 1) return delete this._events[event];
@@ -73,7 +73,7 @@ MicroEvent.prototype = {
     if (event in this._events === false) return;
     this._events[event].splice(this._events[event].indexOf(fct), 1);
   },
-  trigger: function (event /* , args... */){
+  trigger: function(event /* , args... */ ) {
     this._events = this._events || {};
     if (event in this._events === false) return;
     for (var i = 0; i < this._events[event].length; i++) {
@@ -89,7 +89,7 @@ MicroEvent.prototype = {
  *
  * @param {object} the object which will support MicroEvent
  */
-MicroEvent.mixin = function (destObject){
+MicroEvent.mixin = function(destObject) {
   var props = ['on', 'off', 'trigger'];
   for (var i = 0; i < props.length; i++) {
     destObject.prototype[props[i]] = MicroEvent.prototype[props[i]];
@@ -118,7 +118,7 @@ var KEY_TAB = 9;
 var TAG_SELECT = 1;
 var TAG_INPUT = 2;
 
-var isset = function (object){
+var isset = function(object) {
   return typeof object !== 'undefined';
 };
 
@@ -138,7 +138,7 @@ var isset = function (object){
  * @param {string} value
  * @returns {string|null}
  */
-var hash_key = function (value){
+var hash_key = function(value) {
   if (typeof value === 'undefined' || value === null) return null;
   if (typeof value === 'boolean') return value ? '1' : '0';
   return value + '';
@@ -150,7 +150,7 @@ var hash_key = function (value){
  * @param {string} str
  * @returns {string}
  */
-var escape_html = function (str){
+var escape_html = function(str) {
   return (str + '')
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
@@ -164,7 +164,7 @@ var escape_html = function (str){
  * @param {string} str
  * @returns {string}
  */
-var escape_replace = function (str){
+var escape_replace = function(str) {
   return (str + '').replace(/\$/g, '$$$$');
 };
 
@@ -178,9 +178,9 @@ var hook = {};
  * @param {string} method
  * @param {function} fn
  */
-hook.before = function (self, method, fn){
+hook.before = function(self, method, fn) {
   var original = self[method];
-  self[method] = function (){
+  self[method] = function() {
     fn.apply(self, arguments);
     return original.apply(self, arguments);
   };
@@ -194,9 +194,9 @@ hook.before = function (self, method, fn){
  * @param {string} method
  * @param {function} fn
  */
-hook.after = function (self, method, fn){
+hook.after = function(self, method, fn) {
   var original = self[method];
-  self[method] = function (){
+  self[method] = function() {
     var result = original.apply(self, arguments);
     fn.apply(self, arguments);
     return result;
@@ -211,7 +211,7 @@ hook.after = function (self, method, fn){
  * @param {string} key
  * @param {mixed} objects
  */
-var build_hash_table = function (key, objects){
+var build_hash_table = function(key, objects) {
   if (!$.isArray(objects)) return objects;
   var i, n, table = {};
   for (i = 0, n = objects.length; i < n; i++) {
@@ -228,9 +228,9 @@ var build_hash_table = function (key, objects){
  * @param {function} fn
  * @returns {function}
  */
-var once = function (fn){
+var once = function(fn) {
   var called = false;
-  return function (){
+  return function() {
     if (called) return;
     called = true;
     fn.apply(this, arguments);
@@ -245,13 +245,13 @@ var once = function (fn){
  * @param {int} delay
  * @returns {function}
  */
-var debounce = function (fn, delay){
+var debounce = function(fn, delay) {
   var timeout;
-  return function (){
+  return function() {
     var self = this;
     var args = arguments;
     window.clearTimeout(timeout);
-    timeout = window.setTimeout(function (){
+    timeout = window.setTimeout(function() {
       fn.apply(self, args);
     }, delay);
   };
@@ -265,13 +265,13 @@ var debounce = function (fn, delay){
  * @param {array} types
  * @param {function} fn
  */
-var debounce_events = function (self, types, fn){
+var debounce_events = function(self, types, fn) {
   var type;
   var trigger = self.trigger;
   var event_args = {};
 
   // override trigger method
-  self.trigger = function (){
+  self.trigger = function() {
     var type = arguments[0];
     if (types.indexOf(type) !== -1) {
       event_args[type] = arguments;
@@ -300,8 +300,8 @@ var debounce_events = function (self, types, fn){
  * @param {string} selector - Descendant selector to filter by.
  * @param {function} fn - Event handler.
  */
-var watchChildEvent = function ($parent, event, selector, fn){
-  $parent.on(event, selector, function (e){
+var watchChildEvent = function($parent, event, selector, fn) {
+  $parent.on(event, selector, function(e) {
     var child = e.target;
     while (child && child.parentNode !== $parent[0]) {
       child = child.parentNode;
@@ -320,7 +320,7 @@ var watchChildEvent = function ($parent, event, selector, fn){
  * @param {object} input
  * @returns {object}
  */
-var getSelection = function (input){
+var getSelection = function(input) {
   var result = {};
   if ('selectionStart' in input) {
     result.start = input.selectionStart;
@@ -343,7 +343,7 @@ var getSelection = function (input){
  * @param {object} $to
  * @param {array} properties
  */
-var transferStyles = function ($from, $to, properties){
+var transferStyles = function($from, $to, properties) {
   var i, n, styles = {};
   if (properties) {
     for (i = 0, n = properties.length; i < n; i++) {
@@ -363,7 +363,7 @@ var transferStyles = function ($from, $to, properties){
  * @param {object} $parent
  * @returns {int}
  */
-var measureString = function (str, $parent){
+var measureString = function(str, $parent) {
   if (!str) {
     return 0;
   }
@@ -400,10 +400,10 @@ var measureString = function (str, $parent){
  *
  * @param {object} $input
  */
-var autoGrow = function ($input){
+var autoGrow = function($input) {
   var currentWidth = null;
 
-  var update = function (e, options){
+  var update = function(e, options) {
     var value, keyCode, printable, placeholder, width;
     var shift, character, selection;
     e = e || window.event || {};
@@ -416,9 +416,12 @@ var autoGrow = function ($input){
     if (e.type && e.type.toLowerCase() === 'keydown') {
       keyCode = e.keyCode;
       printable = (
-        (keyCode >= 97 && keyCode <= 122) || // a-z
-        (keyCode >= 65 && keyCode <= 90) || // A-Z
-        (keyCode >= 48 && keyCode <= 57) || // 0-9
+        (keyCode >= 97 && keyCode <= 122)
+        || // a-z
+        (keyCode >= 65 && keyCode <= 90)
+        || // A-Z
+        (keyCode >= 48 && keyCode <= 57)
+        || // 0-9
         keyCode === 32 // space
       );
 
@@ -457,7 +460,7 @@ var autoGrow = function ($input){
   update();
 };
 
-var Selectize = function ($input, settings){
+var Selectize = function($input, settings) {
   var key, i, n, dir, input, self = this;
   input = $input[0];
   input.selectize = self;
@@ -546,7 +549,7 @@ $.extend(Selectize.prototype, {
   /**
    * Creates all elements and sets up event bindings.
    */
-  setup: function (){
+  setup: function() {
     var self = this;
     var settings = self.settings;
     var eventNS = self.eventNS;
@@ -614,43 +617,43 @@ $.extend(Selectize.prototype, {
     self.$dropdown = $dropdown;
     self.$dropdown_content = $dropdown_content;
 
-    $dropdown.on('mouseenter', '[data-selectable]', function (){ return self.onOptionHover.apply(self, arguments); });
-    $dropdown.on('mousedown', '[data-selectable]', function (){ return self.onOptionSelect.apply(self, arguments); });
-    watchChildEvent($control, 'mousedown', '*:not(input)', function (){ return self.onItemSelect.apply(self, arguments); });
+    $dropdown.on('mouseenter', '[data-selectable]', function() { return self.onOptionHover.apply(self, arguments); });
+    $dropdown.on('mousedown', '[data-selectable]', function() { return self.onOptionSelect.apply(self, arguments); });
+    watchChildEvent($control, 'mousedown', '*:not(input)', function() { return self.onItemSelect.apply(self, arguments); });
     autoGrow($control_input);
 
     $control.on({
-      mousedown: function (){ return self.onMouseDown.apply(self, arguments); },
-      click: function (){ return self.onClick.apply(self, arguments); }
+      mousedown: function() { return self.onMouseDown.apply(self, arguments); },
+      click: function() { return self.onClick.apply(self, arguments); }
     });
 
     $control_input.on({
-      mousedown: function (e){ e.stopPropagation(); },
-      keydown: function (){ return self.onKeyDown.apply(self, arguments); },
-      keyup: function (){ return self.onKeyUp.apply(self, arguments); },
-      keypress: function (){ return self.onKeyPress.apply(self, arguments); },
-      resize: function (){ self.positionDropdown.apply(self, []); },
-      blur: function (){ return self.onBlur.apply(self, arguments); },
-      focus: function (){
+      mousedown: function(e) { e.stopPropagation(); },
+      keydown: function() { return self.onKeyDown.apply(self, arguments); },
+      keyup: function() { return self.onKeyUp.apply(self, arguments); },
+      keypress: function() { return self.onKeyPress.apply(self, arguments); },
+      resize: function() { self.positionDropdown.apply(self, []); },
+      blur: function() { return self.onBlur.apply(self, arguments); },
+      focus: function() {
         self.ignoreBlur = false;
         return self.onFocus.apply(self, arguments);
       },
-      paste: function (){ return self.onPaste.apply(self, arguments); }
+      paste: function() { return self.onPaste.apply(self, arguments); }
     });
 
-    $document.on('keydown' + eventNS, function (e){
+    $document.on('keydown' + eventNS, function(e) {
       self.isCmdDown = e[IS_MAC ? 'metaKey' : 'ctrlKey'];
       self.isCtrlDown = e[IS_MAC ? 'altKey' : 'ctrlKey'];
       self.isShiftDown = e.shiftKey;
     });
 
-    $document.on('keyup' + eventNS, function (e){
+    $document.on('keyup' + eventNS, function(e) {
       if (e.keyCode === KEY_CTRL) self.isCtrlDown = false;
       if (e.keyCode === KEY_SHIFT) self.isShiftDown = false;
       if (e.keyCode === KEY_CMD) self.isCmdDown = false;
     });
 
-    $document.on('mousedown' + eventNS, function (e){
+    $document.on('mousedown' + eventNS, function(e) {
       if (self.isFocused) {
         // prevent events on the dropdown scrollbar from causing the control to blur
         if ($.contains(self.$dropdown[0], e.target)) {
@@ -663,12 +666,12 @@ $.extend(Selectize.prototype, {
       }
     });
 
-    $window.on(['scroll' + eventNS, 'resize' + eventNS].join(' '), function (){
+    $window.on(['scroll' + eventNS, 'resize' + eventNS].join(' '), function() {
       if (self.isOpen) {
         self.positionDropdown.apply(self, arguments);
       }
     });
-    $window.on('mousemove' + eventNS, function (){
+    $window.on('mousemove' + eventNS, function() {
       self.ignoreHover = false;
     });
 
@@ -688,7 +691,7 @@ $.extend(Selectize.prototype, {
 
     // feature detect for the validation API
     if ($input[0].validity) {
-      $input.on('invalid' + eventNS, function (e){
+      $input.on('invalid' + eventNS, function(e) {
         e.preventDefault();
         self.isInvalid = true;
         self.refreshState();
@@ -721,25 +724,25 @@ $.extend(Selectize.prototype, {
   /**
    * Sets up default rendering functions.
    */
-  setupTemplates: function (){
+  setupTemplates: function() {
     var self = this;
     var field_label = self.settings.labelField;
     var field_optgroup = self.settings.optgroupLabelField;
 
     var templates = {
-      'optgroup': function (data){
+      'optgroup': function(data) {
         return '<div class="optgroup">' + data.html + '</div>';
       },
-      'optgroup_header': function (data, escape){
+      'optgroup_header': function(data, escape) {
         return '<div class="optgroup-header">' + escape(data[field_optgroup]) + '</div>';
       },
-      'option': function (data, escape){
+      'option': function(data, escape) {
         return '<div class="option">' + escape(data[field_label]) + '</div>';
       },
-      'item': function (data, escape){
+      'item': function(data, escape) {
         return '<div class="item">' + escape(data[field_label]) + '</div>';
       },
-      'option_create': function (data, escape){
+      'option_create': function(data, escape) {
         return '<div class="create">添加 <strong>' + escape(data.input) + '</strong>&hellip;</div>';
       }
     };
@@ -751,7 +754,7 @@ $.extend(Selectize.prototype, {
    * Maps fired events to callbacks provided
    * in the settings used when creating the control.
    */
-  setupCallbacks: function (){
+  setupCallbacks: function() {
     var key, fn, callbacks = {
       'initialize': 'onInitialize',
       'change': 'onChange',
@@ -782,7 +785,7 @@ $.extend(Selectize.prototype, {
    * @param {object} e
    * @return {boolean}
    */
-  onClick: function (e){
+  onClick: function(e) {
     var self = this;
 
     // necessary for mobile webkit devices (manual focus triggering
@@ -800,7 +803,7 @@ $.extend(Selectize.prototype, {
    * @param {object} e
    * @return {boolean}
    */
-  onMouseDown: function (e){
+  onMouseDown: function(e) {
     var self = this;
     var defaultPrevented = e.isDefaultPrevented();
     var $target = $(e.target);
@@ -821,7 +824,7 @@ $.extend(Selectize.prototype, {
     } else {
       // give control focus
       if (!defaultPrevented) {
-        window.setTimeout(function (){
+        window.setTimeout(function() {
           self.focus();
         }, 0);
       }
@@ -833,7 +836,7 @@ $.extend(Selectize.prototype, {
    * This should propagate the event to the original DOM
    * input / select element.
    */
-  onChange: function (){
+  onChange: function() {
     this.$input.trigger('change');
   },
 
@@ -843,7 +846,7 @@ $.extend(Selectize.prototype, {
    * @param {object} e
    * @returns {boolean}
    */
-  onPaste: function (e){
+  onPaste: function(e) {
     var self = this;
     if (self.isFull() || self.isInputHidden || self.isLocked) {
       e.preventDefault();
@@ -856,7 +859,7 @@ $.extend(Selectize.prototype, {
    * @param {object} e
    * @returns {boolean}
    */
-  onKeyPress: function (e){
+  onKeyPress: function(e) {
     if (this.isLocked) return e && e.preventDefault();
     var character = String.fromCharCode(e.keyCode || e.which);
     if (this.settings.create && character === this.settings.delimiter) {
@@ -872,7 +875,7 @@ $.extend(Selectize.prototype, {
    * @param {object} e
    * @returns {boolean}
    */
-  onKeyDown: function (e){
+  onKeyDown: function(e) {
     var isInput = e.target === this.$control_input[0];
     var self = this;
 
@@ -954,7 +957,7 @@ $.extend(Selectize.prototype, {
    * @param {object} e
    * @returns {boolean}
    */
-  onKeyUp: function (e){
+  onKeyUp: function(e) {
     var self = this;
 
     if (self.isLocked) return e && e.preventDefault();
@@ -975,13 +978,13 @@ $.extend(Selectize.prototype, {
    *
    * @param {string} value
    */
-  onSearchChange: function (value){
+  onSearchChange: function(value) {
     var self = this;
     var fn = self.settings.load;
     if (!fn) return;
     if (self.loadedSearches.hasOwnProperty(value)) return;
     self.loadedSearches[value] = true;
-    self.load(function (callback){
+    self.load(function(callback) {
       fn.apply(self, [value, callback]);
     });
   },
@@ -992,7 +995,7 @@ $.extend(Selectize.prototype, {
    * @param {object} e (optional)
    * @returns {boolean}
    */
-  onFocus: function (e){
+  onFocus: function(e) {
     var self = this;
 
     self.isFocused = true;
@@ -1020,7 +1023,7 @@ $.extend(Selectize.prototype, {
    * @param {object} e
    * @returns {boolean}
    */
-  onBlur: function (e){
+  onBlur: function(e) {
     var self = this;
     self.isFocused = false;
     if (self.ignoreFocus) return;
@@ -1052,7 +1055,7 @@ $.extend(Selectize.prototype, {
    * @param {object} e
    * @returns {boolean}
    */
-  onOptionHover: function (e){
+  onOptionHover: function(e) {
     if (this.ignoreHover) return;
     this.setActiveOption(e.currentTarget, false);
   },
@@ -1064,7 +1067,7 @@ $.extend(Selectize.prototype, {
    * @param {object} e
    * @returns {boolean}
    */
-  onOptionSelect: function (e){
+  onOptionSelect: function(e) {
     var value, $target, $option, self = this;
 
     if (e.preventDefault) {
@@ -1095,7 +1098,7 @@ $.extend(Selectize.prototype, {
    * @param {object} e
    * @returns {boolean}
    */
-  onItemSelect: function (e){
+  onItemSelect: function(e) {
     var self = this;
 
     if (self.isLocked) return;
@@ -1112,13 +1115,13 @@ $.extend(Selectize.prototype, {
    *
    * @param {function} fn
    */
-  load: function (fn){
+  load: function(fn) {
     var self = this;
     var $wrapper = self.$wrapper.addClass('loading');
 
     self.loading++;
     fn.apply(self, [
-      function (results){
+      function(results) {
         self.loading = Math.max(self.loading - 1, 0);
         if (results && results.length) {
           self.addOption(results);
@@ -1137,7 +1140,7 @@ $.extend(Selectize.prototype, {
    *
    * @param {string} value
    */
-  setTextboxValue: function (value){
+  setTextboxValue: function(value) {
     var $input = this.$control_input;
     var changed = $input.val() !== value;
     if (changed) {
@@ -1154,7 +1157,7 @@ $.extend(Selectize.prototype, {
    *
    * @returns {mixed}
    */
-  getValue: function (){
+  getValue: function() {
     if (this.tagType === TAG_SELECT && this.$input.attr('multiple')) {
       return this.items;
     } else {
@@ -1167,8 +1170,8 @@ $.extend(Selectize.prototype, {
    *
    * @param {mixed} value
    */
-  setValue: function (value){
-    debounce_events(this, ['change'], function (){
+  setValue: function(value) {
+    debounce_events(this, ['change'], function() {
       this.clear();
       this.addItems(value);
     });
@@ -1180,7 +1183,7 @@ $.extend(Selectize.prototype, {
    * @param {object} $item
    * @param {object} e (optional)
    */
-  setActiveItem: function ($item, e){
+  setActiveItem: function($item, e) {
     var self = this;
     var eventName;
     var i, idx, begin, end, item, swap;
@@ -1247,7 +1250,7 @@ $.extend(Selectize.prototype, {
    * @param {boolean} scroll
    * @param {boolean} animate
    */
-  setActiveOption: function ($option, scroll, animate){
+  setActiveOption: function($option, scroll, animate) {
     var height_menu, height_item, y;
     var scroll_top, scroll_bottom;
     var self = this;
@@ -1281,7 +1284,7 @@ $.extend(Selectize.prototype, {
   /**
    * Selects all items (CTRL + A).
    */
-  selectAll: function (){
+  selectAll: function() {
     var self = this;
     if (self.settings.mode === 'single') return;
 
@@ -1297,7 +1300,7 @@ $.extend(Selectize.prototype, {
    * Hides the input element out of view, while
    * retaining its focus.
    */
-  hideInput: function (){
+  hideInput: function() {
     var self = this;
 
     self.setTextboxValue('');
@@ -1308,7 +1311,7 @@ $.extend(Selectize.prototype, {
   /**
    * Restores input visibility.
    */
-  showInput: function (){
+  showInput: function() {
     this.$control_input.css({ opacity: 1, position: 'relative', left: 0 });
     this.isInputHidden = false;
   },
@@ -1320,13 +1323,13 @@ $.extend(Selectize.prototype, {
    *
    * @param {boolean} trigger
    */
-  focus: function (){
+  focus: function() {
     var self = this;
     if (self.isDisabled) return;
 
     self.ignoreFocus = true;
     self.$control_input[0].focus();
-    window.setTimeout(function (){
+    window.setTimeout(function() {
       self.ignoreFocus = false;
       self.onFocus();
     }, 0);
@@ -1335,7 +1338,7 @@ $.extend(Selectize.prototype, {
   /**
    * Forces the control out of focus.
    */
-  blur: function (){
+  blur: function() {
     this.$control_input.trigger('blur');
   },
 
@@ -1348,7 +1351,7 @@ $.extend(Selectize.prototype, {
    * @param {object} options
    * @return {function}
    */
-  getScoreFunction: function (query){
+  getScoreFunction: function(query) {
     return this.sifter.getScoreFunction(query, this.getSearchOptions());
   },
 
@@ -1359,7 +1362,7 @@ $.extend(Selectize.prototype, {
    * @see https://github.com/brianreavis/sifter.js
    * @return {object}
    */
-  getSearchOptions: function (){
+  getSearchOptions: function() {
     var settings = this.settings;
     var sort = settings.sortField;
     if (typeof sort === 'string') {
@@ -1387,7 +1390,7 @@ $.extend(Selectize.prototype, {
    * @param {string} query
    * @returns {object}
    */
-  search: function (query){
+  search: function(query) {
     var i, value, score, result, calculateScore;
     var self = this;
     var settings = self.settings;
@@ -1428,7 +1431,7 @@ $.extend(Selectize.prototype, {
    *
    * @param {boolean} triggerDropdown
    */
-  refreshOptions: function (triggerDropdown){
+  refreshOptions: function(triggerDropdown) {
     var i, j, k, n, groups, groups_order, option, option_html, optgroup, optgroups, html, html_children, has_create_option;
     var $active, $active_before, $create;
 
@@ -1559,7 +1562,7 @@ $.extend(Selectize.prototype, {
    *
    * @param {object} data
    */
-  addOption: function (data){
+  addOption: function(data) {
     var i, n, optgroup, value, self = this;
 
     if ($.isArray(data)) {
@@ -1585,7 +1588,7 @@ $.extend(Selectize.prototype, {
    * @param {string} id
    * @param {object} data
    */
-  addOptionGroup: function (id, data){
+  addOptionGroup: function(id, data) {
     this.optgroups[id] = data;
     this.trigger('optgroup_add', id, data);
   },
@@ -1598,7 +1601,7 @@ $.extend(Selectize.prototype, {
    * @param {string} value
    * @param {object} data
    */
-  updateOption: function (value, data){
+  updateOption: function(value, data) {
     var self = this;
     var $item, $item_new;
     var value_new, index_item, cache_items, cache_options;
@@ -1656,7 +1659,7 @@ $.extend(Selectize.prototype, {
    *
    * @param {string} value
    */
-  removeOption: function (value){
+  removeOption: function(value) {
     var self = this;
     value = hash_key(value);
 
@@ -1675,7 +1678,7 @@ $.extend(Selectize.prototype, {
   /**
    * Clears all options.
    */
-  clearOptions: function (){
+  clearOptions: function() {
     var self = this;
 
     self.loadedSearches = {};
@@ -1694,7 +1697,7 @@ $.extend(Selectize.prototype, {
    * @param {string} value
    * @returns {object}
    */
-  getOption: function (value){
+  getOption: function(value) {
     return this.getElementWithValue(value, this.$dropdown_content.find('[data-selectable]'));
   },
 
@@ -1706,7 +1709,7 @@ $.extend(Selectize.prototype, {
    * @param {int} direction  can be 1 for next or -1 for previous
    * @return {object}
    */
-  getAdjacentOption: function ($option, direction){
+  getAdjacentOption: function($option, direction) {
     var $options = this.$dropdown.find('[data-selectable]');
     var index = $options.index($option) + direction;
 
@@ -1721,7 +1724,7 @@ $.extend(Selectize.prototype, {
    * @param {object} $els
    * @return {object}
    */
-  getElementWithValue: function (value, $els){
+  getElementWithValue: function(value, $els) {
     value = hash_key(value);
 
     if (typeof value !== 'undefined' && value !== null) {
@@ -1742,7 +1745,7 @@ $.extend(Selectize.prototype, {
    * @param {string} value
    * @returns {object}
    */
-  getItem: function (value){
+  getItem: function(value) {
     return this.getElementWithValue(value, this.$control.children());
   },
 
@@ -1752,7 +1755,7 @@ $.extend(Selectize.prototype, {
    *
    * @param {string} value
    */
-  addItems: function (values){
+  addItems: function(values) {
     var items = $.isArray(values) ? values : [values];
     for (var i = 0, n = items.length; i < n; i++) {
       this.isPending = (i < n - 1);
@@ -1766,8 +1769,8 @@ $.extend(Selectize.prototype, {
    *
    * @param {string} value
    */
-  addItem: function (value){
-    debounce_events(this, ['change'], function (){
+  addItem: function(value) {
+    debounce_events(this, ['change'], function() {
       var $item, $option, $options;
       var self = this;
       var inputMode = self.settings.mode;
@@ -1824,7 +1827,7 @@ $.extend(Selectize.prototype, {
    *
    * @param {string} value
    */
-  removeItem: function (value){
+  removeItem: function(value) {
     var self = this;
     var $item, i, idx;
 
@@ -1867,7 +1870,7 @@ $.extend(Selectize.prototype, {
    *
    * @return {boolean}
    */
-  createItem: function (triggerDropdown){
+  createItem: function(triggerDropdown) {
     var self = this;
     var input = $.trim(self.$control_input.val() || '');
     var caret = self.caretPos;
@@ -1878,14 +1881,14 @@ $.extend(Selectize.prototype, {
       triggerDropdown = true;
     }
 
-    var setup = (typeof self.settings.create === 'function') ? this.settings.create : function (input){
+    var setup = (typeof self.settings.create === 'function') ? this.settings.create : function(input) {
       var data = {};
       data[self.settings.labelField] = input;
       data[self.settings.valueField] = input;
       return data;
     };
 
-    var create = once(function (data){
+    var create = once(function(data) {
       self.unlock();
 
       if (!data || typeof data !== 'object') return;
@@ -1910,7 +1913,7 @@ $.extend(Selectize.prototype, {
   /**
    * Re-renders the selected item lists.
    */
-  refreshItems: function (){
+  refreshItems: function() {
     this.lastQuery = null;
 
     if (this.isSetup) {
@@ -1927,7 +1930,7 @@ $.extend(Selectize.prototype, {
    * Updates all state-dependent attributes
    * and CSS classes.
    */
-  refreshState: function (){
+  refreshState: function() {
     var invalid, self = this;
     if (self.isRequired) {
       if (self.items.length) self.isInvalid = false;
@@ -1939,7 +1942,7 @@ $.extend(Selectize.prototype, {
   /**
    * Updates all state-dependent CSS classes.
    */
-  refreshClasses: function (){
+  refreshClasses: function() {
     var self = this;
     var isFull = self.isFull();
     var isLocked = self.isLocked;
@@ -1969,7 +1972,7 @@ $.extend(Selectize.prototype, {
    *
    * @returns {boolean}
    */
-  isFull: function (){
+  isFull: function() {
     return this.settings.maxItems !== null && this.items.length >= this.settings.maxItems;
   },
 
@@ -1977,7 +1980,7 @@ $.extend(Selectize.prototype, {
    * Refreshes the original <select> or <input>
    * element to reflect the current state.
    */
-  updateOriginalInput: function (){
+  updateOriginalInput: function() {
     var i, n, options, self = this;
 
     if (self.tagType === TAG_SELECT) {
@@ -2003,7 +2006,7 @@ $.extend(Selectize.prototype, {
    * Shows/hide the input placeholder depending
    * on if there items in the list already.
    */
-  updatePlaceholder: function (){
+  updatePlaceholder: function() {
     if (!this.settings.placeholder) return;
     var $input = this.$control_input;
 
@@ -2019,7 +2022,7 @@ $.extend(Selectize.prototype, {
    * Shows the autocomplete dropdown containing
    * the available options.
    */
-  open: function (){
+  open: function() {
     var self = this;
 
     if (self.isLocked || self.isOpen || !self.hasOptions
@@ -2036,7 +2039,7 @@ $.extend(Selectize.prototype, {
   /**
    * Closes the autocomplete dropdown menu.
    */
-  close: function (){
+  close: function() {
     var self = this;
     var trigger = self.isOpen;
 
@@ -2056,7 +2059,7 @@ $.extend(Selectize.prototype, {
    * Calculates and applies the appropriate
    * position of the dropdown.
    */
-  positionDropdown: function (){
+  positionDropdown: function() {
     var $control = this.$control;
     var offset = this.settings.dropdownParent === 'body' ? $control.offset() : $control.position();
     offset.top += $control.outerHeight(true);
@@ -2072,7 +2075,7 @@ $.extend(Selectize.prototype, {
    * Resets / clears all selected items
    * from the control.
    */
-  clear: function (){
+  clear: function() {
     var self = this;
 
     if (!self.items.length) return;
@@ -2094,7 +2097,7 @@ $.extend(Selectize.prototype, {
    *
    * @param {object} $el
    */
-  insertAtCaret: function ($el){
+  insertAtCaret: function($el) {
     var caret = Math.min(this.caretPos, this.items.length);
     if (caret === 0) {
       this.$control.prepend($el);
@@ -2110,7 +2113,7 @@ $.extend(Selectize.prototype, {
    * @param {object} e (optional)
    * @returns {boolean}
    */
-  deleteSelection: function (e){
+  deleteSelection: function(e) {
     var i, n, direction, selection, values, caret, option_select, $option_select, $tail;
     var self = this;
 
@@ -2182,7 +2185,7 @@ $.extend(Selectize.prototype, {
    * @param {int} direction
    * @param {object} e (optional)
    */
-  advanceSelection: function (direction, e){
+  advanceSelection: function(direction, e) {
     var tail, selection, idx, valueLength, cursorAtEdge, $tail;
     var self = this;
 
@@ -2217,8 +2220,9 @@ $.extend(Selectize.prototype, {
    * @param {int} direction
    * @param {object} e (optional)
    */
-  advanceCaret: function (direction, e){
-    var self = this, fn, $adj;
+  advanceCaret: function(direction, e) {
+    var self = this,
+      fn, $adj;
 
     if (direction === 0) return;
 
@@ -2240,7 +2244,7 @@ $.extend(Selectize.prototype, {
    *
    * @param {int} i
    */
-  setCaret: function (i){
+  setCaret: function(i) {
     var self = this;
 
     if (self.settings.mode === 'single') {
@@ -2272,7 +2276,7 @@ $.extend(Selectize.prototype, {
    * Disables user input on the control. Used while
    * items are being asynchronously created.
    */
-  lock: function (){
+  lock: function() {
     this.close();
     this.isLocked = true;
     this.refreshState();
@@ -2281,7 +2285,7 @@ $.extend(Selectize.prototype, {
   /**
    * Re-enables user input on the control.
    */
-  unlock: function (){
+  unlock: function() {
     this.isLocked = false;
     this.refreshState();
   },
@@ -2290,7 +2294,7 @@ $.extend(Selectize.prototype, {
    * Disables user input on the control completely.
    * While disabled, it cannot receive focus.
    */
-  disable: function (){
+  disable: function() {
     var self = this;
     self.$input.prop('disabled', true);
     self.isDisabled = true;
@@ -2301,7 +2305,7 @@ $.extend(Selectize.prototype, {
    * Enables the control so that it can respond
    * to focus and user input.
    */
-  enable: function (){
+  enable: function() {
     var self = this;
     self.$input.prop('disabled', false);
     self.isDisabled = false;
@@ -2313,7 +2317,7 @@ $.extend(Selectize.prototype, {
    * unbinds all event listeners so that it can
    * be garbage collected.
    */
-  destroy: function (){
+  destroy: function() {
     var self = this;
     var eventNS = self.eventNS;
     var revertSettings = self.revertSettings;
@@ -2349,7 +2353,7 @@ $.extend(Selectize.prototype, {
    * @param {object} data
    * @returns {string}
    */
-  render: function (templateName, data){
+  render: function(templateName, data) {
     var value, id, label;
     var html = '';
     var cache = false;
@@ -2401,7 +2405,7 @@ $.extend(Selectize.prototype, {
    *
    * @param {string} templateName
    */
-  clearCache: function (templateName){
+  clearCache: function(templateName) {
     var self = this;
     if (typeof templateName === 'undefined') {
       self.renderCache = {};
@@ -2417,7 +2421,7 @@ $.extend(Selectize.prototype, {
    * @param {string} input
    * @return {boolean}
    */
-  canCreate: function (input){
+  canCreate: function(input) {
     var self = this;
     if (!self.settings.create) return false;
     var filter = self.settings.createFilter;
@@ -2501,7 +2505,7 @@ Selectize.defaults = {
   }
 };
 
-$.fn.selectize = function (settings_user){
+$.fn.selectize = function(settings_user) {
   var defaults = $.fn.selectize.defaults;
   var settings = $.extend({}, defaults, settings_user);
   var attr_data = settings.dataAttr;
@@ -2517,7 +2521,7 @@ $.fn.selectize = function (settings_user){
    * @param {object} $input
    * @param {object} settings_element
    */
-  var init_textbox = function ($input, settings_element){
+  var init_textbox = function($input, settings_element) {
     var i, n, values, option, value = $.trim($input.val() || '');
     if (!settings.allowEmptyOption && !value.length) return;
 
@@ -2539,11 +2543,11 @@ $.fn.selectize = function (settings_user){
    * @param {object} $input
    * @param {object} settings_element
    */
-  var init_select = function ($input, settings_element){
+  var init_select = function($input, settings_element) {
     var i, n, tagName, $children, order = 0;
     var options = settings_element.options;
 
-    var readData = function ($el){
+    var readData = function($el) {
       var data = attr_data && $el.attr(attr_data);
       if (typeof data === 'string' && data.length) {
         return JSON.parse(data);
@@ -2551,7 +2555,7 @@ $.fn.selectize = function (settings_user){
       return null;
     };
 
-    var addOption = function ($option, group){
+    var addOption = function($option, group) {
       var value, option;
 
       $option = $($option);
@@ -2589,7 +2593,7 @@ $.fn.selectize = function (settings_user){
       }
     };
 
-    var addGroup = function ($optgroup){
+    var addGroup = function($optgroup) {
       var i, n, id, optgroup, $options;
 
       $optgroup = $($optgroup);
@@ -2621,7 +2625,7 @@ $.fn.selectize = function (settings_user){
     }
   };
 
-  return this.each(function (){
+  return this.each(function() {
     if (this.selectize) return;
 
     var $input = $(this);
@@ -2650,7 +2654,7 @@ $.fn.selectize = function (settings_user){
 
 $.fn.selectize.defaults = Selectize.defaults;
 
-Selectize.define('dropdown_header', function (options){
+Selectize.define('dropdown_header', function(options) {
   var self = this;
 
   options = $.extend({
@@ -2660,25 +2664,25 @@ Selectize.define('dropdown_header', function (options){
     labelClass: 'selectize-dropdown-header-label',
     closeClass: 'selectize-dropdown-header-close',
 
-    html: function (data){
+    html: function(data) {
       return (
-        '<div class="' + data.headerClass + '">' +
-        '<div class="' + data.titleRowClass + '">' +
-        '<span class="' + data.labelClass + '">' + data.title + '</span>' +
-        '<a href="javascript:void(0)" class="' + data.closeClass + '">&times;</a>' +
-        '</div>' +
-        '</div>'
+        '<div class="' + data.headerClass + '">'
+        + '<div class="' + data.titleRowClass + '">'
+        + '<span class="' + data.labelClass + '">' + data.title + '</span>'
+        + '<a href="javascript:void(0)" class="' + data.closeClass + '">&times;</a>'
+        + '</div>'
+        + '</div>'
       );
     }
   }, options);
 
-  self.setup = (function (){
+  self.setup = (function() {
     var original = self.setup;
-    return function (){
+    return function() {
       original.apply(self, arguments);
       self.$dropdown_header = $(options.html(options));
       self.$dropdown.prepend(self.$dropdown_header);
-      self.$dropdown_header.on('click', '.' + options.closeClass, function (){
+      self.$dropdown_header.on('click', '.' + options.closeClass, function() {
         self.close();
         self.blur();
       });
@@ -2687,7 +2691,7 @@ Selectize.define('dropdown_header', function (options){
 
 });
 
-Selectize.define('optgroup_columns', function (options){
+Selectize.define('optgroup_columns', function(options) {
   var self = this;
 
   options = $.extend({
@@ -2695,16 +2699,16 @@ Selectize.define('optgroup_columns', function (options){
     equalizeHeight: true
   }, options);
 
-  this.getAdjacentOption = function ($option, direction){
+  this.getAdjacentOption = function($option, direction) {
     var $options = $option.closest('[data-group]').find('[data-selectable]');
     var index = $options.index($option) + direction;
 
     return index >= 0 && index < $options.length ? $options.eq(index) : $();
   };
 
-  this.onKeyDown = (function (){
+  this.onKeyDown = (function() {
     var original = self.onKeyDown;
-    return function (e){
+    return function(e) {
       var index, $option, $options, $optgroup;
 
       if (this.isOpen && (e.keyCode === KEY_LEFT || e.keyCode === KEY_RIGHT)) {
@@ -2730,7 +2734,7 @@ Selectize.define('optgroup_columns', function (options){
     };
   })();
 
-  var getScrollbarWidth = function (){
+  var getScrollbarWidth = function() {
     var div;
     var width = getScrollbarWidth.width;
     var doc = document;
@@ -2746,7 +2750,7 @@ Selectize.define('optgroup_columns', function (options){
     return width;
   };
 
-  var equalizeSizes = function (){
+  var equalizeSizes = function() {
     var i, n, height_max, width, width_last, width_parent, $optgroups;
 
     $optgroups = $('[data-group]', self.$dropdown_content);
@@ -2778,7 +2782,7 @@ Selectize.define('optgroup_columns', function (options){
   }
 });
 
-Selectize.define('remove_button', function (options){
+Selectize.define('remove_button', function(options) {
   if (this.settings.mode === 'single') return;
 
   options = $.extend({
@@ -2798,18 +2802,18 @@ Selectize.define('remove_button', function (options){
    * @param {string} html_element
    * @return {string}
    */
-  var append = function (html_container, html_element){
+  var append = function(html_container, html_element) {
     var pos = html_container.search(/(<\/[^>]+>\s*)$/);
     return html_container.substring(0, pos) + html_element + html_container.substring(pos);
   };
 
-  this.setup = (function (){
+  this.setup = (function() {
     var original = self.setup;
-    return function (){
+    return function() {
       // override the item rendering method to add the button to each
       if (options.append) {
         var render_item = self.settings.render.item;
-        self.settings.render.item = function (data){
+        self.settings.render.item = function(data) {
           return append(render_item.apply(this, arguments), html);
         };
       }
@@ -2817,7 +2821,7 @@ Selectize.define('remove_button', function (options){
       original.apply(this, arguments);
 
       // add event listener
-      this.$control.on('click', '.' + options.className, function (e){
+      this.$control.on('click', '.' + options.className, function(e) {
         e.preventDefault();
         if (self.isLocked) return;
 
@@ -2831,16 +2835,16 @@ Selectize.define('remove_button', function (options){
   })();
 });
 
-Selectize.define('restore_on_backspace', function (options){
+Selectize.define('restore_on_backspace', function(options) {
   var self = this;
 
-  options.text = options.text || function (option){
-      return option[this.settings.labelField];
-    };
+  options.text = options.text || function(option) {
+    return option[this.settings.labelField];
+  };
 
-  this.onKeyDown = (function (e){
+  this.onKeyDown = (function(e) {
     var original = self.onKeyDown;
-    return function (e){
+    return function(e) {
       var index, option;
       if (e.keyCode === KEY_BACKSPACE && this.$control_input.val() === '' && !this.$activeItems.length) {
         index = this.caretPos - 1;

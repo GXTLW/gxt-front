@@ -9,9 +9,11 @@
 
 // Google Maps: http://code.google.com/apis/maps/index.html
 
-KindEditor.plugin('map', function (K){
-  var self = this, name = 'map', lang = self.lang(name + '.');
-  self.clickToolbar(name, function (){
+KindEditor.plugin('map', function(K) {
+  var self = this,
+    name = 'map',
+    lang = self.lang(name + '.');
+  self.clickToolbar(name, function() {
     var html = [
       '<div style="padding:10px 20px;">',
       '<div class="ke-dialog-row">',
@@ -30,7 +32,7 @@ KindEditor.plugin('map', function (K){
       body: html,
       yesBtn: {
         name: self.lang('yes'),
-        click: function (e){
+        click: function(e) {
           var geocoder = win.geocoder,
             map = win.map,
             center = map.getCenter().lat() + ',' + map.getCenter().lng(),
@@ -47,7 +49,7 @@ KindEditor.plugin('map', function (K){
           self.exec('insertimage', url).hideDialog().focus();
         }
       },
-      beforeRemove: function (){
+      beforeRemove: function() {
         searchBtn.remove();
         if (doc) {
           doc.write('');
@@ -118,7 +120,7 @@ KindEditor.plugin('map', function (K){
     // TODO：用doc.write(iframeHtml)方式加载时，在IE6上第一次加载报错，暂时使用src方式
     var iframe = K('<iframe class="ke-textarea" frameborder="0" src="' + self.pluginsPath + 'map/map.html" style="width:558px;height:360px;"></iframe>');
 
-    function ready(){
+    function ready() {
       win = iframe[0].contentWindow;
       doc = K.iframeDoc(iframe);
       //doc.open();
@@ -126,7 +128,7 @@ KindEditor.plugin('map', function (K){
       //doc.close();
     }
 
-    iframe.bind('load', function (){
+    iframe.bind('load', function() {
       iframe.unbind('load');
       if (K.IE) {
         ready();
@@ -136,7 +138,7 @@ KindEditor.plugin('map', function (K){
     });
     K('.ke-map', div).replaceWith(iframe);
     // search map
-    searchBtn.click(function (){
+    searchBtn.click(function() {
       win.search(addressBox.val());
     });
   });

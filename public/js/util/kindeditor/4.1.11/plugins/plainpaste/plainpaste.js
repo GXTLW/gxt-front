@@ -7,14 +7,15 @@
  * @licence http://www.kindsoft.net/license.php
  *******************************************************************************/
 
-KindEditor.plugin('plainpaste', function (K){
-  var self = this, name = 'plainpaste';
-  self.clickToolbar(name, function (){
+KindEditor.plugin('plainpaste', function(K) {
+  var self = this,
+    name = 'plainpaste';
+  self.clickToolbar(name, function() {
     var lang = self.lang(name + '.'),
-      html = '<div style="padding:10px 20px;">' +
-        '<div style="margin-bottom:10px;">' + lang.comment + '</div>' +
-        '<textarea class="ke-textarea" style="width:408px;height:260px;"></textarea>' +
-        '</div>',
+      html = '<div style="padding:10px 20px;">'
+      + '<div style="margin-bottom:10px;">' + lang.comment + '</div>'
+      + '<textarea class="ke-textarea" style="width:408px;height:260px;"></textarea>'
+      + '</div>',
       dialog = self.createDialog({
         name: name,
         width: 450,
@@ -22,7 +23,7 @@ KindEditor.plugin('plainpaste', function (K){
         body: html,
         yesBtn: {
           name: self.lang('yes'),
-          click: function (e){
+          click: function(e) {
             var html = textarea.val();
             html = K.escape(html);
             html = html.replace(/ {2}/g, ' &nbsp;');

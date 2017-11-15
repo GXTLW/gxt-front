@@ -29,7 +29,7 @@ var expando = 0;
  * @param absolute
  * @returns {*}
  */
-function patchThreshold(threshold, absolute){
+function patchThreshold(threshold, absolute) {
   if (is.number(threshold) && !is.nan(threshold) && !is.infinite(threshold)) {
     if (absolute) {
       threshold = Math.abs(threshold);
@@ -82,7 +82,7 @@ function patchThreshold(threshold, absolute){
  * @param viewport
  * @returns {*}
  */
-function patchViewport(viewport){
+function patchViewport(viewport) {
   return viewport === window
     ? (document.compatMode === 'CSS1Compat' ? document.documentElement : document.body)
     : viewport;
@@ -94,7 +94,7 @@ function patchViewport(viewport){
  * @param options
  * @constructor
  */
-function Viewport(viewport, options){
+function Viewport(viewport, options) {
   if (window !== window && is.element(viewport)) {
     throw new Error('Viewport must be window or a HTMLElement');
   }
@@ -127,7 +127,7 @@ function Viewport(viewport, options){
  * }}
  */
 Viewport.prototype = {
-  __initOptions: function (options){
+  __initOptions: function(options) {
     options = $.extend({
       delay: 150,
       target: null,
@@ -142,7 +142,7 @@ Viewport.prototype = {
 
     this.options = options;
   },
-  __findTarget: function (){
+  __findTarget: function() {
     var context = this;
     var options = context.options;
     var target = options.target;
@@ -153,7 +153,7 @@ Viewport.prototype = {
     } else if (is.element(target) && $.contains(__viewport[0], target)) {
       target = $(target);
     } else if (target instanceof $) {
-      target = target.filter(function (){
+      target = target.filter(function() {
         return $.contains(__viewport[0], this);
       });
     } else {
@@ -162,7 +162,7 @@ Viewport.prototype = {
 
     context.target = target;
   },
-  __filterTargetInViewport: function (width, height){
+  __filterTargetInViewport: function(width, height) {
     var result = [];
     var context = this;
     var target = context.target;
@@ -188,7 +188,7 @@ Viewport.prototype = {
     }
 
     // filter elements by their rect info
-    target.each(function (index, element){
+    target.each(function(index, element) {
       var rect = element.getBoundingClientRect();
 
       // hidden element
@@ -204,12 +204,10 @@ Viewport.prototype = {
         var right = rect.right - offsetLeft;
 
         // adjust position
-        if (
-          !(top - threshold[2] >= height
-          || right + threshold[3] <= 0
-          || bottom + threshold[0] <= 0
-          || left - threshold[1] >= width)
-        ) {
+        if (!(top - threshold[2] >= height
+            || right + threshold[3] <= 0
+            || bottom + threshold[0] <= 0
+            || left - threshold[1] >= width)) {
           result.push(element);
         }
       }
@@ -217,7 +215,7 @@ Viewport.prototype = {
 
     return result;
   },
-  __changeViewport: function (emitter, vertical, horizontal){
+  __changeViewport: function(emitter, vertical, horizontal) {
     var context = this;
     var options = context.options;
     var viewport = context.viewport;
@@ -264,7 +262,7 @@ Viewport.prototype = {
     // return scrollbar position
     return event;
   },
-  __init: function (){
+  __init: function() {
     // delay trigger the scroll and resize event.
     var context = this;
     var id = context.id;
@@ -275,7 +273,7 @@ Viewport.prototype = {
     var namespace = '.viewport-' + id;
 
     // change viewport
-    function changeViewport(e){
+    function changeViewport(e) {
       // trigger the viewchange event internally.
       var event = context.__changeViewport(e.type, scrollTop, scrollLeft);
 
@@ -294,12 +292,12 @@ Viewport.prototype = {
       var timer;
 
       // handler
-      handler = function (e){
+      handler = function(e) {
         // clear timer
         clearTimeout(timer);
 
         // delay execute
-        timer = setTimeout(function (){
+        timer = setTimeout(function() {
           changeViewport(e);
         }, options.delay);
       };
@@ -313,7 +311,7 @@ Viewport.prototype = {
     // init event
     context.__changeViewport('init', scrollTop, scrollLeft);
   },
-  on: function (event, handler){
+  on: function(event, handler) {
     var context = this;
 
     context.events[event] = context.events[event]
@@ -323,7 +321,7 @@ Viewport.prototype = {
 
     return context;
   },
-  off: function (event, handler){
+  off: function(event, handler) {
     var context = this;
 
     switch (arguments.length) {
@@ -340,7 +338,7 @@ Viewport.prototype = {
 
     return context;
   },
-  emit: function (event){
+  emit: function(event) {
     var context = this;
     var data = [].slice.call(arguments, 1);
 
@@ -351,7 +349,7 @@ Viewport.prototype = {
 
     return context;
   },
-  refresh: function (options){
+  refresh: function(options) {
     var context = this;
     var viewport = context.viewport;
 
@@ -365,7 +363,7 @@ Viewport.prototype = {
 
     return context;
   },
-  destroy: function (){
+  destroy: function() {
     var context = this;
     var viewport = context.viewport;
     var namespace = '.viewport-' + context.id;

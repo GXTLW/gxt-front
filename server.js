@@ -14,7 +14,7 @@ var cluster = require('cluster');
 var NUMCPUS = os.cpus().length;
 var localhost = ['::', '127.0.0.1', 'localhost'];
 
-function run(){
+function run() {
   if (cluster.isMaster) {
     // worker
     var worker;
@@ -25,7 +25,7 @@ function run(){
       worker = cluster.fork();
 
       // listen event
-      worker.on('message', function (message){
+      worker.on('message', function(message) {
         console.log(message);
       });
     }
@@ -34,7 +34,7 @@ function run(){
     var server = http.createServer(app.callback());
 
     // start listening
-    server.on('listening', function (){
+    server.on('listening', function() {
       var address = server.address();
       var port = address.port;
       var host = localhost.indexOf(address.address) !== -1 ? '127.0.0.1' : address.address;
@@ -51,13 +51,13 @@ function run(){
     });
 
     // error
-    server.on('error', function (){
+    server.on('error', function() {
       // exit
       process.exit();
     });
 
     // close
-    server.on('close', function (){
+    server.on('close', function() {
       // exit
       process.exit();
     });

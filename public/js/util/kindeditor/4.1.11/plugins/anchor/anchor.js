@@ -7,10 +7,12 @@
  * @licence http://www.kindsoft.net/license.php
  *******************************************************************************/
 
-KindEditor.plugin('anchor', function (K){
-  var self = this, name = 'anchor', lang = self.lang(name + '.');
+KindEditor.plugin('anchor', function(K) {
+  var self = this,
+    name = 'anchor',
+    lang = self.lang(name + '.');
   self.plugin.anchor = {
-    edit: function (){
+    edit: function() {
       var html = [
         '<div style="padding:20px;">',
         '<div class="ke-dialog-row">',
@@ -26,7 +28,7 @@ KindEditor.plugin('anchor', function (K){
         body: html,
         yesBtn: {
           name: self.lang('yes'),
-          click: function (e){
+          click: function(e) {
             self.insertHtml('<a name="' + nameBox.val() + '">').hideDialog().focus();
           }
         }
@@ -42,7 +44,7 @@ KindEditor.plugin('anchor', function (K){
       nameBox[0].focus();
       nameBox[0].select();
     },
-    'delete': function (){
+    'delete': function() {
       self.plugin.getSelectedAnchor().remove();
     }
   };

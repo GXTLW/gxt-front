@@ -234,7 +234,7 @@ KindEditor.lang({
   }
 }, 'en');
 
-KindEditor.each(KindEditor.options.items, function (i, name){
+KindEditor.each(KindEditor.options.items, function(i, name) {
   if (name == 'baidumap') {
     KindEditor.options.items[i] = 'map';
   }

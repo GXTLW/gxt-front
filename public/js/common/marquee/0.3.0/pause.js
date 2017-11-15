@@ -33,14 +33,14 @@ var anims = {};
 var pauseId = 'jQuery.pause';
 var oldAnimate = $.fn.animate;
 
-function now(){ return new Date().getTime(); }
+function now() { return new Date().getTime(); }
 
-$.fn.animate = function (prop, speed, easing, callback){
+$.fn.animate = function(prop, speed, easing, callback) {
   var optall = $.speed(speed, easing, callback);
 
   optall.complete = optall.old; // unwrap callback
 
-  return this.each(function (){
+  return this.each(function() {
     // check pauseId
     if (!this[pauseId])
       this[pauseId] = uuid++;
@@ -61,8 +61,8 @@ $.fn.animate = function (prop, speed, easing, callback){
   });
 };
 
-$.fn.pause = function (){
-  return this.each(function (){
+$.fn.pause = function() {
+  return this.each(function() {
     // check pauseId
     if (!this[pauseId])
       this[pauseId] = uuid++;
@@ -86,8 +86,8 @@ $.fn.pause = function (){
   });
 };
 
-$.fn.resume = function (){
-  return this.each(function (){
+$.fn.resume = function() {
+  return this.each(function() {
     // check pauseId
     if (!this[pauseId])
       this[pauseId] = uuid++;

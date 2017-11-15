@@ -21,7 +21,7 @@ module.exports = Popup.extend({
     pointPos: '50%'
   },
 
-  _setAlign: function (){
+  _setAlign: function() {
     var alignObject = {},
       arrowShift = this.get('arrowShift'),
       distance = this.get('distance'),
@@ -35,16 +35,13 @@ module.exports = Popup.extend({
     if (direction === 'up') {
       alignObject.baseXY = [pointPos, 0];
       alignObject.selfXY = [arrowShift, '100%+' + distance];
-    }
-    else if (direction === 'down') {
+    } else if (direction === 'down') {
       alignObject.baseXY = [pointPos, '100%+' + distance];
       alignObject.selfXY = [arrowShift, 0];
-    }
-    else if (direction === 'left') {
+    } else if (direction === 'left') {
       alignObject.baseXY = [0, pointPos];
       alignObject.selfXY = ['100%+' + distance, arrowShift];
-    }
-    else if (direction === 'right') {
+    } else if (direction === 'right') {
       alignObject.baseXY = ['100%+' + distance, pointPos];
       alignObject.selfXY = [0, arrowShift];
     }
@@ -54,7 +51,7 @@ module.exports = Popup.extend({
   },
 
   // 用于 set 属性后的界面更新
-  _onRenderContent: function (val){
+  _onRenderContent: function(val) {
     var ctn = this.$('[data-role="content"]');
     if (typeof val !== 'string') {
       val = val.call(this);

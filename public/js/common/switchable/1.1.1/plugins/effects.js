@@ -15,11 +15,11 @@ module.exports = {
     duration: 500
   },
 
-  isNeeded: function (){
+  isNeeded: function() {
     return this.get('effect') !== 'none';
   },
 
-  install: function (){
+  install: function() {
     var panels = this.get('panels');
 
     // 注：
@@ -75,7 +75,7 @@ module.exports = {
       var min = activeIndex * step;
       var max = min + step - 1;
 
-      panels.each(function (i, panel){
+      panels.each(function(i, panel) {
         var isActivePanel = i >= min && i <= max;
         $(panel).css({
           opacity: isActivePanel ? 1 : 0,
@@ -86,7 +86,7 @@ module.exports = {
     }
 
     // 覆盖 switchPanel 方法
-    this._switchPanel = function (panelInfo){
+    this._switchPanel = function(panelInfo) {
       var effect = this.get('effect');
       var fn = $.isFunction(effect) ? effect : Effects[effect];
       fn.call(this, panelInfo);
@@ -98,7 +98,7 @@ module.exports = {
 var Effects = {
 
   // 淡隐淡现效果
-  fade: function (panelInfo){
+  fade: function(panelInfo) {
     // 简单起见，目前不支持 step > 1 的情景。若需要此效果时，可修改结构来达成。
     if (this.get('step') > 1) {
       throw new Error('Effect "fade" only supports step === 1');
@@ -124,7 +124,7 @@ var Effects = {
       // 动画切换
       this.anim = fromPanel.animate({
         opacity: 0
-      }, duration, easing, function (){
+      }, duration, easing, function() {
         that.anim = null; // free
         // 切换 z-index
         toPanel.css('zIndex', 9);
@@ -139,7 +139,7 @@ var Effects = {
   },
 
   // 水平/垂直滚动效果
-  scroll: function (panelInfo){
+  scroll: function(panelInfo) {
     var isX = this.get('effect') === SCROLLX;
     var diff = this.get('viewSize')[isX ? 0 : 1] * panelInfo.toIndex;
 
@@ -155,11 +155,10 @@ var Effects = {
       var duration = this.get('duration');
       var easing = this.get('easing');
 
-      this.anim = this.content.animate(props, duration, easing, function (){
+      this.anim = this.content.animate(props, duration, easing, function() {
         that.anim = null; // free
       });
-    }
-    else {
+    } else {
       this.content.css(props);
     }
   }

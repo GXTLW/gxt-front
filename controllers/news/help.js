@@ -5,7 +5,7 @@
 'use strict';
 
 module.exports = {
-  index: ctx=>{
+  index: ctx => {
     ctx.state.title = '派遣知识';
 
     ctx.body = ctx.render('apps/news/help');

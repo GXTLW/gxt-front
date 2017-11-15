@@ -5,7 +5,7 @@
 
 var moment = require('moment');
 
-module.exports = function (){
+module.exports = function() {
   return moment.lang('zh-cn', {
     months: "一月_二月_三月_四月_五月_六月_七月_八月_九月_十月_十一月_十二月".split("_"),
     monthsShort: "1月_2月_3月_4月_5月_6月_7月_8月_9月_10月_11月_12月".split("_"),
@@ -23,7 +23,7 @@ module.exports = function (){
       lll: "YYYY年MMMD日LT",
       llll: "YYYY年MMMD日ddddLT"
     },
-    meridiem: function (hour, minute, isLower){
+    meridiem: function(hour, minute, isLower) {
       var hm = hour * 100 + minute;
       if (hm < 600) {
         return "凌晨";
@@ -40,22 +40,22 @@ module.exports = function (){
       }
     },
     calendar: {
-      sameDay: function (){
+      sameDay: function() {
         return this.minutes() === 0 ? "[今天]Ah[点整]" : "[今天]LT";
       },
-      nextDay: function (){
+      nextDay: function() {
         return this.minutes() === 0 ? "[明天]Ah[点整]" : "[明天]LT";
       },
-      lastDay: function (){
+      lastDay: function() {
         return this.minutes() === 0 ? "[昨天]Ah[点整]" : "[昨天]LT";
       },
-      nextWeek: function (){
+      nextWeek: function() {
         var startOfWeek, prefix;
         startOfWeek = moment().startOf('week');
         prefix = this.unix() - startOfWeek.unix() >= 7 * 24 * 3600 ? '[下]' : '[本]';
         return this.minutes() === 0 ? prefix + "dddAh点整" : prefix + "dddAh点mm";
       },
-      lastWeek: function (){
+      lastWeek: function() {
         var startOfWeek, prefix;
         startOfWeek = moment().startOf('week');
         prefix = this.unix() < startOfWeek.unix() ? '[上]' : '[本]';
@@ -63,7 +63,7 @@ module.exports = function (){
       },
       sameElse: 'LL'
     },
-    ordinal: function (number, period){
+    ordinal: function(number, period) {
       switch (period) {
         case "d":
         case "D":
@@ -96,7 +96,7 @@ module.exports = function (){
     week: {
       // GB/T 7408-1994《数据元和交换格式·信息交换·日期和时间表示法》与ISO 8601:1988等效
       dow: 1, // Monday is the first day of the week.
-      doy: 4  // The week that contains Jan 4th is the first week of the year.
+      doy: 4 // The week that contains Jan 4th is the first week of the year.
     }
   });
 }

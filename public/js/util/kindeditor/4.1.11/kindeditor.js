@@ -16,7 +16,7 @@ if (!window.console) {
 }
 
 if (!console.log) {
-  console.log = function (){};
+  console.log = function() {};
 }
 
 var _VERSION = '4.1.11 (2015-03-20)',
@@ -34,21 +34,21 @@ var _VERSION = '4.1.11 (2015-03-20)',
   _V = _matches ? _matches[1] : '0',
   _TIME = new Date().getTime();
 
-function _isArray(val){
+function _isArray(val) {
   if (!val) {
     return false;
   }
   return Object.prototype.toString.call(val) === '[object Array]';
 }
 
-function _isFunction(val){
+function _isFunction(val) {
   if (!val) {
     return false;
   }
   return Object.prototype.toString.call(val) === '[object Function]';
 }
 
-function _inArray(val, arr){
+function _inArray(val, arr) {
   for (var i = 0, len = arr.length; i < len; i++) {
     if (val === arr[i]) {
       return i;
@@ -57,7 +57,7 @@ function _inArray(val, arr){
   return -1;
 }
 
-function _each(obj, fn){
+function _each(obj, fn) {
   if (_isArray(obj)) {
     for (var i = 0, len = obj.length; i < len; i++) {
       if (fn.call(obj[i], i, obj[i]) === false) {
@@ -75,59 +75,61 @@ function _each(obj, fn){
   }
 }
 
-function _trim(str){
+function _trim(str) {
   return str.replace(/(?:^[ \t\n\r]+)|(?:[ \t\n\r]+$)/g, '');
 }
 
-function _inString(val, str, delimiter){
+function _inString(val, str, delimiter) {
   delimiter = delimiter === undefined ? ',' : delimiter;
   return (delimiter + str + delimiter).indexOf(delimiter + val + delimiter) >= 0;
 }
 
-function _addUnit(val, unit){
+function _addUnit(val, unit) {
   unit = unit || 'px';
   return val && /^-?\d+(?:\.\d+)?$/.test(val) ? val + unit : val;
 }
 
-function _removeUnit(val){
+function _removeUnit(val) {
   var match;
   return val && (match = /(\d+)/.exec(val)) ? parseInt(match[1], 10) : 0;
 }
 
-function _escape(val){
+function _escape(val) {
   return val.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-function _unescape(val){
+function _unescape(val) {
   return val.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&amp;/g, '&');
 }
 
-function _toCamel(str){
+function _toCamel(str) {
   var arr = str.split('-');
   str = '';
-  _each(arr, function (key, val){
+  _each(arr, function(key, val) {
     str += (key > 0) ? val.charAt(0).toUpperCase() + val.substr(1) : val;
   });
   return str;
 }
 
-function _toHex(val){
-  function hex(d){
+function _toHex(val) {
+  function hex(d) {
     var s = parseInt(d, 10).toString(16).toUpperCase();
     return s.length > 1 ? s : '0' + s;
   }
 
   return val.replace(/rgb\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)/ig,
-    function ($0, $1, $2, $3){
+    function($0, $1, $2, $3) {
       return '#' + hex($1) + hex($2) + hex($3);
     }
   );
 }
 
-function _toMap(val, delimiter){
+function _toMap(val, delimiter) {
   delimiter = delimiter === undefined ? ',' : delimiter;
-  var map = {}, arr = _isArray(val) ? val : val.split(delimiter), match;
-  _each(arr, function (key, val){
+  var map = {},
+    arr = _isArray(val) ? val : val.split(delimiter),
+    match;
+  _each(arr, function(key, val) {
     if ((match = /^(\d+)\.\.(\d+)$/.exec(val))) {
       for (var i = parseInt(match[1], 10); i <= parseInt(match[2], 10); i++) {
         map[i.toString()] = true;
@@ -139,33 +141,33 @@ function _toMap(val, delimiter){
   return map;
 }
 
-function _toArray(obj, offset){
+function _toArray(obj, offset) {
   return Array.prototype.slice.call(obj, offset || 0);
 }
 
-function _undef(val, defaultVal){
+function _undef(val, defaultVal) {
   return val === undefined ? defaultVal : val;
 }
 
-function _invalidUrl(url){
+function _invalidUrl(url) {
   return !url || /[<>"]/.test(url);
 }
 
-function _addParam(url, param){
+function _addParam(url, param) {
   return url.indexOf('?') >= 0 ? url + '&' + param : url + '?' + param;
 }
 
-function _extend(child, parent, proto){
+function _extend(child, parent, proto) {
   if (!proto) {
     proto = parent;
     parent = null;
   }
   var childProto;
   if (parent) {
-    var fn = function (){};
+    var fn = function() {};
     fn.prototype = parent.prototype;
     childProto = new fn();
-    _each(proto, function (key, val){
+    _each(proto, function(key, val) {
       childProto[key] = val;
     });
   } else {
@@ -176,7 +178,7 @@ function _extend(child, parent, proto){
   child.parent = parent ? parent.prototype : null;
 }
 
-function _json(text){
+function _json(text) {
   var match;
   if ((match = /\{[\s\S]*\}|\[[\s\S]*\]/.exec(text))) {
     text = match[0];
@@ -184,7 +186,7 @@ function _json(text){
   var cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g;
   cx.lastIndex = 0;
   if (cx.test(text)) {
-    text = text.replace(cx, function (a){
+    text = text.replace(cx, function(a) {
       return '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
     });
   }
@@ -327,14 +329,14 @@ var _INPUT_KEY_MAP = _toMap('8,9,13,32,46,48..57,59,61,65..90,106,109..111,188,1
 var _CURSORMOVE_KEY_MAP = _toMap('33..40');
 
 var _CHANGE_KEY_MAP = {};
-_each(_INPUT_KEY_MAP, function (key, val){
+_each(_INPUT_KEY_MAP, function(key, val) {
   _CHANGE_KEY_MAP[key] = val;
 });
-_each(_CURSORMOVE_KEY_MAP, function (key, val){
+_each(_CURSORMOVE_KEY_MAP, function(key, val) {
   _CHANGE_KEY_MAP[key] = val;
 });
 
-function _bindEvent(el, type, fn){
+function _bindEvent(el, type, fn) {
   if (el.addEventListener) {
     el.addEventListener(type, fn, _useCapture);
   } else if (el.attachEvent) {
@@ -342,7 +344,7 @@ function _bindEvent(el, type, fn){
   }
 }
 
-function _unbindEvent(el, type, fn){
+function _unbindEvent(el, type, fn) {
   if (el.removeEventListener) {
     el.removeEventListener(type, fn, _useCapture);
   } else if (el.detachEvent) {
@@ -350,19 +352,20 @@ function _unbindEvent(el, type, fn){
   }
 }
 
-var _EVENT_PROPS = ('altKey,attrChange,attrName,bubbles,button,cancelable,charCode,clientX,clientY,ctrlKey,currentTarget,' +
-'data,detail,eventPhase,fromElement,handler,keyCode,metaKey,newValue,offsetX,offsetY,originalTarget,pageX,' +
-'pageY,prevValue,relatedNode,relatedTarget,screenX,screenY,shiftKey,srcElement,target,toElement,view,wheelDelta,which').split(',');
+var _EVENT_PROPS = ('altKey,attrChange,attrName,bubbles,button,cancelable,charCode,clientX,clientY,ctrlKey,currentTarget,'
+  + 'data,detail,eventPhase,fromElement,handler,keyCode,metaKey,newValue,offsetX,offsetY,originalTarget,pageX,'
+  + 'pageY,prevValue,relatedNode,relatedTarget,screenX,screenY,shiftKey,srcElement,target,toElement,view,wheelDelta,which').split(',');
 
-function KEvent(el, event){
+function KEvent(el, event) {
   this.init(el, event);
 }
 
 _extend(KEvent, {
-  init: function (el, event){
-    var self = this, doc = el.ownerDocument || el.document || el;
+  init: function(el, event) {
+    var self = this,
+      doc = el.ownerDocument || el.document || el;
     self.event = event;
-    _each(_EVENT_PROPS, function (key, val){
+    _each(_EVENT_PROPS, function(key, val) {
       self[val] = event[val];
     });
     if (!self.target) {
@@ -375,7 +378,8 @@ _extend(KEvent, {
       self.relatedTarget = self.fromElement === self.target ? self.toElement : self.fromElement;
     }
     if (self.pageX == null && self.clientX != null) {
-      var d = doc.documentElement, body = doc.body;
+      var d = doc.documentElement,
+        body = doc.body;
       self.pageX = self.clientX + (d && d.scrollLeft || body && body.scrollLeft || 0) - (d && d.clientLeft || body && body.clientLeft || 0);
       self.pageY = self.clientY + (d && d.scrollTop || body && body.scrollTop || 0) - (d && d.clientTop || body && body.clientTop || 0);
     }
@@ -389,25 +393,25 @@ _extend(KEvent, {
       self.which = (self.button & 1 ? 1 : (self.button & 2 ? 3 : (self.button & 4 ? 2 : 0)));
     }
     switch (self.which) {
-      case 186 :
+      case 186:
         self.which = 59;
         break;
-      case 187 :
-      case 107 :
-      case 43 :
+      case 187:
+      case 107:
+      case 43:
         self.which = 61;
         break;
-      case 189 :
-      case 45 :
+      case 189:
+      case 45:
         self.which = 109;
         break;
-      case 42 :
+      case 42:
         self.which = 106;
         break;
-      case 47 :
+      case 47:
         self.which = 111;
         break;
-      case 78 :
+      case 78:
         self.which = 110;
         break;
     }
@@ -415,7 +419,7 @@ _extend(KEvent, {
       self.which -= 48;
     }
   },
-  preventDefault: function (){
+  preventDefault: function() {
     var ev = this.event;
     if (ev.preventDefault) {
       ev.preventDefault();
@@ -423,7 +427,7 @@ _extend(KEvent, {
       ev.returnValue = false;
     }
   },
-  stopPropagation: function (){
+  stopPropagation: function() {
     var ev = this.event;
     if (ev.stopPropagation) {
       ev.stopPropagation();
@@ -431,23 +435,25 @@ _extend(KEvent, {
       ev.cancelBubble = true;
     }
   },
-  stop: function (){
+  stop: function() {
     this.preventDefault();
     this.stopPropagation();
   }
 });
-var _eventExpendo = 'kindeditor_' + _TIME, _eventId = 0, _eventData = {};
+var _eventExpendo = 'kindeditor_' + _TIME,
+  _eventId = 0,
+  _eventData = {};
 
-function _getId(el){
+function _getId(el) {
   return el[_eventExpendo] || null;
 }
 
-function _setId(el){
+function _setId(el) {
   el[_eventExpendo] = ++_eventId;
   return _eventId;
 }
 
-function _removeId(el){
+function _removeId(el) {
   try {
     delete el[_eventExpendo];
   } catch (e) {
@@ -457,9 +463,9 @@ function _removeId(el){
   }
 }
 
-function _bind(el, type, fn){
+function _bind(el, type, fn) {
   if (type.indexOf(',') >= 0) {
-    _each(type.split(','), function (){
+    _each(type.split(','), function() {
       _bind(el, this, fn);
     });
     return;
@@ -480,9 +486,9 @@ function _bind(el, type, fn){
   }
   events = _eventData[id][type];
   if (events.length === 0) {
-    events[0] = function (e){
+    events[0] = function(e) {
       var kevent = e ? new KEvent(el, e) : undefined;
-      _each(events, function (i, event){
+      _each(events, function(i, event) {
         if (i > 0 && event) {
           event.call(el, kevent);
         }
@@ -495,9 +501,9 @@ function _bind(el, type, fn){
   _bindEvent(el, type, events[0]);
 }
 
-function _unbind(el, type, fn){
+function _unbind(el, type, fn) {
   if (type && type.indexOf(',') >= 0) {
-    _each(type.split(','), function (){
+    _each(type.split(','), function() {
       _unbind(el, this, fn);
     });
     return;
@@ -508,7 +514,7 @@ function _unbind(el, type, fn){
   }
   if (type === undefined) {
     if (id in _eventData) {
-      _each(_eventData[id], function (key, events){
+      _each(_eventData[id], function(key, events) {
         if (key != 'el' && events.length > 0) {
           _unbindEvent(el, key, events[0]);
         }
@@ -527,7 +533,7 @@ function _unbind(el, type, fn){
       _unbindEvent(el, type, events[0]);
       delete _eventData[id][type];
     } else {
-      _each(events, function (i, event){
+      _each(events, function(i, event) {
         if (i > 0 && event === fn) {
           events.splice(i, 1);
         }
@@ -538,7 +544,7 @@ function _unbind(el, type, fn){
       }
     }
     var count = 0;
-    _each(_eventData[id], function (){
+    _each(_eventData[id], function() {
       count++;
     });
     if (count < 2) {
@@ -548,9 +554,9 @@ function _unbind(el, type, fn){
   }
 }
 
-function _fire(el, type){
+function _fire(el, type) {
   if (type.indexOf(',') >= 0) {
-    _each(type.split(','), function (){
+    _each(type.split(','), function() {
       _fire(el, this);
     });
     return;
@@ -565,10 +571,10 @@ function _fire(el, type){
   }
 }
 
-function _ctrl(el, key, fn){
+function _ctrl(el, key, fn) {
   var self = this;
   key = /^\d{2,}$/.test(key) ? key : key.toUpperCase().charCodeAt(0);
-  _bind(el, 'keydown', function (e){
+  _bind(el, 'keydown', function(e) {
     if (e.ctrlKey && e.which == key && !e.shiftKey && !e.altKey) {
       fn.call(el);
       e.stop();
@@ -578,14 +584,14 @@ function _ctrl(el, key, fn){
 
 var _readyFinished = false;
 
-function _ready(fn){
+function _ready(fn) {
   if (_readyFinished) {
     fn(KindEditor);
     return;
   }
   var loaded = false;
 
-  function readyFunc(){
+  function readyFunc() {
     if (!loaded) {
       loaded = true;
       fn(KindEditor);
@@ -593,7 +599,7 @@ function _ready(fn){
     }
   }
 
-  function ieReadyFunc(){
+  function ieReadyFunc() {
     if (!loaded) {
       try {
         document.documentElement.doScroll('left');
@@ -605,7 +611,7 @@ function _ready(fn){
     }
   }
 
-  function ieReadyStateFunc(){
+  function ieReadyStateFunc() {
     if (document.readyState === 'complete') {
       readyFunc();
     }
@@ -627,8 +633,8 @@ function _ready(fn){
 }
 
 if (window.attachEvent) {
-  window.attachEvent('onunload', function (){
-    _each(_eventData, function (key, events){
+  window.attachEvent('onunload', function() {
+    _each(_eventData, function(key, events) {
       if (events.el) {
         _unbind(events.el);
       }
@@ -638,7 +644,7 @@ if (window.attachEvent) {
 K.ctrl = _ctrl;
 K.ready = _ready;
 
-function _getCssList(css){
+function _getCssList(css) {
   var list = {},
     reg = /\s*([\w\-]+)\s*:([^;]*)(;|$)/g,
     match;
@@ -650,7 +656,7 @@ function _getCssList(css){
   return list;
 }
 
-function _getAttrList(tag){
+function _getAttrList(tag) {
   var list = {},
     reg = /\s+(?:([\w\-:]+)|(?:([\w\-:]+)=([^\s"'<>]+))|(?:([\w\-:"]+)="([^"]*)")|(?:([\w\-:"]+)='([^']*)'))(?=(?:\s|\/|>)+)/g,
     match;
@@ -662,9 +668,9 @@ function _getAttrList(tag){
   return list;
 }
 
-function _addClassToTag(tag, className){
+function _addClassToTag(tag, className) {
   if (/\s+class\s*=/.test(tag)) {
-    tag = tag.replace(/(\s+class=["']?)([^"']*)(["']?[\s>])/, function ($0, $1, $2, $3){
+    tag = tag.replace(/(\s+class=["']?)([^"']*)(["']?[\s>])/, function($0, $1, $2, $3) {
       if ((' ' + $2 + ' ').indexOf(' ' + className + ' ') < 0) {
         return $2 === '' ? $1 + className + $3 : $1 + $2 + ' ' + className + $3;
       } else {
@@ -677,15 +683,15 @@ function _addClassToTag(tag, className){
   return tag;
 }
 
-function _formatCss(css){
+function _formatCss(css) {
   var str = '';
-  _each(_getCssList(css), function (key, val){
+  _each(_getCssList(css), function(key, val) {
     str += key + ':' + val + ';';
   });
   return str;
 }
 
-function _formatUrl(url, mode, host, pathname){
+function _formatUrl(url, mode, host, pathname) {
   mode = _undef(mode, '').toLowerCase();
   if (url.substr(0, 5) != 'data:') {
     url = url.replace(/([^:])\/\//g, '$1/');
@@ -706,8 +712,10 @@ function _formatUrl(url, mode, host, pathname){
   } else if (/^\w+:/.test(url)) {
     return url;
   }
-  function getRealPath(path){
-    var parts = path.split('/'), paths = [];
+
+  function getRealPath(path) {
+    var parts = path.split('/'),
+      paths = [];
     for (var i = 0, len = parts.length; i < len; i++) {
       var part = parts[i];
       if (part == '..') {
@@ -726,7 +734,8 @@ function _formatUrl(url, mode, host, pathname){
   } else if (!/^\w+:\/\//.test(url)) {
     url = host + getRealPath(pathname + '/' + url);
   }
-  function getRelativePath(path, depth){
+
+  function getRelativePath(path, depth) {
     if (url.substr(0, path.length) === path) {
       var arr = [];
       for (var i = 0; i < depth; i++) {
@@ -757,7 +766,7 @@ function _formatUrl(url, mode, host, pathname){
   return url;
 }
 
-function _formatHtml(html, htmlTags, urlType, wellFormatted, indentChar){
+function _formatHtml(html, htmlTags, urlType, wellFormatted, indentChar) {
   if (html == null) {
     html = '';
   }
@@ -765,7 +774,7 @@ function _formatHtml(html, htmlTags, urlType, wellFormatted, indentChar){
   wellFormatted = _undef(wellFormatted, false);
   indentChar = _undef(indentChar, '\t');
   var fontSizeList = 'xx-small,x-small,small,medium,large,x-large,xx-large'.split(',');
-  html = html.replace(/(<(?:pre|pre\s[^>]*)>)([\s\S]*?)(<\/pre>)/ig, function ($0, $1, $2, $3){
+  html = html.replace(/(<(?:pre|pre\s[^>]*)>)([\s\S]*?)(<\/pre>)/ig, function($0, $1, $2, $3) {
     return $1 + $2.replace(/<(?:br|br\s[^>]*)>/ig, '\n') + $3;
   });
   html = html.replace(/<(?:br|br\s[^>]*)\s*\/?>\s*<\/p>/ig, '</p>');
@@ -775,12 +784,12 @@ function _formatHtml(html, htmlTags, urlType, wellFormatted, indentChar){
   html = html.replace(/\u00AE/g, '&reg;');
   html = html.replace(/\u2003/g, '&emsp;');
   html = html.replace(/\u3000/g, '&emsp;');
-  html = html.replace(/<[^>]+/g, function ($0){
+  html = html.replace(/<[^>]+/g, function($0) {
     return $0.replace(/\s+/g, ' ');
   });
   var htmlTagMap = {};
   if (htmlTags) {
-    _each(htmlTags, function (key, val){
+    _each(htmlTags, function(key, val) {
       var arr = key.split(',');
       for (var i = 0, len = arr.length; i < len; i++) {
         htmlTagMap[arr[i]] = _toMap(val);
@@ -795,7 +804,7 @@ function _formatHtml(html, htmlTags, urlType, wellFormatted, indentChar){
   }
   var re = /(\s*)<(\/)?([\w\-:]+)((?:\s+|(?:\s+[\w\-:]+)|(?:\s+[\w\-:]+=[^\s"'<>]+)|(?:\s+[\w\-:"]+="[^"]*")|(?:\s+[\w\-:"]+='[^']*'))*)(\/)?>(\s*)/g;
   var tagStack = [];
-  html = html.replace(re, function ($0, $1, $2, $3, $4, $5, $6){
+  html = html.replace(re, function($0, $1, $2, $3, $4, $5, $6) {
     var full = $0,
       startNewline = $1 || '',
       startSlash = $2 || '',
@@ -854,8 +863,9 @@ function _formatHtml(html, htmlTags, urlType, wellFormatted, indentChar){
     if (attr !== '') {
       var attrMap = _getAttrList(full);
       if (tagName === 'font') {
-        var fontStyleMap = {}, fontStyle = '';
-        _each(attrMap, function (key, val){
+        var fontStyleMap = {},
+          fontStyle = '';
+        _each(attrMap, function(key, val) {
           if (key === 'color') {
             fontStyleMap.color = val;
             delete attrMap[key];
@@ -875,7 +885,7 @@ function _formatHtml(html, htmlTags, urlType, wellFormatted, indentChar){
         if (fontStyle && !/;$/.test(fontStyle)) {
           fontStyle += ';';
         }
-        _each(fontStyleMap, function (key, val){
+        _each(fontStyleMap, function(key, val) {
           if (val === '') {
             return;
           }
@@ -886,34 +896,34 @@ function _formatHtml(html, htmlTags, urlType, wellFormatted, indentChar){
         });
         attrMap.style = fontStyle;
       }
-      _each(attrMap, function (key, val){
+      _each(attrMap, function(key, val) {
         if (_FILL_ATTR_MAP[key]) {
           attrMap[key] = key;
         }
         if (_inArray(key, ['src', 'href']) >= 0) {
           attrMap[key] = _formatUrl(val, urlType);
         }
-        if (htmlTags && key !== 'style' && !htmlTagMap[tagName]['*'] && !htmlTagMap[tagName][key] ||
-          tagName === 'body' && key === 'contenteditable' ||
-          /^kindeditor_\d+$/.test(key)) {
+        if (htmlTags && key !== 'style' && !htmlTagMap[tagName]['*'] && !htmlTagMap[tagName][key]
+          || tagName === 'body' && key === 'contenteditable'
+          || /^kindeditor_\d+$/.test(key)) {
           delete attrMap[key];
         }
         if (key === 'style' && val !== '') {
           var styleMap = _getCssList(val);
-          _each(styleMap, function (k, v){
+          _each(styleMap, function(k, v) {
             if (htmlTags && !htmlTagMap[tagName].style && !htmlTagMap[tagName]['.' + k]) {
               delete styleMap[k];
             }
           });
           var style = '';
-          _each(styleMap, function (k, v){
+          _each(styleMap, function(k, v) {
             style += k + ':' + v + ';';
           });
           attrMap.style = style;
         }
       });
       attr = '';
-      _each(attrMap, function (key, val){
+      _each(attrMap, function(key, val) {
         if (key === 'style' && val === '') {
           return;
         }
@@ -926,7 +936,7 @@ function _formatHtml(html, htmlTags, urlType, wellFormatted, indentChar){
     }
     return startNewline + '<' + startSlash + tagName + attr + endSlash + '>' + endNewline;
   });
-  html = html.replace(/(<(?:pre|pre\s[^>]*)>)([\s\S]*?)(<\/pre>)/ig, function ($0, $1, $2, $3){
+  html = html.replace(/(<(?:pre|pre\s[^>]*)>)([\s\S]*?)(<\/pre>)/ig, function($0, $1, $2, $3) {
     return $1 + $2.replace(/\n/g, '<span id="__kindeditor_pre_newline__">\n') + $3;
   });
   html = html.replace(/\n\s*\n/g, '\n');
@@ -934,7 +944,7 @@ function _formatHtml(html, htmlTags, urlType, wellFormatted, indentChar){
   return _trim(html);
 }
 
-function _clearMsWord(html, htmlTags){
+function _clearMsWord(html, htmlTags) {
   html = html.replace(/<meta[\s\S]*?>/ig, '')
     .replace(/<![\s\S]*?>/ig, '')
     .replace(/<style[^>]*>[\s\S]*?<\/style>/ig, '')
@@ -942,13 +952,13 @@ function _clearMsWord(html, htmlTags){
     .replace(/<w:[^>]+>[\s\S]*?<\/w:[^>]+>/ig, '')
     .replace(/<o:[^>]+>[\s\S]*?<\/o:[^>]+>/ig, '')
     .replace(/<xml>[\s\S]*?<\/xml>/ig, '')
-    .replace(/<(?:table|td)[^>]*>/ig, function (full){
+    .replace(/<(?:table|td)[^>]*>/ig, function(full) {
       return full.replace(/border-bottom:([#\w\s]+)/ig, 'border:$1');
     });
   return _formatHtml(html, htmlTags);
 }
 
-function _mediaType(src){
+function _mediaType(src) {
   if (/\.(rm|rmvb)(\?|$)/i.test(src)) {
     return 'audio/x-pn-realaudio-plugin';
   }
@@ -958,7 +968,7 @@ function _mediaType(src){
   return 'video/x-ms-asf-plugin';
 }
 
-function _mediaClass(type){
+function _mediaClass(type) {
   if (/realaudio/i.test(type)) {
     return 'ke-rm';
   }
@@ -968,20 +978,20 @@ function _mediaClass(type){
   return 'ke-media';
 }
 
-function _mediaAttrs(srcTag){
+function _mediaAttrs(srcTag) {
   return _getAttrList(unescape(srcTag));
 }
 
-function _mediaEmbed(attrs){
+function _mediaEmbed(attrs) {
   var html = '<embed ';
-  _each(attrs, function (key, val){
+  _each(attrs, function(key, val) {
     html += key + '="' + val + '" ';
   });
   html += '/>';
   return html;
 }
 
-function _mediaImg(blankPath, attrs){
+function _mediaImg(blankPath, attrs) {
   var width = attrs.width,
     height = attrs.height,
     type = attrs.type || _mediaType(attrs.src),
@@ -1005,17 +1015,17 @@ function _mediaImg(blankPath, attrs){
   return html;
 }
 
-function _tmpl(str, data){
+function _tmpl(str, data) {
   var fn = new Function("obj",
-    "var p=[],print=function(){p.push.apply(p,arguments);};" +
-    "with(obj){p.push('" +
-    str.replace(/[\r\t\n]/g, " ")
-      .split("<%").join("\t")
-      .replace(/((^|%>)[^\t]*)'/g, "$1\r")
-      .replace(/\t=(.*?)%>/g, "',$1,'")
-      .split("\t").join("');")
-      .split("%>").join("p.push('")
-      .split("\r").join("\\'") + "');}return p.join('');");
+    "var p=[],print=function(){p.push.apply(p,arguments);};"
+    + "with(obj){p.push('"
+    + str.replace(/[\r\t\n]/g, " ")
+    .split("<%").join("\t")
+    .replace(/((^|%>)[^\t]*)'/g, "$1\r")
+    .replace(/\t=(.*?)%>/g, "',$1,'")
+    .split("\t").join("');")
+    .split("%>").join("p.push('")
+    .split("\r").join("\\'") + "');}return p.join('');");
   return data ? fn(data) : fn;
 }
 
@@ -1030,7 +1040,7 @@ K.mediaImg = _mediaImg;
 K.clearMsWord = _clearMsWord;
 K.tmpl = _tmpl;
 
-function _contains(nodeA, nodeB){
+function _contains(nodeA, nodeB) {
   if (nodeA.nodeType == 9 && nodeB.nodeType != 9) {
     return true;
   }
@@ -1046,7 +1056,7 @@ var _getSetAttrDiv = document.createElement('div');
 _getSetAttrDiv.setAttribute('className', 't');
 var _GET_SET_ATTRIBUTE = _getSetAttrDiv.className !== 't';
 
-function _getAttr(el, key){
+function _getAttr(el, key) {
   key = key.toLowerCase();
   var val = null;
   if (!_GET_SET_ATTRIBUTE && el.nodeName.toLowerCase() != 'script') {
@@ -1069,12 +1079,12 @@ function _getAttr(el, key){
   return val;
 }
 
-function _queryAll(expr, root){
+function _queryAll(expr, root) {
   var exprList = expr.split(',');
   if (exprList.length > 1) {
     var mergedResults = [];
-    _each(exprList, function (){
-      _each(_queryAll(this, root), function (){
+    _each(exprList, function() {
+      _each(_queryAll(this, root), function() {
         if (_inArray(this, mergedResults) < 0) {
           mergedResults.push(this);
         }
@@ -1083,22 +1093,23 @@ function _queryAll(expr, root){
     return mergedResults;
   }
   root = root || document;
-  function escape(str){
+
+  function escape(str) {
     if (typeof str != 'string') {
       return str;
     }
     return str.replace(/([^\w\-])/g, '\\$1');
   }
 
-  function stripslashes(str){
+  function stripslashes(str) {
     return str.replace(/\\/g, '');
   }
 
-  function cmpTag(tagA, tagB){
+  function cmpTag(tagA, tagB) {
     return tagA === '*' || tagA.toLowerCase() === escape(tagB.toLowerCase());
   }
 
-  function byId(id, tag, root){
+  function byId(id, tag, root) {
     var arr = [],
       doc = root.ownerDocument || root,
       el = doc.getElementById(stripslashes(id));
@@ -1110,8 +1121,10 @@ function _queryAll(expr, root){
     return arr;
   }
 
-  function byClass(className, tag, root){
-    var doc = root.ownerDocument || root, arr = [], els, i, len, el;
+  function byClass(className, tag, root) {
+    var doc = root.ownerDocument || root,
+      arr = [],
+      els, i, len, el;
     if (root.getElementsByClassName) {
       els = root.getElementsByClassName(stripslashes(className));
       for (i = 0, len = els.length; i < len; i++) {
@@ -1144,9 +1157,11 @@ function _queryAll(expr, root){
     return arr;
   }
 
-  function byName(name, tag, root){
-    var arr = [], doc = root.ownerDocument || root,
-      els = doc.getElementsByName(stripslashes(name)), el;
+  function byName(name, tag, root) {
+    var arr = [],
+      doc = root.ownerDocument || root,
+      els = doc.getElementsByName(stripslashes(name)),
+      el;
     for (var i = 0, len = els.length; i < len; i++) {
       el = els[i];
       if (cmpTag(tag, el.nodeName) && _contains(root, el)) {
@@ -1158,8 +1173,10 @@ function _queryAll(expr, root){
     return arr;
   }
 
-  function byAttr(key, val, tag, root){
-    var arr = [], els = root.getElementsByTagName(tag), el;
+  function byAttr(key, val, tag, root) {
+    var arr = [],
+      els = root.getElementsByTagName(tag),
+      el;
     for (var i = 0, len = els.length; i < len; i++) {
       el = els[i];
       if (el.nodeType == 1) {
@@ -1177,8 +1194,9 @@ function _queryAll(expr, root){
     return arr;
   }
 
-  function select(expr, root){
-    var arr = [], matches;
+  function select(expr, root) {
+    var arr = [],
+      matches;
     matches = /^((?:\\.|[^.#\s\[<>])+)/.exec(expr);
     var tag = matches ? matches[1] : '*';
     if ((matches = /#((?:[\w\-]|\\.)+)$/.exec(expr))) {
@@ -1188,7 +1206,8 @@ function _queryAll(expr, root){
     } else if ((matches = /\[((?:[\w\-]|\\.)+)\]/.exec(expr))) {
       arr = byAttr(matches[1].toLowerCase(), null, tag, root);
     } else if ((matches = /\[((?:[\w\-]|\\.)+)\s*=\s*['"]?((?:\\.|[^'"]+)+)['"]?\]/.exec(expr))) {
-      var key = matches[1].toLowerCase(), val = matches[2];
+      var key = matches[1].toLowerCase(),
+        val = matches[2];
       if (key === 'id') {
         arr = byId(val, tag, root);
       } else if (key === 'class') {
@@ -1199,7 +1218,8 @@ function _queryAll(expr, root){
         arr = byAttr(key, val, tag, root);
       }
     } else {
-      var els = root.getElementsByTagName(tag), el;
+      var els = root.getElementsByTagName(tag),
+        el;
       for (var i = 0, len = els.length; i < len; i++) {
         el = els[i];
         if (el.nodeType == 1) {
@@ -1210,7 +1230,8 @@ function _queryAll(expr, root){
     return arr;
   }
 
-  var parts = [], arr, re = /((?:\\.|[^\s>])+|[\s>])/g;
+  var parts = [],
+    arr, re = /((?:\\.|[^\s>])+|[\s>])/g;
   while ((arr = re.exec(expr))) {
     if (arr[1] !== ' ') {
       parts.push(arr[1]);
@@ -1220,7 +1241,8 @@ function _queryAll(expr, root){
   if (parts.length == 1) {
     return select(parts[0], root);
   }
-  var isChild = false, part, els, subResults, val, v, i, j, k, length, len, l;
+  var isChild = false,
+    part, els, subResults, val, v, i, j, k, length, len, l;
   for (i = 0, lenth = parts.length; i < lenth; i++) {
     part = parts[i];
     if (part === '>') {
@@ -1254,7 +1276,7 @@ function _queryAll(expr, root){
   return results;
 }
 
-function _query(expr, root){
+function _query(expr, root) {
   var arr = _queryAll(expr, root);
   return arr.length > 0 ? arr[0] : null;
 }
@@ -1263,11 +1285,12 @@ K.query = _query;
 K.queryAll = _queryAll;
 
 var _K = K;
-K = function (expr, root){
+K = function(expr, root) {
   if (expr === undefined || expr === null) {
     return;
   }
-  function newNode(node){
+
+  function newNode(node) {
     if (!node[0]) {
       node = [];
     }
@@ -1284,7 +1307,8 @@ K = function (expr, root){
     }
     if (expr.length !== length || /<.+>/.test(expr)) {
       var doc = root ? root.ownerDocument || root : document,
-        div = doc.createElement('div'), list = [];
+        div = doc.createElement('div'),
+        list = [];
       div.innerHTML = '<img id="__kindeditor_temp_tag__" width="0" height="0" style="display:none;" />' + expr;
       for (var i = 0, len = div.childNodes.length; i < len; i++) {
         var child = div.childNodes[i];
@@ -1309,24 +1333,24 @@ K = function (expr, root){
   return newNode(_toArray(arguments));
 };
 
-_each(_K, function (key, val){
+_each(_K, function(key, val) {
   K[key] = val;
 });
 
 K.NodeClass = KNode;
 
-function _get(val){
+function _get(val) {
   return K(val)[0];
 }
 
-function _getDoc(node){
+function _getDoc(node) {
   if (!node) {
     return document;
   }
   return node.ownerDocument || node.document || node;
 }
 
-function _getWin(node){
+function _getWin(node) {
   if (!node) {
     return window;
   }
@@ -1334,7 +1358,7 @@ function _getWin(node){
   return doc.parentWindow || doc.defaultView;
 }
 
-function _setHtml(el, html){
+function _setHtml(el, html) {
   if (el.nodeType != 1) {
     return;
   }
@@ -1345,24 +1369,24 @@ function _setHtml(el, html){
     temp.parentNode.removeChild(temp);
   } catch (e) {
     K(el).empty();
-    K('@' + html, doc).each(function (){
+    K('@' + html, doc).each(function() {
       el.appendChild(this);
     });
   }
 }
 
-function _hasClass(el, cls){
+function _hasClass(el, cls) {
   return _inString(cls, el.className, ' ');
 }
 
-function _setAttr(el, key, val){
+function _setAttr(el, key, val) {
   if (_IE && _V < 8 && key.toLowerCase() == 'class') {
     key = 'className';
   }
   el.setAttribute(key, '' + val);
 }
 
-function _removeAttr(el, key){
+function _removeAttr(el, key) {
   if (_IE && _V < 8 && key.toLowerCase() == 'class') {
     key = 'className';
   }
@@ -1370,15 +1394,18 @@ function _removeAttr(el, key){
   el.removeAttribute(key);
 }
 
-function _getNodeName(node){
+function _getNodeName(node) {
   if (!node || !node.nodeName) {
     return '';
   }
   return node.nodeName.toLowerCase();
 }
 
-function _computedCss(el, key){
-  var self = this, win = _getWin(el), camelKey = _toCamel(key), val = '';
+function _computedCss(el, key) {
+  var self = this,
+    win = _getWin(el),
+    camelKey = _toCamel(key),
+    val = '';
   if (win.getComputedStyle) {
     var style = win.getComputedStyle(el, null);
     val = style[camelKey] || style.getPropertyValue(key) || el.style[camelKey];
@@ -1388,26 +1415,26 @@ function _computedCss(el, key){
   return val;
 }
 
-function _hasVal(node){
+function _hasVal(node) {
   return !!_VALUE_TAG_MAP[_getNodeName(node)];
 }
 
-function _docElement(doc){
+function _docElement(doc) {
   doc = doc || document;
   return _QUIRKS ? doc.body : doc.documentElement;
 }
 
-function _docHeight(doc){
+function _docHeight(doc) {
   var el = _docElement(doc);
   return Math.max(el.scrollHeight, el.clientHeight);
 }
 
-function _docWidth(doc){
+function _docWidth(doc) {
   var el = _docElement(doc);
   return Math.max(el.scrollWidth, el.clientWidth);
 }
 
-function _getScrollPos(doc){
+function _getScrollPos(doc) {
   doc = doc || document;
   var x, y;
   if (_IE || _NEWIE || _OPERA) {
@@ -1420,12 +1447,12 @@ function _getScrollPos(doc){
   return { x: x, y: y };
 }
 
-function KNode(node){
+function KNode(node) {
   this.init(node);
 }
 
 _extend(KNode, {
-  init: function (node){
+  init: function(node) {
     var self = this;
     node = _isArray(node) ? node : [node];
     var length = 0;
@@ -1441,7 +1468,7 @@ _extend(KNode, {
     self.type = self.length > 0 ? self[0].nodeType : null;
     self.win = _getWin(self[0]);
   },
-  each: function (fn){
+  each: function(fn) {
     var self = this;
     for (var i = 0; i < self.length; i++) {
       if (fn.call(self[i], i, self[i]) === false) {
@@ -1450,38 +1477,38 @@ _extend(KNode, {
     }
     return self;
   },
-  bind: function (type, fn){
-    this.each(function (){
+  bind: function(type, fn) {
+    this.each(function() {
       _bind(this, type, fn);
     });
     return this;
   },
-  unbind: function (type, fn){
-    this.each(function (){
+  unbind: function(type, fn) {
+    this.each(function() {
       _unbind(this, type, fn);
     });
     return this;
   },
-  fire: function (type){
+  fire: function(type) {
     if (this.length < 1) {
       return this;
     }
     _fire(this[0], type);
     return this;
   },
-  hasAttr: function (key){
+  hasAttr: function(key) {
     if (this.length < 1) {
       return false;
     }
     return !!_getAttr(this[0], key);
   },
-  attr: function (key, val){
+  attr: function(key, val) {
     var self = this;
     if (key === undefined) {
       return _getAttrList(self.outer());
     }
     if (typeof key === 'object') {
-      _each(key, function (k, v){
+      _each(key, function(k, v) {
         self.attr(k, v);
       });
       return self;
@@ -1490,52 +1517,52 @@ _extend(KNode, {
       val = self.length < 1 ? null : _getAttr(self[0], key);
       return val === null ? '' : val;
     }
-    self.each(function (){
+    self.each(function() {
       _setAttr(this, key, val);
     });
     return self;
   },
-  removeAttr: function (key){
-    this.each(function (){
+  removeAttr: function(key) {
+    this.each(function() {
       _removeAttr(this, key);
     });
     return this;
   },
-  get: function (i){
+  get: function(i) {
     if (this.length < 1) {
       return null;
     }
     return this[i || 0];
   },
-  eq: function (i){
+  eq: function(i) {
     if (this.length < 1) {
       return null;
     }
     return this[i] ? new KNode(this[i]) : null;
   },
-  hasClass: function (cls){
+  hasClass: function(cls) {
     if (this.length < 1) {
       return false;
     }
     return _hasClass(this[0], cls);
   },
-  addClass: function (cls){
-    this.each(function (){
+  addClass: function(cls) {
+    this.each(function() {
       if (!_hasClass(this, cls)) {
         this.className = _trim(this.className + ' ' + cls);
       }
     });
     return this;
   },
-  removeClass: function (cls){
-    this.each(function (){
+  removeClass: function(cls) {
+    this.each(function() {
       if (_hasClass(this, cls)) {
         this.className = _trim(this.className.replace(new RegExp('(^|\\s)' + cls + '(\\s|$)'), ' '));
       }
     });
     return this;
   },
-  html: function (val){
+  html: function(val) {
     var self = this;
     if (val === undefined) {
       if (self.length < 1 || self.type != 1) {
@@ -1543,25 +1570,25 @@ _extend(KNode, {
       }
       return _formatHtml(self[0].innerHTML);
     }
-    self.each(function (){
+    self.each(function() {
       _setHtml(this, val);
     });
     return self;
   },
-  text: function (){
+  text: function() {
     var self = this;
     if (self.length < 1) {
       return '';
     }
     return _IE ? self[0].innerText : self[0].textContent;
   },
-  hasVal: function (){
+  hasVal: function() {
     if (this.length < 1) {
       return false;
     }
     return _hasVal(this[0]);
   },
-  val: function (val){
+  val: function(val) {
     var self = this;
     if (val === undefined) {
       if (self.length < 1) {
@@ -1569,7 +1596,7 @@ _extend(KNode, {
       }
       return self.hasVal() ? self[0].value : self.attr('value');
     } else {
-      self.each(function (){
+      self.each(function() {
         if (_hasVal(this)) {
           this.value = val;
         } else {
@@ -1579,13 +1606,13 @@ _extend(KNode, {
       return self;
     }
   },
-  css: function (key, val){
+  css: function(key, val) {
     var self = this;
     if (key === undefined) {
       return _getCssList(self.attr('style'));
     }
     if (typeof key === 'object') {
-      _each(key, function (k, v){
+      _each(key, function(k, v) {
         self.css(k, v);
       });
       return self;
@@ -1596,12 +1623,12 @@ _extend(KNode, {
       }
       return self[0].style[_toCamel(key)] || _computedCss(self[0], key) || '';
     }
-    self.each(function (){
+    self.each(function() {
       this.style[_toCamel(key)] = val;
     });
     return self;
   },
-  width: function (val){
+  width: function(val) {
     var self = this;
     if (val === undefined) {
       if (self.length < 1) {
@@ -1611,7 +1638,7 @@ _extend(KNode, {
     }
     return self.css('width', _addUnit(val));
   },
-  height: function (val){
+  height: function(val) {
     var self = this;
     if (val === undefined) {
       if (self.length < 1) {
@@ -1621,8 +1648,8 @@ _extend(KNode, {
     }
     return self.css('height', _addUnit(val));
   },
-  opacity: function (val){
-    this.each(function (){
+  opacity: function(val) {
+    this.each(function() {
       if (this.style.opacity === undefined) {
         this.style.filter = val == 1 ? '' : 'alpha(opacity=' + (val * 100) + ')';
       } else {
@@ -1631,7 +1658,7 @@ _extend(KNode, {
     });
     return this;
   },
-  data: function (key, val){
+  data: function(key, val) {
     var self = this;
     key = 'kindeditor_data_' + key;
     if (val === undefined) {
@@ -1640,13 +1667,16 @@ _extend(KNode, {
       }
       return self[0][key];
     }
-    this.each(function (){
+    this.each(function() {
       this[key] = val;
     });
     return self;
   },
-  pos: function (){
-    var self = this, node = self[0], x = 0, y = 0;
+  pos: function() {
+    var self = this,
+      node = self[0],
+      x = 0,
+      y = 0;
     if (node) {
       if (node.getBoundingClientRect) {
         var box = node.getBoundingClientRect(),
@@ -1663,34 +1693,34 @@ _extend(KNode, {
     }
     return { x: _round(x), y: _round(y) };
   },
-  clone: function (bool){
+  clone: function(bool) {
     if (this.length < 1) {
       return new KNode([]);
     }
     return new KNode(this[0].cloneNode(bool));
   },
-  append: function (expr){
-    this.each(function (){
+  append: function(expr) {
+    this.each(function() {
       if (this.appendChild) {
         this.appendChild(_get(expr));
       }
     });
     return this;
   },
-  appendTo: function (expr){
-    this.each(function (){
+  appendTo: function(expr) {
+    this.each(function() {
       _get(expr).appendChild(this);
     });
     return this;
   },
-  before: function (expr){
-    this.each(function (){
+  before: function(expr) {
+    this.each(function() {
       this.parentNode.insertBefore(_get(expr), this);
     });
     return this;
   },
-  after: function (expr){
-    this.each(function (){
+  after: function(expr) {
+    this.each(function() {
       if (this.nextSibling) {
         this.parentNode.insertBefore(_get(expr), this.nextSibling);
       } else {
@@ -1699,9 +1729,9 @@ _extend(KNode, {
     });
     return this;
   },
-  replaceWith: function (expr){
+  replaceWith: function(expr) {
     var nodes = [];
-    this.each(function (i, node){
+    this.each(function(i, node) {
       _unbind(node);
       var newNode = _get(expr);
       node.parentNode.replaceChild(newNode, node);
@@ -1709,9 +1739,9 @@ _extend(KNode, {
     });
     return K(nodes);
   },
-  empty: function (){
+  empty: function() {
     var self = this;
-    self.each(function (i, node){
+    self.each(function(i, node) {
       var child = node.firstChild;
       while (child) {
         if (!node.parentNode) {
@@ -1724,9 +1754,9 @@ _extend(KNode, {
     });
     return self;
   },
-  remove: function (keepChilds){
+  remove: function(keepChilds) {
     var self = this;
-    self.each(function (i, node){
+    self.each(function(i, node) {
       if (!node.parentNode) {
         return;
       }
@@ -1745,7 +1775,7 @@ _extend(KNode, {
     self.length = 0;
     return self;
   },
-  show: function (val){
+  show: function(val) {
     var self = this;
     if (val === undefined) {
       val = self._originDisplay || '';
@@ -1755,7 +1785,7 @@ _extend(KNode, {
     }
     return self.css('display', val);
   },
-  hide: function (){
+  hide: function() {
     var self = this;
     if (self.length < 1) {
       return self;
@@ -1763,50 +1793,52 @@ _extend(KNode, {
     self._originDisplay = self[0].style.display;
     return self.css('display', 'none');
   },
-  outer: function (){
+  outer: function() {
     var self = this;
     if (self.length < 1) {
       return '';
     }
-    var div = self.doc.createElement('div'), html;
+    var div = self.doc.createElement('div'),
+      html;
     div.appendChild(self[0].cloneNode(true));
     html = _formatHtml(div.innerHTML);
     div = null;
     return html;
   },
-  isSingle: function (){
+  isSingle: function() {
     return !!_SINGLE_TAG_MAP[this.name];
   },
-  isInline: function (){
+  isInline: function() {
     return !!_INLINE_TAG_MAP[this.name];
   },
-  isBlock: function (){
+  isBlock: function() {
     return !!_BLOCK_TAG_MAP[this.name];
   },
-  isStyle: function (){
+  isStyle: function() {
     return !!_STYLE_TAG_MAP[this.name];
   },
-  isControl: function (){
+  isControl: function() {
     return !!_CONTROL_TAG_MAP[this.name];
   },
-  contains: function (otherNode){
+  contains: function(otherNode) {
     if (this.length < 1) {
       return false;
     }
     return _contains(this[0], _get(otherNode));
   },
-  parent: function (){
+  parent: function() {
     if (this.length < 1) {
       return null;
     }
     var node = this[0].parentNode;
     return node ? new KNode(node) : null;
   },
-  children: function (){
+  children: function() {
     if (this.length < 1) {
       return new KNode([]);
     }
-    var list = [], child = this[0].firstChild;
+    var list = [],
+      child = this[0].firstChild;
     while (child) {
       if (child.nodeType != 3 || _trim(child.nodeValue) !== '') {
         list.push(child);
@@ -1815,45 +1847,47 @@ _extend(KNode, {
     }
     return new KNode(list);
   },
-  first: function (){
+  first: function() {
     var list = this.children();
     return list.length > 0 ? list.eq(0) : null;
   },
-  last: function (){
+  last: function() {
     var list = this.children();
     return list.length > 0 ? list.eq(list.length - 1) : null;
   },
-  index: function (){
+  index: function() {
     if (this.length < 1) {
       return -1;
     }
-    var i = -1, sibling = this[0];
+    var i = -1,
+      sibling = this[0];
     while (sibling) {
       i++;
       sibling = sibling.previousSibling;
     }
     return i;
   },
-  prev: function (){
+  prev: function() {
     if (this.length < 1) {
       return null;
     }
     var node = this[0].previousSibling;
     return node ? new KNode(node) : null;
   },
-  next: function (){
+  next: function() {
     if (this.length < 1) {
       return null;
     }
     var node = this[0].nextSibling;
     return node ? new KNode(node) : null;
   },
-  scan: function (fn, order){
+  scan: function(fn, order) {
     if (this.length < 1) {
       return;
     }
     order = (order === undefined) ? true : order;
-    function walk(node){
+
+    function walk(node) {
       var n = order ? node.firstChild : node.lastChild;
       while (n) {
         var next = order ? n.nextSibling : n.previousSibling;
@@ -1871,10 +1905,10 @@ _extend(KNode, {
     return this;
   }
 });
-_each(('blur,focus,focusin,focusout,load,resize,scroll,unload,click,dblclick,' +
-'mousedown,mouseup,mousemove,mouseover,mouseout,mouseenter,mouseleave,' +
-'change,select,submit,keydown,keypress,keyup,error,contextmenu').split(','), function (i, type){
-  KNode.prototype[type] = function (fn){
+_each(('blur,focus,focusin,focusout,load,resize,scroll,unload,click,dblclick,'
+  + 'mousedown,mouseup,mousemove,mouseover,mouseout,mouseenter,mouseleave,'
+  + 'change,select,submit,keydown,keypress,keyup,error,contextmenu').split(','), function(i, type) {
+  KNode.prototype[type] = function(fn) {
     return fn ? this.bind(type, fn) : this.fire(type);
   };
 });
@@ -1885,16 +1919,18 @@ var _START_TO_START = 0,
   _END_TO_START = 3,
   _BOOKMARK_ID = 0;
 
-function _updateCollapsed(range){
+function _updateCollapsed(range) {
   range.collapsed = (range.startContainer === range.endContainer && range.startOffset === range.endOffset);
   return range;
 }
 
-function _copyAndDelete(range, isCopy, isDelete){
-  var doc = range.doc, nodeList = [];
+function _copyAndDelete(range, isCopy, isDelete) {
+  var doc = range.doc,
+    nodeList = [];
 
-  function splitTextNode(node, startOffset, endOffset){
-    var length = node.nodeValue.length, centerNode;
+  function splitTextNode(node, startOffset, endOffset) {
+    var length = node.nodeValue.length,
+      centerNode;
     if (isCopy) {
       var cloneNode = node.cloneNode(true);
       if (startOffset > 0) {
@@ -1921,7 +1957,7 @@ function _copyAndDelete(range, isCopy, isDelete){
     return centerNode;
   }
 
-  function removeNodes(){
+  function removeNodes() {
     if (isDelete) {
       range.up().collapse(true);
     }
@@ -1934,8 +1970,12 @@ function _copyAndDelete(range, isCopy, isDelete){
   }
 
   var copyRange = range.cloneRange().down();
-  var start = -1, incStart = -1, incEnd = -1, end = -1,
-    ancestor = range.commonAncestor(), frag = doc.createDocumentFragment();
+  var start = -1,
+    incStart = -1,
+    incEnd = -1,
+    end = -1,
+    ancestor = range.commonAncestor(),
+    frag = doc.createDocumentFragment();
   if (ancestor.nodeType == 3) {
     var textNode = splitTextNode(ancestor, range.startOffset, range.endOffset);
     if (isCopy) {
@@ -1944,8 +1984,10 @@ function _copyAndDelete(range, isCopy, isDelete){
     removeNodes();
     return isCopy ? frag : range;
   }
-  function extractNodes(parent, frag){
-    var node = parent.firstChild, nextNode;
+
+  function extractNodes(parent, frag) {
+    var node = parent.firstChild,
+      nextNode;
     while (node) {
       var testRange = new KRange(doc).selectNode(node);
       start = testRange.compareBoundaryPoints(_START_TO_END, range);
@@ -2014,7 +2056,7 @@ function _copyAndDelete(range, isCopy, isDelete){
   return isCopy ? frag : range;
 }
 
-function _moveToElementText(range, el){
+function _moveToElementText(range, el) {
   var node = el;
   while (node) {
     var knode = K(node);
@@ -2028,7 +2070,7 @@ function _moveToElementText(range, el){
   } catch (e) {}
 }
 
-function _getStartEnd(rng, isStart){
+function _getStartEnd(rng, isStart) {
   var doc = rng.parentElement().ownerDocument,
     pointRange = rng.duplicate();
   pointRange.collapse(isStart);
@@ -2037,7 +2079,9 @@ function _getStartEnd(rng, isStart){
   if (nodes.length === 0) {
     return { node: parent.parentNode, offset: K(parent).index() };
   }
-  var startNode = doc, startPos = 0, cmp = -1;
+  var startNode = doc,
+    startPos = 0,
+    cmp = -1;
   var testRange = rng.duplicate();
   _moveToElementText(testRange, parent);
   for (var i = 0, len = nodes.length; i < len; i++) {
@@ -2047,7 +2091,9 @@ function _getStartEnd(rng, isStart){
       return { node: node.parentNode, offset: i };
     }
     if (node.nodeType == 1) {
-      var nodeRange = rng.duplicate(), dummy, knode = K(node), newNode = node;
+      var nodeRange = rng.duplicate(),
+        dummy, knode = K(node),
+        newNode = node;
       if (knode.isControl()) {
         dummy = doc.createElement('span');
         knode.after(dummy);
@@ -2094,7 +2140,7 @@ function _getStartEnd(rng, isStart){
   return { node: startNode, offset: startPos };
 }
 
-function _getEndRange(node, offset){
+function _getEndRange(node, offset) {
   var doc = node.ownerDocument || node,
     range = doc.body.createTextRange();
   if (doc == node) {
@@ -2102,7 +2148,8 @@ function _getEndRange(node, offset){
     return range;
   }
   if (node.nodeType == 1 && node.childNodes.length > 0) {
-    var children = node.childNodes, isStart, child;
+    var children = node.childNodes,
+      isStart, child;
     if (offset === 0) {
       child = children[0];
       isStart = true;
@@ -2124,7 +2171,8 @@ function _getEndRange(node, offset){
       return range;
     }
     if (child.nodeType == 1) {
-      var kchild = K(child), span;
+      var kchild = K(child),
+        span;
       if (kchild.isControl()) {
         span = doc.createElement('span');
         if (isStart) {
@@ -2152,10 +2200,10 @@ function _getEndRange(node, offset){
   return range;
 }
 
-function _toRange(rng){
+function _toRange(rng) {
   var doc, range;
 
-  function tr2td(start){
+  function tr2td(start) {
     if (K(start.node).name == 'tr') {
       start.node = start.node.cells[start.offset];
       start.offset = 0;
@@ -2187,12 +2235,12 @@ function _toRange(rng){
   return range;
 }
 
-function KRange(doc){
+function KRange(doc) {
   this.init(doc);
 }
 
 _extend(KRange, {
-  init: function (doc){
+  init: function(doc) {
     var self = this;
     self.startContainer = doc;
     self.startOffset = 0;
@@ -2201,8 +2249,8 @@ _extend(KRange, {
     self.collapsed = true;
     self.doc = doc;
   },
-  commonAncestor: function (){
-    function getParents(node){
+  commonAncestor: function() {
+    function getParents(node) {
       var parents = [];
       while (node) {
         parents.push(node);
@@ -2213,7 +2261,10 @@ _extend(KRange, {
 
     var parentsA = getParents(this.startContainer),
       parentsB = getParents(this.endContainer),
-      i = 0, lenA = parentsA.length, lenB = parentsB.length, parentA, parentB;
+      i = 0,
+      lenA = parentsA.length,
+      lenB = parentsB.length,
+      parentA, parentB;
     while (++i) {
       parentA = parentsA[lenA - i];
       parentB = parentsB[lenB - i];
@@ -2223,8 +2274,9 @@ _extend(KRange, {
     }
     return parentsA[lenA - i + 1];
   },
-  setStart: function (node, offset){
-    var self = this, doc = self.doc;
+  setStart: function(node, offset) {
+    var self = this,
+      doc = self.doc;
     self.startContainer = node;
     self.startOffset = offset;
     if (self.endContainer === doc) {
@@ -2233,8 +2285,9 @@ _extend(KRange, {
     }
     return _updateCollapsed(this);
   },
-  setEnd: function (node, offset){
-    var self = this, doc = self.doc;
+  setEnd: function(node, offset) {
+    var self = this,
+      doc = self.doc;
     self.endContainer = node;
     self.endOffset = offset;
     if (self.startContainer === doc) {
@@ -2243,22 +2296,22 @@ _extend(KRange, {
     }
     return _updateCollapsed(this);
   },
-  setStartBefore: function (node){
+  setStartBefore: function(node) {
     return this.setStart(node.parentNode || this.doc, K(node).index());
   },
-  setStartAfter: function (node){
+  setStartAfter: function(node) {
     return this.setStart(node.parentNode || this.doc, K(node).index() + 1);
   },
-  setEndBefore: function (node){
+  setEndBefore: function(node) {
     return this.setEnd(node.parentNode || this.doc, K(node).index());
   },
-  setEndAfter: function (node){
+  setEndAfter: function(node) {
     return this.setEnd(node.parentNode || this.doc, K(node).index() + 1);
   },
-  selectNode: function (node){
+  selectNode: function(node) {
     return this.setStartBefore(node).setEndAfter(node);
   },
-  selectNodeContents: function (node){
+  selectNodeContents: function(node) {
     var knode = K(node);
     if (knode.type == 3 || knode.isSingle()) {
       return this.selectNode(node);
@@ -2269,14 +2322,15 @@ _extend(KRange, {
     }
     return this.setStart(node, 0).setEnd(node, 0);
   },
-  collapse: function (toStart){
+  collapse: function(toStart) {
     if (toStart) {
       return this.setEnd(this.startContainer, this.startOffset);
     }
     return this.setStart(this.endContainer, this.endOffset);
   },
-  compareBoundaryPoints: function (how, range){
-    var rangeA = this.get(), rangeB = range.get();
+  compareBoundaryPoints: function(how, range) {
+    var rangeA = this.get(),
+      rangeB = range.get();
     if (_IERANGE) {
       var arr = {};
       arr[_START_TO_START] = 'StartToStart';
@@ -2334,26 +2388,29 @@ _extend(KRange, {
       return rangeA.compareBoundaryPoints(how, rangeB);
     }
   },
-  cloneRange: function (){
+  cloneRange: function() {
     return new KRange(this.doc).setStart(this.startContainer, this.startOffset).setEnd(this.endContainer, this.endOffset);
   },
-  toString: function (){
-    var rng = this.get(), str = _IERANGE ? rng.text : rng.toString();
+  toString: function() {
+    var rng = this.get(),
+      str = _IERANGE ? rng.text : rng.toString();
     return str.replace(/\r\n|\n|\r/g, '');
   },
-  cloneContents: function (){
+  cloneContents: function() {
     return _copyAndDelete(this, true, false);
   },
-  deleteContents: function (){
+  deleteContents: function() {
     return _copyAndDelete(this, false, true);
   },
-  extractContents: function (){
+  extractContents: function() {
     return _copyAndDelete(this, true, true);
   },
-  insertNode: function (node){
+  insertNode: function(node) {
     var self = this,
-      sc = self.startContainer, so = self.startOffset,
-      ec = self.endContainer, eo = self.endOffset,
+      sc = self.startContainer,
+      so = self.startOffset,
+      ec = self.endContainer,
+      eo = self.endOffset,
       firstChild, lastChild, c, nodeCount = 1;
     if (node.nodeName.toLowerCase() === '#document-fragment') {
       firstChild = node.firstChild;
@@ -2405,18 +2462,23 @@ _extend(KRange, {
     }
     return self.setEnd(ec, eo);
   },
-  surroundContents: function (node){
+  surroundContents: function(node) {
     node.appendChild(this.extractContents());
     return this.insertNode(node).selectNode(node);
   },
-  isControl: function (){
+  isControl: function() {
     var self = this,
-      sc = self.startContainer, so = self.startOffset,
-      ec = self.endContainer, eo = self.endOffset, rng;
+      sc = self.startContainer,
+      so = self.startOffset,
+      ec = self.endContainer,
+      eo = self.endOffset,
+      rng;
     return sc.nodeType == 1 && sc === ec && so + 1 === eo && K(sc.childNodes[so]).isControl();
   },
-  get: function (hasControlRange){
-    var self = this, doc = self.doc, node, rng;
+  get: function(hasControlRange) {
+    var self = this,
+      doc = self.doc,
+      node, rng;
     if (!_IERANGE) {
       rng = doc.createRange();
       try {
@@ -2436,13 +2498,13 @@ _extend(KRange, {
     rng.setEndPoint('EndToStart', _getEndRange(range.endContainer, range.endOffset));
     return rng;
   },
-  html: function (){
+  html: function() {
     return K(this.cloneContents()).outer();
   },
-  down: function (){
+  down: function() {
     var self = this;
 
-    function downPos(node, pos, isStart){
+    function downPos(node, pos, isStart) {
       if (node.nodeType != 1) {
         return;
       }
@@ -2479,10 +2541,10 @@ _extend(KRange, {
     downPos(self.endContainer, self.endOffset, false);
     return self;
   },
-  up: function (){
+  up: function() {
     var self = this;
 
-    function upPos(node, pos, isStart){
+    function upPos(node, pos, isStart) {
       if (node.nodeType != 3) {
         return;
       }
@@ -2505,11 +2567,13 @@ _extend(KRange, {
     upPos(self.endContainer, self.endOffset, false);
     return self;
   },
-  enlarge: function (toBlock){
+  enlarge: function(toBlock) {
     var self = this;
     self.up();
-    function enlargePos(node, pos, isStart){
-      var knode = K(node), parent;
+
+    function enlargePos(node, pos, isStart) {
+      var knode = K(node),
+        parent;
       if (knode.type == 3 || _NOSPLIT_TAG_MAP[knode.name] || !toBlock && knode.isBlock()) {
         return;
       }
@@ -2546,8 +2610,9 @@ _extend(KRange, {
     enlargePos(self.endContainer, self.endOffset, false);
     return self;
   },
-  shrink: function (){
-    var self = this, child, collapsed = self.collapsed;
+  shrink: function() {
+    var self = this,
+      child, collapsed = self.collapsed;
     while (self.startContainer.nodeType == 1 && (child = self.startContainer.childNodes[self.startOffset]) && child.nodeType == 1 && !K(child).isSingle()) {
       self.setStart(child, 0);
     }
@@ -2559,8 +2624,10 @@ _extend(KRange, {
     }
     return self;
   },
-  createBookmark: function (serialize){
-    var self = this, doc = self.doc, endNode,
+  createBookmark: function(serialize) {
+    var self = this,
+      doc = self.doc,
+      endNode,
       startNode = K('<span style="display:none;"></span>', doc)[0];
     startNode.id = '__kindeditor_bookmark_start_' + (_BOOKMARK_ID++) + '__';
     if (!self.collapsed) {
@@ -2576,9 +2643,11 @@ _extend(KRange, {
       end: endNode ? (serialize ? '#' + endNode.id : endNode) : null
     };
   },
-  moveToBookmark: function (bookmark){
-    var self = this, doc = self.doc,
-      start = K(bookmark.start, doc), end = bookmark.end ? K(bookmark.end, doc) : null;
+  moveToBookmark: function(bookmark) {
+    var self = this,
+      doc = self.doc,
+      start = K(bookmark.start, doc),
+      end = bookmark.end ? K(bookmark.end, doc) : null;
     if (!start || start.length < 1) {
       return self;
     }
@@ -2592,13 +2661,14 @@ _extend(KRange, {
     }
     return self;
   },
-  dump: function (){
+  dump: function() {
     console.log('--------------------');
     console.log(this.startContainer.nodeType == 3 ? this.startContainer.nodeValue : this.startContainer, this.startOffset);
     console.log(this.endContainer.nodeType == 3 ? this.endContainer.nodeValue : this.endContainer, this.endOffset);
   }
 });
-function _range(mixed){
+
+function _range(mixed) {
   if (!mixed.nodeName) {
     return mixed.constructor === KRange ? mixed : _toRange(mixed);
   }
@@ -2612,13 +2682,13 @@ K.START_TO_END = _START_TO_END;
 K.END_TO_END = _END_TO_END;
 K.END_TO_START = _END_TO_START;
 
-function _nativeCommand(doc, key, val){
+function _nativeCommand(doc, key, val) {
   try {
     doc.execCommand(key, false, val);
   } catch (e) {}
 }
 
-function _nativeCommandValue(doc, key){
+function _nativeCommandValue(doc, key) {
   var val = '';
   try {
     val = doc.queryCommandValue(key);
@@ -2629,13 +2699,14 @@ function _nativeCommandValue(doc, key){
   return val;
 }
 
-function _getSel(doc){
+function _getSel(doc) {
   var win = _getWin(doc);
   return _IERANGE ? doc.selection : win.getSelection();
 }
 
-function _getRng(doc){
-  var sel = _getSel(doc), rng;
+function _getRng(doc) {
+  var sel = _getSel(doc),
+    rng;
   try {
     if (sel.rangeCount > 0) {
       rng = sel.getRangeAt(0);
@@ -2649,9 +2720,10 @@ function _getRng(doc){
   return rng;
 }
 
-function _singleKeyMap(map){
-  var newMap = {}, arr, v;
-  _each(map, function (key, val){
+function _singleKeyMap(map) {
+  var newMap = {},
+    arr, v;
+  _each(map, function(key, val) {
     arr = key.split(',');
     for (var i = 0, len = arr.length; i < len; i++) {
       v = arr[i];
@@ -2661,11 +2733,11 @@ function _singleKeyMap(map){
   return newMap;
 }
 
-function _hasAttrOrCss(knode, map){
+function _hasAttrOrCss(knode, map) {
   return _hasAttrOrCssByKey(knode, map, '*') || _hasAttrOrCssByKey(knode, map);
 }
 
-function _hasAttrOrCssByKey(knode, map, mapKey){
+function _hasAttrOrCssByKey(knode, map, mapKey) {
   mapKey = mapKey || knode.name;
   if (knode.type !== 1) {
     return false;
@@ -2694,7 +2766,7 @@ function _hasAttrOrCssByKey(knode, map, mapKey){
   return false;
 }
 
-function _removeAttrOrCss(knode, map){
+function _removeAttrOrCss(knode, map) {
   if (knode.type != 1) {
     return;
   }
@@ -2702,7 +2774,7 @@ function _removeAttrOrCss(knode, map){
   _removeAttrOrCssByKey(knode, map);
 }
 
-function _removeAttrOrCssByKey(knode, map, mapKey){
+function _removeAttrOrCssByKey(knode, map, mapKey) {
   mapKey = mapKey || knode.name;
   if (knode.type !== 1) {
     return;
@@ -2711,7 +2783,8 @@ function _removeAttrOrCssByKey(knode, map, mapKey){
   if (!newMap[mapKey]) {
     return;
   }
-  var arr = newMap[mapKey].split(','), allFlag = false;
+  var arr = newMap[mapKey].split(','),
+    allFlag = false;
   for (var i = 0, len = arr.length; i < len; i++) {
     var key = arr[i];
     if (key === '*') {
@@ -2734,7 +2807,7 @@ function _removeAttrOrCssByKey(knode, map, mapKey){
   }
 }
 
-function _getInnerNode(knode){
+function _getInnerNode(knode) {
   var inner = knode;
   while (inner.first()) {
     inner = inner.first();
@@ -2742,16 +2815,18 @@ function _getInnerNode(knode){
   return inner;
 }
 
-function _isEmptyNode(knode){
+function _isEmptyNode(knode) {
   if (knode.type != 1 || knode.isSingle()) {
     return false;
   }
   return knode.html().replace(/<[^>]+>/g, '') === '';
 }
 
-function _mergeWrapper(a, b){
+function _mergeWrapper(a, b) {
   a = a.clone(true);
-  var lastA = _getInnerNode(a), childA = a, merged = false;
+  var lastA = _getInnerNode(a),
+    childA = a,
+    merged = false;
   while (b) {
     while (childA) {
       if (childA.name === b.name) {
@@ -2769,14 +2844,15 @@ function _mergeWrapper(a, b){
   return a;
 }
 
-function _wrapNode(knode, wrapper){
+function _wrapNode(knode, wrapper) {
   wrapper = wrapper.clone(true);
   if (knode.type == 3) {
     _getInnerNode(wrapper).append(knode.clone(false));
     knode.replaceWith(wrapper);
     return wrapper;
   }
-  var nodeWrapper = knode, child;
+  var nodeWrapper = knode,
+    child;
   while ((child = knode.first()) && child.children().length == 1) {
     knode = child;
   }
@@ -2794,18 +2870,18 @@ function _wrapNode(knode, wrapper){
   return wrapper;
 }
 
-function _mergeAttrs(knode, attrs, styles){
-  _each(attrs, function (key, val){
+function _mergeAttrs(knode, attrs, styles) {
+  _each(attrs, function(key, val) {
     if (key !== 'style') {
       knode.attr(key, val);
     }
   });
-  _each(styles, function (key, val){
+  _each(styles, function(key, val) {
     knode.css(key, val);
   });
 }
 
-function _inPreElement(knode){
+function _inPreElement(knode) {
   while (knode && knode.name != 'body') {
     if (_PRE_TAG_MAP[knode.name] || knode.name == 'div' && knode.hasClass('ke-script')) {
       return true;
@@ -2815,20 +2891,23 @@ function _inPreElement(knode){
   return false;
 }
 
-function KCmd(range){
+function KCmd(range) {
   this.init(range);
 }
 
 _extend(KCmd, {
-  init: function (range){
-    var self = this, doc = range.doc;
+  init: function(range) {
+    var self = this,
+      doc = range.doc;
     self.doc = doc;
     self.win = _getWin(doc);
     self.sel = _getSel(doc);
     self.range = range;
   },
-  selection: function (forceReset){
-    var self = this, doc = self.doc, rng = _getRng(doc);
+  selection: function(forceReset) {
+    var self = this,
+      doc = self.doc,
+      rng = _getRng(doc);
     self.sel = _getSel(doc);
     if (rng) {
       self.range = _range(rng);
@@ -2842,12 +2921,18 @@ _extend(KCmd, {
     }
     return self;
   },
-  select: function (hasDummy){
+  select: function(hasDummy) {
     hasDummy = _undef(hasDummy, true);
-    var self = this, sel = self.sel, range = self.range.cloneRange().shrink(),
-      sc = range.startContainer, so = range.startOffset,
-      ec = range.endContainer, eo = range.endOffset,
-      doc = _getDoc(sc), win = self.win, rng, hasU200b = false;
+    var self = this,
+      sel = self.sel,
+      range = self.range.cloneRange().shrink(),
+      sc = range.startContainer,
+      so = range.startOffset,
+      ec = range.endContainer,
+      eo = range.endOffset,
+      doc = _getDoc(sc),
+      win = self.win,
+      rng, hasU200b = false;
     if (hasDummy && sc.nodeType == 1 && range.collapsed) {
       if (_IERANGE) {
         var dummy = K('<span>&nbsp;</span>', doc);
@@ -2890,8 +2975,11 @@ _extend(KCmd, {
     win.focus();
     return self;
   },
-  wrap: function (val){
-    var self = this, doc = self.doc, range = self.range, wrapper;
+  wrap: function(val) {
+    var self = this,
+      doc = self.doc,
+      range = self.range,
+      wrapper;
     wrapper = K(val, doc);
     if (range.collapsed) {
       range.shrink();
@@ -2899,7 +2987,8 @@ _extend(KCmd, {
       return self;
     }
     if (wrapper.isBlock()) {
-      var copyWrapper = wrapper.clone(true), child = copyWrapper;
+      var copyWrapper = wrapper.clone(true),
+        child = copyWrapper;
       while (child.first()) {
         child = child.first();
       }
@@ -2908,8 +2997,10 @@ _extend(KCmd, {
       return self;
     }
     range.enlarge();
-    var bookmark = range.createBookmark(), ancestor = range.commonAncestor(), isStart = false;
-    K(ancestor).scan(function (node){
+    var bookmark = range.createBookmark(),
+      ancestor = range.commonAncestor(),
+      isStart = false;
+    K(ancestor).scan(function(node) {
       if (!isStart && node == bookmark.start) {
         isStart = true;
         return;
@@ -2934,12 +3025,15 @@ _extend(KCmd, {
     range.moveToBookmark(bookmark);
     return self;
   },
-  split: function (isStart, map){
-    var range = this.range, doc = range.doc;
+  split: function(isStart, map) {
+    var range = this.range,
+      doc = range.doc;
     var tempRange = range.cloneRange().collapse(isStart);
-    var node = tempRange.startContainer, pos = tempRange.startOffset,
+    var node = tempRange.startContainer,
+      pos = tempRange.startOffset,
       parent = node.nodeType == 3 ? node.parentNode : node,
-      needSplit = false, knode;
+      needSplit = false,
+      knode;
     while (parent && parent.parentNode) {
       knode = K(parent);
       if (map) {
@@ -2966,7 +3060,8 @@ _extend(KCmd, {
         tempRange.setStart(node, pos).setEndAfter(parent.lastChild);
       }
       var frag = tempRange.extractContents(),
-        first = frag.firstChild, last = frag.lastChild;
+        first = frag.firstChild,
+        last = frag.lastChild;
       if (isStart) {
         tempRange.insertNode(frag);
         range.setStartAfter(last).setEndBefore(dummy);
@@ -2976,7 +3071,8 @@ _extend(KCmd, {
       }
       var dummyParent = dummy.parentNode;
       if (dummyParent == range.endContainer) {
-        var prev = K(dummy).prev(), next = K(dummy).next();
+        var prev = K(dummy).prev(),
+          next = K(dummy).next();
         if (prev && next && prev.type == 3 && next.type == 3) {
           range.setEnd(prev[0], prev[0].nodeValue.length);
         } else if (!isStart) {
@@ -2987,11 +3083,14 @@ _extend(KCmd, {
     }
     return this;
   },
-  remove: function (map){
-    var self = this, doc = self.doc, range = self.range;
+  remove: function(map) {
+    var self = this,
+      doc = self.doc,
+      range = self.range;
     range.enlarge();
     if (range.startOffset === 0) {
-      var ksc = K(range.startContainer), parent;
+      var ksc = K(range.startContainer),
+        parent;
       while ((parent = ksc.parent()) && parent.isStyle() && parent.children().length == 1) {
         ksc = parent;
       }
@@ -3030,11 +3129,13 @@ _extend(KCmd, {
     }
     self.split(true, map);
     self.split(false, map);
-    var startDummy = doc.createElement('span'), endDummy = doc.createElement('span');
+    var startDummy = doc.createElement('span'),
+      endDummy = doc.createElement('span');
     range.cloneRange().collapse(false).insertNode(endDummy);
     range.cloneRange().collapse(true).insertNode(startDummy);
-    var nodeList = [], cmpStart = false;
-    K(range.commonAncestor()).scan(function (node){
+    var nodeList = [],
+      cmpStart = false;
+    K(range.commonAncestor()).scan(function(node) {
       if (!cmpStart && node == startDummy) {
         cmpStart = true;
         return;
@@ -3050,7 +3151,8 @@ _extend(KCmd, {
     K(endDummy).remove();
     sc = range.startContainer;
     so = range.startOffset;
-    var ec = range.endContainer, eo = range.endOffset;
+    var ec = range.endContainer,
+      eo = range.endOffset;
     if (so > 0) {
       var startBefore = K(sc.childNodes[so - 1]);
       if (startBefore && _isEmptyNode(startBefore)) {
@@ -3073,19 +3175,21 @@ _extend(KCmd, {
       endAfter.remove();
     }
     var bookmark = range.createBookmark(true);
-    _each(nodeList, function (i, node){
+    _each(nodeList, function(i, node) {
       _removeAttrOrCss(K(node), map);
     });
     range.moveToBookmark(bookmark);
     return self;
   },
-  commonNode: function (map){
+  commonNode: function(map) {
     var range = this.range;
-    var ec = range.endContainer, eo = range.endOffset,
+    var ec = range.endContainer,
+      eo = range.endOffset,
       node = (ec.nodeType == 3 || eo === 0) ? ec : ec.childNodes[eo - 1];
 
-    function find(node){
-      var child = node, parent = node;
+    function find(node) {
+      var child = node,
+        parent = node;
       while (parent) {
         if (_hasAttrOrCss(K(parent), map)) {
           return K(parent);
@@ -3112,14 +3216,16 @@ _extend(KCmd, {
     }
     return null;
   },
-  commonAncestor: function (tagName){
+  commonAncestor: function(tagName) {
     var range = this.range,
-      sc = range.startContainer, so = range.startOffset,
-      ec = range.endContainer, eo = range.endOffset,
+      sc = range.startContainer,
+      so = range.startOffset,
+      ec = range.endContainer,
+      eo = range.endOffset,
       startNode = (sc.nodeType == 3 || so === 0) ? sc : sc.childNodes[so - 1],
       endNode = (ec.nodeType == 3 || eo === 0) ? ec : ec.childNodes[eo - 1];
 
-    function find(node){
+    function find(node) {
       while (node) {
         if (node.nodeType == 1) {
           if (node.tagName.toLowerCase() === tagName) {
@@ -3131,28 +3237,34 @@ _extend(KCmd, {
       return null;
     }
 
-    var start = find(startNode), end = find(endNode);
+    var start = find(startNode),
+      end = find(endNode);
     if (start && end && start === end) {
       return K(start);
     }
     return null;
   },
-  state: function (key){
-    var self = this, doc = self.doc, bool = false;
+  state: function(key) {
+    var self = this,
+      doc = self.doc,
+      bool = false;
     try {
       bool = doc.queryCommandState(key);
     } catch (e) {}
     return bool;
   },
-  val: function (key){
-    var self = this, doc = self.doc, range = self.range;
+  val: function(key) {
+    var self = this,
+      doc = self.doc,
+      range = self.range;
 
-    function lc(val){
+    function lc(val) {
       return val.toLowerCase();
     }
 
     key = lc(key);
-    var val = '', knode;
+    var val = '',
+      knode;
     if (key === 'fontfamily' || key === 'fontname') {
       val = _nativeCommandValue(doc, 'fontname');
       val = val.replace(/['"]/g, '');
@@ -3202,7 +3314,7 @@ _extend(KCmd, {
     }
     return val;
   },
-  toggle: function (wrapper, map){
+  toggle: function(wrapper, map) {
     var self = this;
     if (self.commonNode(map)) {
       self.remove(map);
@@ -3211,64 +3323,66 @@ _extend(KCmd, {
     }
     return self.select();
   },
-  bold: function (){
+  bold: function() {
     return this.toggle('<strong></strong>', {
       span: '.font-weight=bold',
       strong: '*',
       b: '*'
     });
   },
-  italic: function (){
+  italic: function() {
     return this.toggle('<em></em>', {
       span: '.font-style=italic',
       em: '*',
       i: '*'
     });
   },
-  underline: function (){
+  underline: function() {
     return this.toggle('<u></u>', {
       span: '.text-decoration=underline',
       u: '*'
     });
   },
-  strikethrough: function (){
+  strikethrough: function() {
     return this.toggle('<s></s>', {
       span: '.text-decoration=line-through',
       s: '*'
     });
   },
-  forecolor: function (val){
+  forecolor: function(val) {
     return this.wrap('<span style="color:' + val + ';"></span>').select();
   },
-  hilitecolor: function (val){
+  hilitecolor: function(val) {
     return this.wrap('<span style="background-color:' + val + ';"></span>').select();
   },
-  fontsize: function (val){
+  fontsize: function(val) {
     return this.wrap('<span style="font-size:' + val + ';"></span>').select();
   },
-  fontname: function (val){
+  fontname: function(val) {
     return this.fontfamily(val);
   },
-  fontfamily: function (val){
+  fontfamily: function(val) {
     return this.wrap('<span style="font-family:' + val + ';"></span>').select();
   },
-  removeformat: function (){
+  removeformat: function() {
     var map = {
         '*': '.font-weight,.font-style,.text-decoration,.color,.background-color,.font-size,.font-family,.text-indent'
       },
       tags = _STYLE_TAG_MAP;
-    _each(tags, function (key, val){
+    _each(tags, function(key, val) {
       map[key] = '*';
     });
     this.remove(map);
     return this.select();
   },
-  inserthtml: function (val, quickMode){
-    var self = this, range = self.range;
+  inserthtml: function(val, quickMode) {
+    var self = this,
+      range = self.range;
     if (val === '') {
       return self;
     }
-    function pasteHtml(range, val){
+
+    function pasteHtml(range, val) {
       val = '<img id="__kindeditor_temp_tag__" width="0" height="0" style="display:none;" />' + val;
       var rng = range.get();
       if (rng.item) {
@@ -3284,10 +3398,10 @@ _extend(KCmd, {
       self.select(false);
     }
 
-    function insertHtml(range, val){
+    function insertHtml(range, val) {
       var doc = range.doc,
         frag = doc.createDocumentFragment();
-      K('@' + val, doc).each(function (){
+      K('@' + val, doc).each(function() {
         frag.appendChild(this);
       });
       range.deleteContents();
@@ -3307,14 +3421,14 @@ _extend(KCmd, {
     insertHtml(range, val);
     return self;
   },
-  hr: function (){
+  hr: function() {
     return this.inserthtml('<hr />');
   },
-  print: function (){
+  print: function() {
     this.win.print();
     return this;
   },
-  insertimage: function (url, title, width, height, border, align){
+  insertimage: function(url, title, width, height, border, align) {
     title = _undef(title, '');
     border = _undef(border, 0);
     var html = '<img src="' + _escape(url) + '" data-ke-src="' + _escape(url) + '" ';
@@ -3334,8 +3448,10 @@ _extend(KCmd, {
     html += '/>';
     return this.inserthtml(html);
   },
-  createlink: function (url, type){
-    var self = this, doc = self.doc, range = self.range;
+  createlink: function(url, type) {
+    var self = this,
+      doc = self.doc,
+      range = self.range;
     self.select();
     var a = self.commonNode({ a: '*' });
     if (a && !range.isControl()) {
@@ -3358,7 +3474,8 @@ _extend(KCmd, {
       range.selectNode(node[0]);
       return self.select();
     }
-    function setAttr(node, url, type){
+
+    function setAttr(node, url, type) {
       K(node).attr('href', url).attr('data-ke-src', url);
       if (type) {
         K(node).attr('target', type);
@@ -3367,8 +3484,10 @@ _extend(KCmd, {
       }
     }
 
-    var sc = range.startContainer, so = range.startOffset,
-      ec = range.endContainer, eo = range.endOffset;
+    var sc = range.startContainer,
+      so = range.startOffset,
+      ec = range.endContainer,
+      eo = range.endOffset;
     if (sc.nodeType == 1 && sc === ec && so + 1 === eo) {
       var child = sc.childNodes[so];
       if (child.nodeName.toLowerCase() == 'a') {
@@ -3377,13 +3496,15 @@ _extend(KCmd, {
       }
     }
     _nativeCommand(doc, 'createlink', '__kindeditor_temp_url__');
-    K('a[href="__kindeditor_temp_url__"]', doc).each(function (){
+    K('a[href="__kindeditor_temp_url__"]', doc).each(function() {
       setAttr(this, url, type);
     });
     return self;
   },
-  unlink: function (){
-    var self = this, doc = self.doc, range = self.range;
+  unlink: function() {
+    var self = this,
+      doc = self.doc,
+      range = self.range;
     self.select();
     if (range.collapsed) {
       var a = self.commonNode({ a: '*' });
@@ -3404,9 +3525,9 @@ _extend(KCmd, {
     return self;
   }
 });
-_each(('formatblock,selectall,justifyleft,justifycenter,justifyright,justifyfull,insertorderedlist,' +
-'insertunorderedlist,indent,outdent,subscript,superscript').split(','), function (i, name){
-  KCmd.prototype[name] = function (val){
+_each(('formatblock,selectall,justifyleft,justifycenter,justifyright,justifyfull,insertorderedlist,'
+  + 'insertunorderedlist,indent,outdent,subscript,superscript').split(','), function(i, name) {
+  KCmd.prototype[name] = function(val) {
     var self = this;
     self.select();
     _nativeCommand(self.doc, name, val);
@@ -3419,8 +3540,8 @@ _each(('formatblock,selectall,justifyleft,justifycenter,justifyright,justifyfull
     return self;
   };
 });
-_each('cut,copy,paste'.split(','), function (i, name){
-  KCmd.prototype[name] = function (){
+_each('cut,copy,paste'.split(','), function(i, name) {
+  KCmd.prototype[name] = function() {
     var self = this;
     if (!self.doc.queryCommandSupported(name)) {
       throw 'not supported';
@@ -3430,7 +3551,8 @@ _each('cut,copy,paste'.split(','), function (i, name){
     return self;
   };
 });
-function _cmd(mixed){
+
+function _cmd(mixed) {
   if (mixed.nodeName) {
     var doc = _getDoc(mixed);
     mixed = _range(doc).selectNodeContents(doc.body).collapse(false);
@@ -3441,7 +3563,7 @@ function _cmd(mixed){
 K.CmdClass = KCmd;
 K.cmd = _cmd;
 
-function _drag(options){
+function _drag(options) {
   var moveEl = options.moveEl,
     moveFn = options.moveFn,
     clickEl = options.clickEl || moveEl,
@@ -3449,7 +3571,7 @@ function _drag(options){
     iframeFix = options.iframeFix === undefined ? true : options.iframeFix;
   var docs = [document];
   if (iframeFix) {
-    K('iframe').each(function (){
+    K('iframe').each(function() {
       var src = _formatUrl(this.src || '', 'absolute');
       if (/^https?:\/\//.test(src)) {
         return;
@@ -3466,7 +3588,7 @@ function _drag(options){
       }
     });
   }
-  clickEl.mousedown(function (e){
+  clickEl.mousedown(function(e) {
     if (e.button !== 0 && e.button !== 1) {
       return;
     }
@@ -3481,7 +3603,8 @@ function _drag(options){
     if (beforeDrag) {
       beforeDrag();
     }
-    function moveListener(e){
+
+    function moveListener(e) {
       e.preventDefault();
       var kdoc = K(_getDoc(e.target));
       var diffX = _round((kdoc.data('pos-x') || 0) + e.pageX - pageX);
@@ -3489,11 +3612,11 @@ function _drag(options){
       moveFn.call(clickEl, x, y, width, height, diffX, diffY);
     }
 
-    function selectListener(e){
+    function selectListener(e) {
       e.preventDefault();
     }
 
-    function upListener(e){
+    function upListener(e) {
       e.preventDefault();
       K(docs).unbind('mousemove', moveListener)
         .unbind('mouseup', upListener)
@@ -3512,12 +3635,12 @@ function _drag(options){
   });
 }
 
-function KWidget(options){
+function KWidget(options) {
   this.init(options);
 }
 
 _extend(KWidget, {
-  init: function (options){
+  init: function(options) {
     var self = this;
     self.name = options.name || '';
     self.doc = options.doc || document;
@@ -3567,7 +3690,7 @@ _extend(KWidget, {
     if (options.autoScroll) {
       if (_IE && _V < 7 || _QUIRKS) {
         var scrollPos = _getScrollPos();
-        K(self.win).bind('scroll', function (e){
+        K(self.win).bind('scroll', function(e) {
           var pos = _getScrollPos(),
             diffX = pos.x - scrollPos.x,
             diffY = pos.y - scrollPos.y;
@@ -3578,7 +3701,7 @@ _extend(KWidget, {
       }
     }
   },
-  pos: function (x, y, updateProp){
+  pos: function(x, y, updateProp) {
     var self = this;
     updateProp = _undef(updateProp, true);
     if (x !== null) {
@@ -3597,7 +3720,7 @@ _extend(KWidget, {
     }
     return self;
   },
-  autoPos: function (width, height){
+  autoPos: function(width, height) {
     var self = this,
       w = _removeUnit(width) || 0,
       h = _removeUnit(height) || 0,
@@ -3620,30 +3743,30 @@ _extend(KWidget, {
     }
     return self.pos(x, y);
   },
-  remove: function (){
+  remove: function() {
     var self = this;
     if (_IE && _V < 7 || _QUIRKS) {
       K(self.win).unbind('scroll');
     }
     self.div.remove();
-    _each(self, function (i){
+    _each(self, function(i) {
       self[i] = null;
     });
     return this;
   },
-  show: function (){
+  show: function() {
     this.div.show();
     return this;
   },
-  hide: function (){
+  hide: function() {
     this.div.hide();
     return this;
   },
-  draggable: function (options){
+  draggable: function(options) {
     var self = this;
     options = options || {};
     options.moveEl = self.div;
-    options.moveFn = function (x, y, width, height, diffX, diffY){
+    options.moveFn = function(x, y, width, height, diffX, diffY) {
       if ((x = x + diffX) < 0) {
         x = 0;
       }
@@ -3656,14 +3779,15 @@ _extend(KWidget, {
     return self;
   }
 });
-function _widget(options){
+
+function _widget(options) {
   return new KWidget(options);
 }
 
 K.WidgetClass = KWidget;
 K.widget = _widget;
 
-function _iframeDoc(iframe){
+function _iframeDoc(iframe) {
   iframe = _get(iframe);
   return iframe.contentDocument || iframe.contentWindow.document;
 }
@@ -3672,7 +3796,8 @@ var html, _direction = '';
 if ((html = document.getElementsByTagName('html'))) {
   _direction = html[0].dir;
 }
-function _getInitHtml(themesPath, bodyClass, cssPath, cssData){
+
+function _getInitHtml(themesPath, bodyClass, cssPath, cssData) {
   var arr = [
     (_direction === '' ? '<html>' : '<html dir="' + _direction + '">'),
     '<head><meta charset="utf-8" /><title></title>',
@@ -3731,7 +3856,7 @@ function _getInitHtml(themesPath, bodyClass, cssPath, cssData){
   if (!_isArray(cssPath)) {
     cssPath = [cssPath];
   }
-  _each(cssPath, function (i, path){
+  _each(cssPath, function(i, path) {
     if (path) {
       arr.push('<link href="' + path + '" type="text/css" rel="stylesheet" />');
     }
@@ -3743,7 +3868,7 @@ function _getInitHtml(themesPath, bodyClass, cssPath, cssData){
   return arr.join('\n');
 }
 
-function _elementVal(knode, val){
+function _elementVal(knode, val) {
   if (knode.hasVal()) {
     if (val === undefined) {
       var html = knode.val();
@@ -3755,12 +3880,12 @@ function _elementVal(knode, val){
   return knode.html(val);
 }
 
-function KEdit(options){
+function KEdit(options) {
   this.init(options);
 }
 
 _extend(KEdit, KWidget, {
-  init: function (options){
+  init: function(options) {
     var self = this;
     KEdit.parent.init.call(self, options);
     self.srcElement = K(options.srcElement);
@@ -3774,9 +3899,9 @@ _extend(KEdit, KWidget, {
       cssPath = options.cssPath,
       cssData = options.cssData,
       isDocumentDomain = location.protocol != 'res:' && location.host.replace(/:\d+/, '') !== document.domain,
-      srcScript = ('document.open();' +
-      (isDocumentDomain ? 'document.domain="' + document.domain + '";' : '') +
-      'document.close();'),
+      srcScript = ('document.open();'
+        + (isDocumentDomain ? 'document.domain="' + document.domain + '";' : '')
+        + 'document.close();'),
       iframeSrc = _IE ? ' src="javascript:void(function(){' + encodeURIComponent(srcScript) + '}())"' : '';
     self.iframe = K('<iframe class="ke-edit-iframe" hidefocus="true" frameborder="0"' + iframeSrc + '></iframe>').css('width', '100%');
     self.textarea = K('<textarea class="ke-edit-textarea" hidefocus="true"></textarea>').css('width', '100%');
@@ -3794,7 +3919,8 @@ _extend(KEdit, KWidget, {
     } else {
       self.iframe.hide();
     }
-    function ready(){
+
+    function ready() {
       var doc = _iframeDoc(self.iframe);
       doc.open();
       if (isDocumentDomain) {
@@ -3805,11 +3931,11 @@ _extend(KEdit, KWidget, {
       self.win = self.iframe[0].contentWindow;
       self.doc = doc;
       var cmd = _cmd(doc);
-      self.afterChange(function (e){
+      self.afterChange(function(e) {
         cmd.selection();
       });
       if (_WEBKIT) {
-        K(doc).click(function (e){
+        K(doc).click(function(e) {
           if (K(e.target).name === 'img') {
             cmd.selection(true);
             cmd.range.selectNode(e.target);
@@ -3818,7 +3944,7 @@ _extend(KEdit, KWidget, {
         });
       }
       if (_IE) {
-        self._mousedownHandler = function (){
+        self._mousedownHandler = function() {
           var newRange = cmd.range.cloneRange();
           newRange.shrink();
           if (newRange.isControl()) {
@@ -3826,7 +3952,7 @@ _extend(KEdit, KWidget, {
           }
         };
         K(document).mousedown(self._mousedownHandler);
-        K(doc).keydown(function (e){
+        K(doc).keydown(function(e) {
           if (e.which == 8) {
             cmd.selection();
             var rng = cmd.range;
@@ -3853,7 +3979,7 @@ _extend(KEdit, KWidget, {
     }
 
     if (isDocumentDomain) {
-      self.iframe.bind('load', function (e){
+      self.iframe.bind('load', function(e) {
         self.iframe.unbind('load');
         if (_IE) {
           ready();
@@ -3867,14 +3993,14 @@ _extend(KEdit, KWidget, {
     self.srcElement.hide();
     !isDocumentDomain && ready();
   },
-  setWidth: function (val){
+  setWidth: function(val) {
     var self = this;
     val = _addUnit(val);
     self.width = val;
     self.div.css('width', val);
     return self;
   },
-  setHeight: function (val){
+  setHeight: function(val) {
     var self = this;
     val = _addUnit(val);
     self.height = val;
@@ -3886,8 +4012,9 @@ _extend(KEdit, KWidget, {
     self.textarea.css('height', val);
     return self;
   },
-  remove: function (){
-    var self = this, doc = self.doc;
+  remove: function() {
+    var self = this,
+      doc = self.doc;
     K(doc.body).unbind();
     K(doc).unbind();
     K(self.win).unbind();
@@ -3900,8 +4027,9 @@ _extend(KEdit, KWidget, {
     self.textarea.unbind();
     KEdit.parent.remove.call(self);
   },
-  html: function (val, isFull){
-    var self = this, doc = self.doc;
+  html: function(val, isFull) {
+    var self = this,
+      doc = self.doc;
     if (self.designMode) {
       var body = doc.body;
       if (val === undefined) {
@@ -3936,8 +4064,9 @@ _extend(KEdit, KWidget, {
     self.textarea.val(val);
     return self;
   },
-  design: function (bool){
-    var self = this, val;
+  design: function(bool) {
+    var self = this,
+      val;
     if (bool === undefined ? !self.designMode : bool) {
       if (!self.designMode) {
         val = self.html();
@@ -3955,7 +4084,7 @@ _extend(KEdit, KWidget, {
         iframe.show();
 
         // safari iframe scrollbar hack
-        setTimeout(function (){
+        setTimeout(function() {
           iframe.height(height);
         }, 0);
       }
@@ -3970,12 +4099,12 @@ _extend(KEdit, KWidget, {
     }
     return self.focus();
   },
-  focus: function (){
+  focus: function() {
     var self = this;
     self.designMode ? self.win.focus() : self.textarea[0].focus();
     return self;
   },
-  blur: function (){
+  blur: function() {
     var self = this;
     if (_IE) {
       var input = K('<input type="text" style="float:left;width:0;height:0;padding:0;margin:0;border:0;" value="" />', self.div);
@@ -3987,17 +4116,20 @@ _extend(KEdit, KWidget, {
     }
     return self;
   },
-  afterChange: function (fn){
-    var self = this, doc = self.doc, body = doc.body;
-    K(doc).keyup(function (e){
+  afterChange: function(fn) {
+    var self = this,
+      doc = self.doc,
+      body = doc.body;
+    K(doc).keyup(function(e) {
       if (!e.ctrlKey && !e.altKey && _CHANGE_KEY_MAP[e.which]) {
         fn(e);
       }
     });
     K(doc).mouseup(fn).contextmenu(fn);
     K(self.win).blur(fn);
-    function timeoutHandler(e){
-      setTimeout(function (){
+
+    function timeoutHandler(e) {
+      setTimeout(function() {
         fn(e);
       }, 1);
     }
@@ -4007,7 +4139,8 @@ _extend(KEdit, KWidget, {
     return self;
   }
 });
-function _edit(options){
+
+function _edit(options) {
   return new KEdit(options);
 }
 
@@ -4015,7 +4148,7 @@ K.EditClass = KEdit;
 K.edit = _edit;
 K.iframeDoc = _iframeDoc;
 
-function _selectToolbar(name, fn){
+function _selectToolbar(name, fn) {
   var self = this,
     knode = self.get(name);
   if (knode) {
@@ -4026,21 +4159,22 @@ function _selectToolbar(name, fn){
   }
 }
 
-function KToolbar(options){
+function KToolbar(options) {
   this.init(options);
 }
 
 _extend(KToolbar, KWidget, {
-  init: function (options){
+  init: function(options) {
     var self = this;
     KToolbar.parent.init.call(self, options);
     self.disableMode = _undef(options.disableMode, false);
     self.noDisableItemMap = _toMap(_undef(options.noDisableItems, []));
     self._itemMap = {};
-    self.div.addClass('ke-toolbar').bind('contextmenu,mousedown,mousemove', function (e){
+    self.div.addClass('ke-toolbar').bind('contextmenu,mousedown,mousemove', function(e) {
       e.preventDefault();
     }).attr('unselectable', 'on');
-    function find(target){
+
+    function find(target) {
       var knode = K(target);
       if (knode.hasClass('ke-outline')) {
         return knode;
@@ -4050,7 +4184,7 @@ _extend(KToolbar, KWidget, {
       }
     }
 
-    function hover(e, method){
+    function hover(e, method) {
       var knode = find(e.target);
       if (knode) {
         if (knode.hasClass('ke-disabled')) {
@@ -4063,13 +4197,13 @@ _extend(KToolbar, KWidget, {
       }
     }
 
-    self.div.mouseover(function (e){
-      hover(e, 'addClass');
-    })
-      .mouseout(function (e){
+    self.div.mouseover(function(e) {
+        hover(e, 'addClass');
+      })
+      .mouseout(function(e) {
         hover(e, 'removeClass');
       })
-      .click(function (e){
+      .click(function(e) {
         var knode = find(e.target);
         if (knode) {
           if (knode.hasClass('ke-disabled')) {
@@ -4079,25 +4213,25 @@ _extend(KToolbar, KWidget, {
         }
       });
   },
-  get: function (name){
+  get: function(name) {
     if (this._itemMap[name]) {
       return this._itemMap[name];
     }
     return (this._itemMap[name] = K('span.ke-icon-' + name, this.div).parent());
   },
-  select: function (name){
-    _selectToolbar.call(this, name, function (knode){
+  select: function(name) {
+    _selectToolbar.call(this, name, function(knode) {
       knode.addClass('ke-selected');
     });
     return self;
   },
-  unselect: function (name){
-    _selectToolbar.call(this, name, function (knode){
+  unselect: function(name) {
+    _selectToolbar.call(this, name, function(knode) {
       knode.removeClass('ke-selected').removeClass('ke-on');
     });
     return self;
   },
-  enable: function (name){
+  enable: function(name) {
     var self = this,
       knode = name.get ? name : self.get(name);
     if (knode) {
@@ -4106,7 +4240,7 @@ _extend(KToolbar, KWidget, {
     }
     return self;
   },
-  disable: function (name){
+  disable: function(name) {
     var self = this,
       knode = name.get ? name : self.get(name);
     if (knode) {
@@ -4115,13 +4249,15 @@ _extend(KToolbar, KWidget, {
     }
     return self;
   },
-  disableAll: function (bool, noDisableItems){
-    var self = this, map = self.noDisableItemMap, item;
+  disableAll: function(bool, noDisableItems) {
+    var self = this,
+      map = self.noDisableItemMap,
+      item;
     if (noDisableItems) {
       map = _toMap(noDisableItems);
     }
     if (bool === undefined ? !self.disableMode : bool) {
-      K('span.ke-outline', self.div).each(function (){
+      K('span.ke-outline', self.div).each(function() {
         var knode = K(this),
           name = knode[0].getAttribute('data-name', 2);
         if (!map[name]) {
@@ -4130,7 +4266,7 @@ _extend(KToolbar, KWidget, {
       });
       self.disableMode = true;
     } else {
-      K('span.ke-outline', self.div).each(function (){
+      K('span.ke-outline', self.div).each(function() {
         var knode = K(this),
           name = knode[0].getAttribute('data-name', 2);
         if (!map[name]) {
@@ -4142,28 +4278,29 @@ _extend(KToolbar, KWidget, {
     return self;
   }
 });
-function _toolbar(options){
+
+function _toolbar(options) {
   return new KToolbar(options);
 }
 
 K.ToolbarClass = KToolbar;
 K.toolbar = _toolbar;
 
-function KMenu(options){
+function KMenu(options) {
   this.init(options);
 }
 
 _extend(KMenu, KWidget, {
-  init: function (options){
+  init: function(options) {
     var self = this;
     options.z = options.z || 811213;
     KMenu.parent.init.call(self, options);
     self.centerLineMode = _undef(options.centerLineMode, true);
-    self.div.addClass('ke-menu').bind('click,mousedown', function (e){
+    self.div.addClass('ke-menu').bind('click,mousedown', function(e) {
       e.stopPropagation();
     }).attr('unselectable', 'on');
   },
-  addItem: function (item){
+  addItem: function(item) {
     var self = this;
     if (item.title === '-') {
       self.div.append(K('<div class="ke-menu-separator"></div>'));
@@ -4186,19 +4323,19 @@ _extend(KMenu, KWidget, {
         centerDiv.css('height', height);
       }
     }
-    itemDiv.mouseover(function (e){
-      K(this).addClass('ke-menu-item-on');
-      if (centerDiv) {
-        centerDiv.addClass('ke-menu-item-center-on');
-      }
-    })
-      .mouseout(function (e){
+    itemDiv.mouseover(function(e) {
+        K(this).addClass('ke-menu-item-on');
+        if (centerDiv) {
+          centerDiv.addClass('ke-menu-item-center-on');
+        }
+      })
+      .mouseout(function(e) {
         K(this).removeClass('ke-menu-item-on');
         if (centerDiv) {
           centerDiv.removeClass('ke-menu-item-center-on');
         }
       })
-      .click(function (e){
+      .click(function(e) {
         item.click.call(K(this));
         e.stopPropagation();
       })
@@ -4216,7 +4353,7 @@ _extend(KMenu, KWidget, {
     rightDiv.html(item.title);
     return self;
   },
-  remove: function (){
+  remove: function() {
     var self = this;
     if (self.options.beforeRemove) {
       self.options.beforeRemove.call(self);
@@ -4226,19 +4363,20 @@ _extend(KMenu, KWidget, {
     return self;
   }
 });
-function _menu(options){
+
+function _menu(options) {
   return new KMenu(options);
 }
 
 K.MenuClass = KMenu;
 K.menu = _menu;
 
-function KColorPicker(options){
+function KColorPicker(options) {
   this.init(options);
 }
 
 _extend(KColorPicker, KWidget, {
-  init: function (options){
+  init: function(options) {
     var self = this;
     options.z = options.z || 811213;
     KColorPicker.parent.init.call(self, options);
@@ -4250,7 +4388,7 @@ _extend(KColorPicker, KWidget, {
       ];
     self.selectedColor = (options.selectedColor || '').toLowerCase();
     self._cells = [];
-    self.div.addClass('ke-colorpicker').bind('click,mousedown', function (e){
+    self.div.addClass('ke-colorpicker').bind('click,mousedown', function(e) {
       e.stopPropagation();
     }).attr('unselectable', 'on');
     var table = self.doc.createElement('table');
@@ -4259,7 +4397,8 @@ _extend(KColorPicker, KWidget, {
     table.cellPadding = 0;
     table.cellSpacing = 0;
     table.border = 0;
-    var row = table.insertRow(0), cell = row.insertCell(0);
+    var row = table.insertRow(0),
+      cell = row.insertCell(0);
     cell.colSpan = colors[0].length;
     self._addAttr(cell, '', 'ke-colorpicker-cell-top');
     for (var i = 0; i < colors.length; i++) {
@@ -4270,20 +4409,20 @@ _extend(KColorPicker, KWidget, {
       }
     }
   },
-  _addAttr: function (cell, color, cls){
+  _addAttr: function(cell, color, cls) {
     var self = this;
     cell = K(cell).addClass(cls);
     if (self.selectedColor === color.toLowerCase()) {
       cell.addClass('ke-colorpicker-cell-selected');
     }
     cell.attr('title', color || self.options.noColor);
-    cell.mouseover(function (e){
+    cell.mouseover(function(e) {
       K(this).addClass('ke-colorpicker-cell-on');
     });
-    cell.mouseout(function (e){
+    cell.mouseout(function(e) {
       K(this).removeClass('ke-colorpicker-cell-on');
     });
-    cell.click(function (e){
+    cell.click(function(e) {
       e.stop();
       self.options.click.call(K(this), color);
     });
@@ -4295,28 +4434,29 @@ _extend(KColorPicker, KWidget, {
     K(cell).attr('unselectable', 'on');
     self._cells.push(cell);
   },
-  remove: function (){
+  remove: function() {
     var self = this;
-    _each(self._cells, function (){
+    _each(self._cells, function() {
       this.unbind();
     });
     KColorPicker.parent.remove.call(self);
     return self;
   }
 });
-function _colorpicker(options){
+
+function _colorpicker(options) {
   return new KColorPicker(options);
 }
 
 K.ColorPickerClass = KColorPicker;
 K.colorpicker = _colorpicker;
 
-function KUploadButton(options){
+function KUploadButton(options) {
   this.init(options);
 }
 
 _extend(KUploadButton, {
-  init: function (options){
+  init: function(options) {
     var self = this,
       button = K(options.button),
       fieldName = options.fieldName || 'file',
@@ -4325,9 +4465,9 @@ _extend(KUploadButton, {
       extraParams = options.extraParams || {},
       cls = button[0].className || '',
       target = options.target || 'kindeditor_upload_iframe_' + new Date().getTime();
-    options.afterError = options.afterError || function (str){
-        alert(str);
-      };
+    options.afterError = options.afterError || function(str) {
+      alert(str);
+    };
     var hiddenElements = [];
     for (var k in extraParams) {
       hiddenElements.push('<input type="hidden" name="' + k + '" value="' + extraParams[k] + '" />');
@@ -4356,10 +4496,10 @@ _extend(KUploadButton, {
     K('.ke-upload-area', div).width(width);
     self.options = options;
   },
-  submit: function (){
+  submit: function() {
     var self = this,
       iframe = self.iframe;
-    iframe.bind('load', function (){
+    iframe.bind('load', function() {
       iframe.unbind();
       var tempForm = document.createElement('form');
       self.fileBox.before(tempForm);
@@ -4368,7 +4508,8 @@ _extend(KUploadButton, {
       K(tempForm).remove(true);
       var doc = K.iframeDoc(iframe),
         pre = doc.getElementsByTagName('pre')[0],
-        str = '', data;
+        str = '',
+        data;
       if (pre) {
         str = pre.innerHTML;
       } else {
@@ -4388,7 +4529,7 @@ _extend(KUploadButton, {
     self.form[0].submit();
     return self;
   },
-  remove: function (){
+  remove: function() {
     var self = this;
     if (self.fileBox) {
       self.fileBox.unbind();
@@ -4399,14 +4540,15 @@ _extend(KUploadButton, {
     return self;
   }
 });
-function _uploadbutton(options){
+
+function _uploadbutton(options) {
   return new KUploadButton(options);
 }
 
 K.UploadButtonClass = KUploadButton;
 K.uploadbutton = _uploadbutton;
 
-function _createButton(arg){
+function _createButton(arg) {
   arg = arg || {};
   var name = arg.name || '',
     span = K('<span class="ke-button-common ke-button-outer" title="' + name + '"></span>'),
@@ -4418,12 +4560,12 @@ function _createButton(arg){
   return span;
 }
 
-function KDialog(options){
+function KDialog(options) {
   this.init(options);
 }
 
 _extend(KDialog, KWidget, {
-  init: function (options){
+  init: function(options) {
     var self = this;
     var shadowMode = _undef(options.shadowMode, true);
     options.z = options.z || 811213;
@@ -4437,7 +4579,7 @@ _extend(KDialog, KWidget, {
       noBtn = options.noBtn,
       closeBtn = options.closeBtn,
       showMask = _undef(options.showMask, true);
-    self.div.addClass('ke-dialog').bind('click,mousedown', function (e){
+    self.div.addClass('ke-dialog').bind('click,mousedown', function(e) {
       e.stopPropagation();
     });
     var contentDiv = K('<div class="ke-dialog-content"></div>').appendTo(self.div);
@@ -4466,7 +4608,7 @@ _extend(KDialog, KWidget, {
       { btn: previewBtn, name: 'preview' },
       { btn: yesBtn, name: 'yes' },
       { btn: noBtn, name: 'no' }
-    ], function (){
+    ], function() {
       if (this.btn) {
         var button = _createButton(this.btn);
         button.addClass('ke-dialog-' + this.name);
@@ -4498,13 +4640,14 @@ _extend(KDialog, KWidget, {
     self.headerDiv = headerDiv;
     self.isLoading = false;
   },
-  setMaskIndex: function (z){
+  setMaskIndex: function(z) {
     var self = this;
     self.mask.div.css('z-index', z);
   },
-  showLoading: function (msg){
+  showLoading: function(msg) {
     msg = _undef(msg, '');
-    var self = this, body = self.bodyDiv;
+    var self = this,
+      body = self.bodyDiv;
     self.loading = K('<div class="ke-dialog-loading"><div class="ke-inline-block ke-dialog-loading-content" style="margin-top:' + Math.round(body.height() / 3) + 'px;">' + msg + '</div></div>')
       .width(body.width()).height(body.height())
       .css('top', self.headerDiv.height() + 'px');
@@ -4512,13 +4655,13 @@ _extend(KDialog, KWidget, {
     self.isLoading = true;
     return self;
   },
-  hideLoading: function (){
+  hideLoading: function() {
     this.loading && this.loading.remove();
     this.bodyDiv.css('visibility', 'visible');
     this.isLoading = false;
     return this;
   },
-  remove: function (){
+  remove: function() {
     var self = this;
     if (self.options.beforeRemove) {
       self.options.beforeRemove.call(self);
@@ -4531,55 +4674,56 @@ _extend(KDialog, KWidget, {
     self.footerDiv.unbind();
     self.bodyDiv.unbind();
     self.headerDiv.unbind();
-    K('iframe', self.div).each(function (){
+    K('iframe', self.div).each(function() {
       K(this).remove();
     });
     KDialog.parent.remove.call(self);
     return self;
   }
 });
-function _dialog(options){
+
+function _dialog(options) {
   return new KDialog(options);
 }
 
 K.DialogClass = KDialog;
 K.dialog = _dialog;
 
-function _tabs(options){
+function _tabs(options) {
   var self = _widget(options),
     remove = self.remove,
     afterSelect = options.afterSelect,
     div = self.div,
     liList = [];
   div.addClass('ke-tabs')
-    .bind('contextmenu,mousedown,mousemove', function (e){
+    .bind('contextmenu,mousedown,mousemove', function(e) {
       e.preventDefault();
     });
   var ul = K('<ul class="ke-tabs-ul ke-clearfix"></ul>');
   div.append(ul);
-  self.add = function (tab){
+  self.add = function(tab) {
     var li = K('<li class="ke-tabs-li">' + tab.title + '</li>');
     li.data('tab', tab);
     liList.push(li);
     ul.append(li);
   };
   self.selectedIndex = 0;
-  self.select = function (index){
+  self.select = function(index) {
     self.selectedIndex = index;
-    _each(liList, function (i, li){
+    _each(liList, function(i, li) {
       li.unbind();
       if (i === index) {
         li.addClass('ke-tabs-li-selected');
         K(li.data('tab').panel).show('');
       } else {
         li.removeClass('ke-tabs-li-selected').removeClass('ke-tabs-li-on')
-          .mouseover(function (){
+          .mouseover(function() {
             K(this).addClass('ke-tabs-li-on');
           })
-          .mouseout(function (){
+          .mouseout(function() {
             K(this).removeClass('ke-tabs-li-on');
           })
-          .click(function (){
+          .click(function() {
             self.select(i);
           });
         K(li.data('tab').panel).hide();
@@ -4589,8 +4733,8 @@ function _tabs(options){
       afterSelect.call(self, index);
     }
   };
-  self.remove = function (){
-    _each(liList, function (){
+  self.remove = function() {
+    _each(liList, function() {
       this.remove();
     });
     ul.remove();
@@ -4601,13 +4745,13 @@ function _tabs(options){
 
 K.tabs = _tabs;
 
-function _loadScript(url, fn){
+function _loadScript(url, fn) {
   var head = document.getElementsByTagName('head')[0] || (_QUIRKS ? document.body : document.documentElement),
     script = document.createElement('script');
   head.appendChild(script);
   script.src = url;
   script.charset = 'utf-8';
-  script.onload = script.onreadystatechange = function (){
+  script.onload = script.onreadystatechange = function() {
     if (!this.readyState || this.readyState === 'loaded') {
       if (fn) {
         fn();
@@ -4618,12 +4762,12 @@ function _loadScript(url, fn){
   };
 }
 
-function _chopQuery(url){
+function _chopQuery(url) {
   var index = url.indexOf('?');
   return index > 0 ? url.substr(0, index) : url;
 }
 
-function _loadStyle(url){
+function _loadStyle(url) {
   var head = document.getElementsByTagName('head')[0] || (_QUIRKS ? document.body : document.documentElement),
     link = document.createElement('link'),
     absoluteUrl = _chopQuery(_formatUrl(url, 'absolute'));
@@ -4638,12 +4782,12 @@ function _loadStyle(url){
   link.rel = 'stylesheet';
 }
 
-function _ajax(url, fn, method, param, dataType){
+function _ajax(url, fn, method, param, dataType) {
   method = method || 'GET';
   dataType = dataType || 'json';
   var xhr = window.XMLHttpRequest ? new window.XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
   xhr.open(method, url, true);
-  xhr.onreadystatechange = function (){
+  xhr.onreadystatechange = function() {
     if (xhr.readyState == 4 && xhr.status == 200) {
       if (fn) {
         var data = _trim(xhr.responseText);
@@ -4656,7 +4800,7 @@ function _ajax(url, fn, method, param, dataType){
   };
   if (method == 'POST') {
     var params = [];
-    _each(param, function (key, val){
+    _each(param, function(key, val) {
       params.push(encodeURIComponent(key) + '=' + encodeURIComponent(val));
     });
     try {
@@ -4674,7 +4818,7 @@ K.ajax = _ajax;
 
 var _plugins = {};
 
-function _plugin(name, fn){
+function _plugin(name, fn) {
   if (name === undefined) {
     return _plugins;
   }
@@ -4686,7 +4830,7 @@ function _plugin(name, fn){
 
 var _language = {};
 
-function _parseLangKey(key){
+function _parseLangKey(key) {
   var match, ns = 'core';
   if ((match = /^(\w+)\.(\w+)$/.exec(key))) {
     ns = match[1];
@@ -4695,7 +4839,7 @@ function _parseLangKey(key){
   return { ns: ns, key: key };
 }
 
-function _lang(mixed, langType){
+function _lang(mixed, langType) {
   langType = langType === undefined ? K.options.langType : langType;
   if (typeof mixed === 'string') {
     if (!_language[langType]) {
@@ -4708,7 +4852,7 @@ function _lang(mixed, langType){
     var obj = _parseLangKey(mixed);
     return _language[langType][obj.ns][obj.key];
   }
-  _each(mixed, function (key, val){
+  _each(mixed, function(key, val) {
     var obj = _parseLangKey(key);
     if (!_language[langType]) {
       _language[langType] = {};
@@ -4720,12 +4864,13 @@ function _lang(mixed, langType){
   });
 }
 
-function _getImageFromRange(range, fn){
+function _getImageFromRange(range, fn) {
   if (range.collapsed) {
     return;
   }
   range = range.cloneRange().up();
-  var sc = range.startContainer, so = range.startOffset;
+  var sc = range.startContainer,
+    so = range.startOffset;
   if (!_WEBKIT && !range.isControl()) {
     return;
   }
@@ -4738,9 +4883,10 @@ function _getImageFromRange(range, fn){
   }
 }
 
-function _bindContextmenuEvent(){
-  var self = this, doc = self.edit.doc;
-  K(doc).contextmenu(function (e){
+function _bindContextmenuEvent() {
+  var self = this,
+    doc = self.edit.doc;
+  K(doc).contextmenu(function(e) {
     if (self.menu) {
       self.hideMenu();
     }
@@ -4751,8 +4897,9 @@ function _bindContextmenuEvent(){
     if (self._contextmenus.length === 0) {
       return;
     }
-    var maxWidth = 0, items = [];
-    _each(self._contextmenus, function (){
+    var maxWidth = 0,
+      items = [];
+    _each(self._contextmenus, function() {
       if (this.title == '-') {
         items.push(this);
         return;
@@ -4771,7 +4918,7 @@ function _bindContextmenuEvent(){
       items.pop();
     }
     var prevItem = null;
-    _each(items, function (i){
+    _each(items, function(i) {
       if (this.title == '-' && prevItem.title == '-') {
         delete items[i];
       }
@@ -4787,7 +4934,7 @@ function _bindContextmenuEvent(){
           css: { visibility: 'hidden' },
           shadowMode: self.shadowMode
         });
-      _each(items, function (){
+      _each(items, function() {
         if (this.title) {
           menu.addItem(this);
         }
@@ -4803,8 +4950,10 @@ function _bindContextmenuEvent(){
   });
 }
 
-function _bindNewlineEvent(){
-  var self = this, doc = self.edit.doc, newlineTag = self.newlineTag;
+function _bindNewlineEvent() {
+  var self = this,
+    doc = self.edit.doc,
+    newlineTag = self.newlineTag;
   if (_IE && newlineTag !== 'br') {
     return;
   }
@@ -4817,7 +4966,7 @@ function _bindNewlineEvent(){
   var brSkipTagMap = _toMap('h1,h2,h3,h4,h5,h6,pre,li'),
     pSkipTagMap = _toMap('p,h1,h2,h3,h4,h5,h6,pre,li,blockquote');
 
-  function getAncestorTagName(range){
+  function getAncestorTagName(range) {
     var ancestor = K(range.commonAncestor());
     while (ancestor) {
       if (ancestor.type == 1 && !ancestor.isStyle()) {
@@ -4828,7 +4977,7 @@ function _bindNewlineEvent(){
     return ancestor.name;
   }
 
-  K(doc).keydown(function (e){
+  K(doc).keydown(function(e) {
     if (e.which != 13 || e.shiftKey || e.ctrlKey || e.altKey) {
       return;
     }
@@ -4846,7 +4995,7 @@ function _bindNewlineEvent(){
       _nativeCommand(doc, 'formatblock', '<p>');
     }
   });
-  K(doc).keyup(function (e){
+  K(doc).keyup(function(e) {
     if (e.which != 13 || e.shiftKey || e.ctrlKey || e.altKey) {
       return;
     }
@@ -4888,16 +5037,18 @@ function _bindNewlineEvent(){
   });
 }
 
-function _bindTabEvent(){
-  var self = this, doc = self.edit.doc;
-  K(doc).keydown(function (e){
+function _bindTabEvent() {
+  var self = this,
+    doc = self.edit.doc;
+  K(doc).keydown(function(e) {
     if (e.which == 9) {
       e.preventDefault();
       if (self.afterTab) {
         self.afterTab.call(self, e);
         return;
       }
-      var cmd = self.cmd, range = cmd.range;
+      var cmd = self.cmd,
+        range = cmd.range;
       range.shrink();
       if (range.collapsed && range.startContainer.nodeType == 1) {
         range.insertNode(K('@&nbsp;', doc)[0]);
@@ -4908,28 +5059,28 @@ function _bindTabEvent(){
   });
 }
 
-function _bindFocusEvent(){
+function _bindFocusEvent() {
   var self = this;
-  K(self.edit.textarea[0], self.edit.win).focus(function (e){
+  K(self.edit.textarea[0], self.edit.win).focus(function(e) {
     if (self.afterFocus) {
       self.afterFocus.call(self, e);
     }
-  }).blur(function (e){
+  }).blur(function(e) {
     if (self.afterBlur) {
       self.afterBlur.call(self, e);
     }
   });
 }
 
-function _removeBookmarkTag(html){
+function _removeBookmarkTag(html) {
   return _trim(html.replace(/<span [^>]*id="?__kindeditor_bookmark_\w+_\d+__"?[^>]*><\/span>/ig, ''));
 }
 
-function _removeTempTag(html){
+function _removeTempTag(html) {
   return html.replace(/<div[^>]+class="?__kindeditor_paste__"?[^>]*>[\s\S]*?<\/div>/ig, '');
 }
 
-function _addBookmarkToStack(stack, bookmark){
+function _addBookmarkToStack(stack, bookmark) {
   if (stack.length === 0) {
     stack.push(bookmark);
     return;
@@ -4940,8 +5091,9 @@ function _addBookmarkToStack(stack, bookmark){
   }
 }
 
-function _undoToRedo(fromStack, toStack){
-  var self = this, edit = self.edit,
+function _undoToRedo(fromStack, toStack) {
+  var self = this,
+    edit = self.edit,
     body = edit.doc.body,
     range, bookmark;
   if (fromStack.length === 0) {
@@ -4973,20 +5125,21 @@ function _undoToRedo(fromStack, toStack){
   return self;
 }
 
-function KEditor(options){
+function KEditor(options) {
   var self = this;
   self.options = {};
-  function setOption(key, val){
+
+  function setOption(key, val) {
     if (KEditor.prototype[key] === undefined) {
       self[key] = val;
     }
     self.options[key] = val;
   }
 
-  _each(options, function (key, val){
+  _each(options, function(key, val) {
     setOption(key, options[key]);
   });
-  _each(K.options, function (key, val){
+  _each(K.options, function(key, val) {
     if (self[key] === undefined) {
       setOption(key, val);
     }
@@ -5019,10 +5172,10 @@ function KEditor(options){
 }
 
 KEditor.prototype = {
-  lang: function (mixed){
+  lang: function(mixed) {
     return _lang(mixed, this.langType);
   },
-  loadPlugin: function (name, fn){
+  loadPlugin: function(name, fn) {
     var self = this;
     var _pluginStatus = this._pluginStatus;
     if (!_pluginStatus) {
@@ -5030,7 +5183,7 @@ KEditor.prototype = {
     }
     if (_plugins[name]) {
       if (!_isFunction(_plugins[name])) {
-        setTimeout(function (){
+        setTimeout(function() {
           self.loadPlugin(name, fn);
         }, 100);
         return self;
@@ -5045,8 +5198,8 @@ KEditor.prototype = {
       return self;
     }
     _plugins[name] = 'loading';
-    _loadScript(self.pluginsPath + name + '/' + name + '.js?ver=' + encodeURIComponent(K.DEBUG ? _TIME : _VERSION), function (){
-      setTimeout(function (){
+    _loadScript(self.pluginsPath + name + '/' + name + '.js?ver=' + encodeURIComponent(K.DEBUG ? _TIME : _VERSION), function() {
+      setTimeout(function() {
         if (_plugins[name]) {
           self.loadPlugin(name, fn);
         }
@@ -5054,7 +5207,7 @@ KEditor.prototype = {
     });
     return self;
   },
-  handler: function (key, fn){
+  handler: function(key, fn) {
     var self = this;
     if (!self._handlers[key]) {
       self._handlers[key] = [];
@@ -5063,53 +5216,55 @@ KEditor.prototype = {
       self._handlers[key].push(fn);
       return self;
     }
-    _each(self._handlers[key], function (){
+    _each(self._handlers[key], function() {
       fn = this.call(self, fn);
     });
     return fn;
   },
-  clickToolbar: function (name, fn){
-    var self = this, key = 'clickToolbar' + name;
+  clickToolbar: function(name, fn) {
+    var self = this,
+      key = 'clickToolbar' + name;
     if (fn === undefined) {
       if (self._handlers[key]) {
         return self.handler(key);
       }
-      self.loadPlugin(name, function (){
+      self.loadPlugin(name, function() {
         self.handler(key);
       });
       return self;
     }
     return self.handler(key, fn);
   },
-  updateState: function (){
+  updateState: function() {
     var self = this;
-    _each(('justifyleft,justifycenter,justifyright,justifyfull,insertorderedlist,insertunorderedlist,' +
-    'subscript,superscript,bold,italic,underline,strikethrough').split(','), function (i, name){
+    _each(('justifyleft,justifycenter,justifyright,justifyfull,insertorderedlist,insertunorderedlist,'
+      + 'subscript,superscript,bold,italic,underline,strikethrough').split(','), function(i, name) {
       self.cmd.state(name) ? self.toolbar.select(name) : self.toolbar.unselect(name);
     });
     return self;
   },
-  addContextmenu: function (item){
+  addContextmenu: function(item) {
     this._contextmenus.push(item);
     return this;
   },
-  afterCreate: function (fn){
+  afterCreate: function(fn) {
     return this.handler('afterCreate', fn);
   },
-  beforeRemove: function (fn){
+  beforeRemove: function(fn) {
     return this.handler('beforeRemove', fn);
   },
-  beforeGetHtml: function (fn){
+  beforeGetHtml: function(fn) {
     return this.handler('beforeGetHtml', fn);
   },
-  beforeSetHtml: function (fn){
+  beforeSetHtml: function(fn) {
     return this.handler('beforeSetHtml', fn);
   },
-  afterSetHtml: function (fn){
+  afterSetHtml: function(fn) {
     return this.handler('afterSetHtml', fn);
   },
-  create: function (){
-    var self = this, fullscreenMode = self.fullscreenMode;
+  create: function() {
+    var self = this,
+      fullscreenMode = self.fullscreenMode;
     if (self.isCreated) {
       return self;
     }
@@ -5168,7 +5323,7 @@ KEditor.prototype = {
       }
     }
     var htmlList = [];
-    K.each(self.items, function (i, name){
+    K.each(self.items, function(i, name) {
       if (name == '|') {
         htmlList.push('<span class="ke-inline-block ke-separator"></span>');
       } else if (name == '/') {
@@ -5182,7 +5337,7 @@ KEditor.prototype = {
       src: toolbarDiv,
       html: htmlList.join(''),
       noDisableItems: self.noDisableItems,
-      click: function (e, name){
+      click: function(e, name) {
         e.stop();
         if (self.menu) {
           var menuName = self.menu.name;
@@ -5204,23 +5359,23 @@ KEditor.prototype = {
       bodyClass: self.bodyClass,
       cssPath: self.cssPath,
       cssData: self.cssData,
-      beforeGetHtml: function (html){
+      beforeGetHtml: function(html) {
         html = self.beforeGetHtml(html);
         html = _removeBookmarkTag(_removeTempTag(html));
         return _formatHtml(html, self.filterMode ? self.htmlTags : null, self.urlType, self.wellFormatMode, self.indentChar);
       },
-      beforeSetHtml: function (html){
+      beforeSetHtml: function(html) {
         html = _formatHtml(html, self.filterMode ? self.htmlTags : null, '', false);
         return self.beforeSetHtml(html);
       },
-      afterSetHtml: function (){
+      afterSetHtml: function() {
         self.edit = edit = this;
         self.afterSetHtml();
       },
-      afterCreate: function (){
+      afterCreate: function() {
         self.edit = edit = this;
         self.cmd = edit.cmd;
-        self._docMousedownFn = function (e){
+        self._docMousedownFn = function(e) {
           if (self.menu) {
             self.hideMenu();
           }
@@ -5230,7 +5385,7 @@ KEditor.prototype = {
         _bindNewlineEvent.call(self);
         _bindTabEvent.call(self);
         _bindFocusEvent.call(self);
-        edit.afterChange(function (e){
+        edit.afterChange(function(e) {
           if (!edit.designMode) {
             return;
           }
@@ -5240,7 +5395,7 @@ KEditor.prototype = {
             self.options.afterChange.call(self);
           }
         });
-        edit.textarea.keyup(function (e){
+        edit.textarea.keyup(function(e) {
           if (!e.ctrlKey && !e.altKey && _INPUT_KEY_MAP[e.which]) {
             if (self.options.afterChange) {
               self.options.afterChange.call(self);
@@ -5275,7 +5430,8 @@ KEditor.prototype = {
       K(window).unbind('resize', self._fullscreenResizeHandler);
       self._fullscreenResizeHandler = null;
     }
-    function initResize(){
+
+    function initResize() {
       if (statusbar.height() === 0) {
         setTimeout(initResize, 100);
         return;
@@ -5285,7 +5441,7 @@ KEditor.prototype = {
 
     initResize();
     if (fullscreenMode) {
-      self._fullscreenResizeHandler = function (e){
+      self._fullscreenResizeHandler = function(e) {
         if (self.isCreated) {
           self.resize(_docElement().clientWidth, _docElement().clientHeight, false);
         }
@@ -5296,7 +5452,7 @@ KEditor.prototype = {
       statusbar.last().css('visibility', 'hidden');
     } else {
       if (_GECKO) {
-        K(window).bind('scroll', function (e){
+        K(window).bind('scroll', function(e) {
           self._scrollPos = _getScrollPos();
         });
       }
@@ -5304,7 +5460,7 @@ KEditor.prototype = {
         _drag({
           moveEl: container,
           clickEl: statusbar,
-          moveFn: function (x, y, width, height, diffX, diffY){
+          moveFn: function(x, y, width, height, diffX, diffY) {
             height += diffY;
             self.resize(null, height);
           }
@@ -5316,7 +5472,7 @@ KEditor.prototype = {
         _drag({
           moveEl: container,
           clickEl: statusbar.last(),
-          moveFn: function (x, y, width, height, diffX, diffY){
+          moveFn: function(x, y, width, height, diffX, diffY) {
             width += diffX;
             height += diffY;
             self.resize(width, height);
@@ -5328,7 +5484,7 @@ KEditor.prototype = {
     }
     return self;
   },
-  remove: function (){
+  remove: function() {
     var self = this;
     if (!self.isCreated) {
       return self;
@@ -5338,7 +5494,7 @@ KEditor.prototype = {
     if (self.menu) {
       self.hideMenu();
     }
-    _each(self.dialogs, function (){
+    _each(self.dialogs, function() {
       self.hideDialog();
     });
     K(document).unbind('mousedown', self._docMousedownFn);
@@ -5352,7 +5508,7 @@ KEditor.prototype = {
     self.isCreated = false;
     return self;
   },
-  resize: function (width, height, updateProp){
+  resize: function(width, height, updateProp) {
     var self = this;
     updateProp = _undef(updateProp, true);
     if (width) {
@@ -5376,11 +5532,11 @@ KEditor.prototype = {
     }
     return self;
   },
-  select: function (){
+  select: function() {
     this.isCreated && this.cmd.select();
     return this;
   },
-  html: function (val){
+  html: function(val) {
     var self = this;
     if (val === undefined) {
       return self.isCreated ? self.edit.html() : _elementVal(self.srcElement);
@@ -5391,10 +5547,10 @@ KEditor.prototype = {
     }
     return self;
   },
-  fullHtml: function (){
+  fullHtml: function() {
     return this.isCreated ? this.edit.html(undefined, true) : '';
   },
-  text: function (val){
+  text: function(val) {
     var self = this;
     if (val === undefined) {
       return _trim(self.html().replace(/<(?!img|embed).*?>/ig, '').replace(/&nbsp;/ig, ' '));
@@ -5402,18 +5558,18 @@ KEditor.prototype = {
       return self.html(_escape(val));
     }
   },
-  isEmpty: function (){
+  isEmpty: function() {
     return _trim(this.text().replace(/\r\n|\n|\r/, '')) === '';
   },
-  isDirty: function (){
+  isDirty: function() {
     return _trim(this.initContent.replace(/\r\n|\n|\r|t/g, '')) !== _trim(this.html().replace(/\r\n|\n|\r|t/g, ''));
   },
-  selectedHtml: function (){
+  selectedHtml: function() {
     var val = this.isCreated ? this.cmd.range.html() : '';
     val = _removeBookmarkTag(_removeTempTag(val));
     return val;
   },
-  count: function (mode){
+  count: function(mode) {
     var self = this;
     mode = (mode || 'html').toLowerCase();
     if (mode === 'html') {
@@ -5424,9 +5580,10 @@ KEditor.prototype = {
     }
     return 0;
   },
-  exec: function (key){
+  exec: function(key) {
     key = key.toLowerCase();
-    var self = this, cmd = self.cmd,
+    var self = this,
+      cmd = self.cmd,
       changeFlag = _inArray(key, 'selectall,copy,paste,print'.split(',')) < 0;
     if (changeFlag) {
       self.addBookmark(false);
@@ -5441,7 +5598,7 @@ KEditor.prototype = {
     }
     return self;
   },
-  insertHtml: function (val, quickMode){
+  insertHtml: function(val, quickMode) {
     if (!this.isCreated) {
       return this;
     }
@@ -5449,7 +5606,7 @@ KEditor.prototype = {
     this.exec('inserthtml', val, quickMode);
     return this;
   },
-  appendHtml: function (val){
+  appendHtml: function(val) {
     this.html(this.html() + val);
     if (this.isCreated) {
       var cmd = this.cmd;
@@ -5458,23 +5615,25 @@ KEditor.prototype = {
     }
     return this;
   },
-  sync: function (){
+  sync: function() {
     _elementVal(this.srcElement, this.html());
     return this;
   },
-  focus: function (){
+  focus: function() {
     this.isCreated ? this.edit.focus() : this.srcElement[0].focus();
     return this;
   },
-  blur: function (){
+  blur: function() {
     this.isCreated ? this.edit.blur() : this.srcElement[0].blur();
     return this;
   },
-  addBookmark: function (checkSize){
+  addBookmark: function(checkSize) {
     checkSize = _undef(checkSize, true);
-    var self = this, edit = self.edit,
+    var self = this,
+      edit = self.edit,
       body = edit.doc.body,
-      html = _removeTempTag(body.innerHTML), bookmark;
+      html = _removeTempTag(body.innerHTML),
+      bookmark;
     if (checkSize && self._undoStack.length > 0) {
       var prev = self._undoStack[self._undoStack.length - 1];
       if (Math.abs(html.length - _removeBookmarkTag(prev.html).length) < self.minChangeSize) {
@@ -5495,24 +5654,26 @@ KEditor.prototype = {
     _addBookmarkToStack(self._undoStack, bookmark);
     return self;
   },
-  undo: function (){
+  undo: function() {
     return _undoToRedo.call(this, this._undoStack, this._redoStack);
   },
-  redo: function (){
+  redo: function() {
     return _undoToRedo.call(this, this._redoStack, this._undoStack);
   },
-  fullscreen: function (bool){
+  fullscreen: function(bool) {
     this.fullscreenMode = (bool === undefined ? !this.fullscreenMode : bool);
     this.addBookmark(false);
     return this.remove().create();
   },
-  readonly: function (isReadonly){
+  readonly: function(isReadonly) {
     isReadonly = _undef(isReadonly, true);
-    var self = this, edit = self.edit, doc = edit.doc;
+    var self = this,
+      edit = self.edit,
+      doc = edit.doc;
     if (self.designMode) {
       self.toolbar.disableAll(isReadonly, []);
     } else {
-      _each(self.noDisableItems, function (){
+      _each(self.noDisableItems, function() {
         self.toolbar[isReadonly ? 'disable' : 'enable'](this);
       });
     }
@@ -5523,7 +5684,7 @@ KEditor.prototype = {
     }
     edit.textarea[0].disabled = isReadonly;
   },
-  createMenu: function (options){
+  createMenu: function(options) {
     var self = this,
       name = options.name,
       knode = self.toolbar.get(name),
@@ -5543,23 +5704,24 @@ KEditor.prototype = {
     }
     return self.menu;
   },
-  hideMenu: function (){
+  hideMenu: function() {
     this.menu.remove();
     this.menu = null;
     return this;
   },
-  hideContextmenu: function (){
+  hideContextmenu: function() {
     this.contextmenu.remove();
     this.contextmenu = null;
     return this;
   },
-  createDialog: function (options){
-    var self = this, name = options.name;
+  createDialog: function(options) {
+    var self = this,
+      name = options.name;
     options.z = self.options.zIndex;
     options.shadowMode = _undef(options.shadowMode, self.shadowMode);
     options.closeBtn = _undef(options.closeBtn, {
       name: self.lang('close'),
-      click: function (e){
+      click: function(e) {
         self.hideDialog();
         if (_IE && self.cmd) {
           self.cmd.select();
@@ -5568,7 +5730,7 @@ KEditor.prototype = {
     });
     options.noBtn = _undef(options.noBtn, {
       name: self.lang(options.yesBtn ? 'no' : 'close'),
-      click: function (e){
+      click: function(e) {
         self.hideDialog();
         if (_IE && self.cmd) {
           self.cmd.select();
@@ -5590,7 +5752,7 @@ KEditor.prototype = {
     self.dialogs.push(dialog);
     return dialog;
   },
-  hideDialog: function (){
+  hideDialog: function() {
     var self = this;
     if (self.dialogs.length > 0) {
       self.dialogs.pop().remove();
@@ -5602,14 +5764,15 @@ KEditor.prototype = {
     }
     return self;
   },
-  errorDialog: function (html){
+  errorDialog: function(html) {
     var self = this;
     var dialog = self.createDialog({
       width: 750,
       title: self.lang('uploadError'),
       body: '<div style="padding:10px 20px;"><iframe frameborder="0" style="width:708px;height:400px;"></iframe></div>'
     });
-    var iframe = K('iframe', dialog.div), doc = K.iframeDoc(iframe);
+    var iframe = K('iframe', dialog.div),
+      doc = K.iframeDoc(iframe);
     doc.open();
     doc.write(html);
     doc.close();
@@ -5618,12 +5781,14 @@ KEditor.prototype = {
     return self;
   }
 };
-function _editor(options){
+
+function _editor(options) {
   return new KEditor(options);
 }
 
 _instances = [];
-function _create(expr, options){
+
+function _create(expr, options) {
   options = options || {};
   options.basePath = _undef(options.basePath, K.basePath);
   options.themesPath = _undef(options.themesPath, options.basePath + 'themes/');
@@ -5634,8 +5799,9 @@ function _create(expr, options){
     _loadStyle(options.themesPath + 'default/default.css');
     _loadStyle(options.themesPath + themeType + '/' + themeType + '.css');
   }
-  function create(editor){
-    _each(_plugins, function (name, fn){
+
+  function create(editor) {
+    _each(_plugins, function(name, fn) {
       if (_isFunction(fn)) {
         fn.call(editor, KindEditor);
       }
@@ -5648,7 +5814,7 @@ function _create(expr, options){
     return;
   }
   if (knode.length > 1) {
-    knode.each(function (){
+    knode.each(function() {
       _create(this, options);
     });
     return _instances[0];
@@ -5659,15 +5825,15 @@ function _create(expr, options){
   if (_language[editor.langType]) {
     return create(editor);
   }
-  _loadScript(editor.langPath + editor.langType + '.js?ver=' + encodeURIComponent(K.DEBUG ? _TIME : _VERSION), function (){
+  _loadScript(editor.langPath + editor.langType + '.js?ver=' + encodeURIComponent(K.DEBUG ? _TIME : _VERSION), function() {
     create(editor);
   });
   return editor;
 }
 
-function _eachEditor(expr, fn){
-  K(expr).each(function (i, el){
-    K.each(_instances, function (j, editor){
+function _eachEditor(expr, fn) {
+  K(expr).each(function(i, el) {
+    K.each(_instances, function(j, editor) {
       if (editor && editor.srcElement[0] == el) {
         fn.call(editor, j);
         return false;
@@ -5676,29 +5842,29 @@ function _eachEditor(expr, fn){
   });
 }
 
-K.remove = function (expr){
-  _eachEditor(expr, function (i){
+K.remove = function(expr) {
+  _eachEditor(expr, function(i) {
     this.remove();
     _instances.splice(i, 1);
   });
 };
-K.sync = function (expr){
-  _eachEditor(expr, function (){
+K.sync = function(expr) {
+  _eachEditor(expr, function() {
     this.sync();
   });
 };
-K.html = function (expr, val){
-  _eachEditor(expr, function (){
+K.html = function(expr, val) {
+  _eachEditor(expr, function() {
     this.html(val);
   });
 };
-K.insertHtml = function (expr, val){
-  _eachEditor(expr, function (){
+K.insertHtml = function(expr, val) {
+  _eachEditor(expr, function() {
     this.insertHtml(val);
   });
 };
-K.appendHtml = function (expr, val){
-  _eachEditor(expr, function (){
+K.appendHtml = function(expr, val) {
+  _eachEditor(expr, function() {
     this.appendHtml(val);
   });
 };
@@ -5713,21 +5879,28 @@ K.instances = _instances;
 K.plugin = _plugin;
 K.lang = _lang;
 
-_plugin('core', function (K){
+_plugin('core', function(K) {
   var self = this,
     shortcutKeys = {
-      undo: 'Z', redo: 'Y', bold: 'B', italic: 'I', underline: 'U', print: 'P', selectall: 'A'
+      undo: 'Z',
+      redo: 'Y',
+      bold: 'B',
+      italic: 'I',
+      underline: 'U',
+      print: 'P',
+      selectall: 'A'
     };
-  self.afterSetHtml(function (){
+  self.afterSetHtml(function() {
     if (self.options.afterChange) {
       self.options.afterChange.call(self);
     }
   });
-  self.afterCreate(function (){
+  self.afterCreate(function() {
     if (self.syncType != 'form') {
       return;
     }
-    var el = K(self.srcElement), hasForm = false;
+    var el = K(self.srcElement),
+      hasForm = false;
     while ((el = el.parent())) {
       if (el.name == 'form') {
         hasForm = true;
@@ -5735,24 +5908,24 @@ _plugin('core', function (K){
       }
     }
     if (hasForm) {
-      el.bind('submit', function (e){
+      el.bind('submit', function(e) {
         self.sync();
-        K(window).bind('unload', function (){
+        K(window).bind('unload', function() {
           self.edit.textarea.remove();
         });
       });
       var resetBtn = K('[type="reset"]', el);
-      resetBtn.click(function (){
+      resetBtn.click(function() {
         self.html(self.initContent);
         self.cmd.selection();
       });
-      self.beforeRemove(function (){
+      self.beforeRemove(function() {
         el.unbind();
         resetBtn.unbind();
       });
     }
   });
-  self.clickToolbar('source', function (){
+  self.clickToolbar('source', function() {
     if (self.edit.designMode) {
       self.toolbar.disableAll(true);
       self.edit.design(false);
@@ -5762,7 +5935,7 @@ _plugin('core', function (K){
       self.edit.design(true);
       self.toolbar.unselect('source');
       if (_GECKO) {
-        setTimeout(function (){
+        setTimeout(function() {
           self.cmd.selection();
         }, 0);
       } else {
@@ -5771,20 +5944,20 @@ _plugin('core', function (K){
     }
     self.designMode = self.edit.designMode;
   });
-  self.afterCreate(function (){
+  self.afterCreate(function() {
     if (!self.designMode) {
       self.toolbar.disableAll(true).select('source');
     }
   });
-  self.clickToolbar('fullscreen', function (){
+  self.clickToolbar('fullscreen', function() {
     self.fullscreen();
   });
   if (self.fullscreenShortcut) {
     var loaded = false;
-    self.afterCreate(function (){
-      K(self.edit.doc, self.edit.textarea).keyup(function (e){
+    self.afterCreate(function() {
+      K(self.edit.doc, self.edit.textarea).keyup(function(e) {
         if (e.which == 27) {
-          setTimeout(function (){
+          setTimeout(function() {
             self.fullscreen();
           }, 0);
         }
@@ -5800,19 +5973,19 @@ _plugin('core', function (K){
       }
     });
   }
-  _each('undo,redo'.split(','), function (i, name){
+  _each('undo,redo'.split(','), function(i, name) {
     if (shortcutKeys[name]) {
-      self.afterCreate(function (){
-        _ctrl(this.edit.doc, shortcutKeys[name], function (){
+      self.afterCreate(function() {
+        _ctrl(this.edit.doc, shortcutKeys[name], function() {
           self.clickToolbar(name);
         });
       });
     }
-    self.clickToolbar(name, function (){
+    self.clickToolbar(name, function() {
       self[name]();
     });
   });
-  self.clickToolbar('formatblock', function (){
+  self.clickToolbar('formatblock', function() {
     var blocks = self.lang('formatblock.formatBlock'),
       heights = {
         h1: 28,
@@ -5826,7 +5999,7 @@ _plugin('core', function (K){
         name: 'formatblock',
         width: self.langType == 'en' ? 200 : 150
       });
-    _each(blocks, function (key, val){
+    _each(blocks, function(key, val) {
       var style = 'font-size:' + heights[key] + 'px;';
       if (key.charAt(0) === 'h') {
         style += 'font-weight:bold;';
@@ -5835,59 +6008,59 @@ _plugin('core', function (K){
         title: '<span style="' + style + '" unselectable="on">' + val + '</span>',
         height: heights[key] + 12,
         checked: (curVal === key || curVal === val),
-        click: function (){
+        click: function() {
           self.select().exec('formatblock', '<' + key + '>').hideMenu();
         }
       });
     });
   });
-  self.clickToolbar('fontname', function (){
+  self.clickToolbar('fontname', function() {
     var curVal = self.cmd.val('fontname'),
       menu = self.createMenu({
         name: 'fontname',
         width: 150
       });
-    _each(self.lang('fontname.fontName'), function (key, val){
+    _each(self.lang('fontname.fontName'), function(key, val) {
       menu.addItem({
         title: '<span style="font-family: ' + key + ';" unselectable="on">' + val + '</span>',
         checked: (curVal === key.toLowerCase() || curVal === val.toLowerCase()),
-        click: function (){
+        click: function() {
           self.exec('fontname', key).hideMenu();
         }
       });
     });
   });
-  self.clickToolbar('fontsize', function (){
+  self.clickToolbar('fontsize', function() {
     var curVal = self.cmd.val('fontsize'),
       menu = self.createMenu({
         name: 'fontsize',
         width: 150
       });
-    _each(self.fontSizeTable, function (i, val){
+    _each(self.fontSizeTable, function(i, val) {
       menu.addItem({
         title: '<span style="font-size:' + val + ';" unselectable="on">' + val + '</span>',
         height: _removeUnit(val) + 12,
         checked: curVal === val,
-        click: function (){
+        click: function() {
           self.exec('fontsize', val).hideMenu();
         }
       });
     });
   });
-  _each('forecolor,hilitecolor'.split(','), function (i, name){
-    self.clickToolbar(name, function (){
+  _each('forecolor,hilitecolor'.split(','), function(i, name) {
+    self.clickToolbar(name, function() {
       self.createMenu({
         name: name,
         selectedColor: self.cmd.val(name) || 'default',
         colors: self.colorTable,
-        click: function (color){
+        click: function(color) {
           self.exec(name, color).hideMenu();
         }
       });
     });
   });
-  _each(('cut,copy,paste').split(','), function (i, name){
-    self.clickToolbar(name, function (){
+  _each(('cut,copy,paste').split(','), function(i, name) {
+    self.clickToolbar(name, function() {
       self.focus();
       try {
         self.exec(name, null);
@@ -5896,11 +6069,11 @@ _plugin('core', function (K){
       }
     });
   });
-  self.clickToolbar('about', function (){
-    var html = '<div style="margin:20px;">' +
-      '<div>KindEditor ' + _VERSION + '</div>' +
-      '<div>Copyright &copy; <a href="http://www.kindsoft.net/" target="_blank">kindsoft.net</a> All rights reserved.</div>' +
-      '</div>';
+  self.clickToolbar('about', function() {
+    var html = '<div style="margin:20px;">'
+      + '<div>KindEditor ' + _VERSION + '</div>'
+      + '<div>Copyright &copy; <a href="http://www.kindsoft.net/" target="_blank">kindsoft.net</a> All rights reserved.</div>'
+      + '</div>';
     self.createDialog({
       name: 'about',
       width: 350,
@@ -5908,36 +6081,36 @@ _plugin('core', function (K){
       body: html
     });
   });
-  self.plugin.getSelectedLink = function (){
+  self.plugin.getSelectedLink = function() {
     return self.cmd.commonAncestor('a');
   };
-  self.plugin.getSelectedImage = function (){
-    return _getImageFromRange(self.edit.cmd.range, function (img){
+  self.plugin.getSelectedImage = function() {
+    return _getImageFromRange(self.edit.cmd.range, function(img) {
       return !/^ke-\w+$/i.test(img[0].className);
     });
   };
-  self.plugin.getSelectedFlash = function (){
-    return _getImageFromRange(self.edit.cmd.range, function (img){
+  self.plugin.getSelectedFlash = function() {
+    return _getImageFromRange(self.edit.cmd.range, function(img) {
       return img[0].className == 'ke-flash';
     });
   };
-  self.plugin.getSelectedMedia = function (){
-    return _getImageFromRange(self.edit.cmd.range, function (img){
+  self.plugin.getSelectedMedia = function() {
+    return _getImageFromRange(self.edit.cmd.range, function(img) {
       return img[0].className == 'ke-media' || img[0].className == 'ke-rm';
     });
   };
-  self.plugin.getSelectedAnchor = function (){
-    return _getImageFromRange(self.edit.cmd.range, function (img){
+  self.plugin.getSelectedAnchor = function() {
+    return _getImageFromRange(self.edit.cmd.range, function(img) {
       return img[0].className == 'ke-anchor';
     });
   };
-  _each('link,image,flash,media,anchor'.split(','), function (i, name){
+  _each('link,image,flash,media,anchor'.split(','), function(i, name) {
     var uName = name.charAt(0).toUpperCase() + name.substr(1);
-    _each('edit,delete'.split(','), function (j, val){
+    _each('edit,delete'.split(','), function(j, val) {
       self.addContextmenu({
         title: self.lang(val + uName),
-        click: function (){
-          self.loadPlugin(name, function (){
+        click: function() {
+          self.loadPlugin(name, function() {
             self.plugin[name][val]();
             self.hideMenu();
           });
@@ -5949,22 +6122,22 @@ _plugin('core', function (K){
     });
     self.addContextmenu({ title: '-' });
   });
-  self.plugin.getSelectedTable = function (){
+  self.plugin.getSelectedTable = function() {
     return self.cmd.commonAncestor('table');
   };
-  self.plugin.getSelectedRow = function (){
+  self.plugin.getSelectedRow = function() {
     return self.cmd.commonAncestor('tr');
   };
-  self.plugin.getSelectedCell = function (){
+  self.plugin.getSelectedCell = function() {
     return self.cmd.commonAncestor('td');
   };
-  _each(('prop,cellprop,colinsertleft,colinsertright,rowinsertabove,rowinsertbelow,rowmerge,colmerge,' +
-  'rowsplit,colsplit,coldelete,rowdelete,insert,delete').split(','), function (i, val){
+  _each(('prop,cellprop,colinsertleft,colinsertright,rowinsertabove,rowinsertbelow,rowmerge,colmerge,'
+    + 'rowsplit,colsplit,coldelete,rowdelete,insert,delete').split(','), function(i, val) {
     var cond = _inArray(val, ['prop', 'delete']) < 0 ? self.plugin.getSelectedCell : self.plugin.getSelectedTable;
     self.addContextmenu({
       title: self.lang('table' + val),
-      click: function (){
-        self.loadPlugin('table', function (){
+      click: function() {
+        self.loadPlugin('table', function() {
           self.plugin.table[val]();
           self.hideMenu();
         });
@@ -5975,35 +6148,37 @@ _plugin('core', function (K){
     });
   });
   self.addContextmenu({ title: '-' });
-  _each(('selectall,justifyleft,justifycenter,justifyright,justifyfull,insertorderedlist,' +
-  'insertunorderedlist,indent,outdent,subscript,superscript,hr,print,' +
-  'bold,italic,underline,strikethrough,removeformat,unlink').split(','), function (i, name){
+  _each(('selectall,justifyleft,justifycenter,justifyright,justifyfull,insertorderedlist,'
+    + 'insertunorderedlist,indent,outdent,subscript,superscript,hr,print,'
+    + 'bold,italic,underline,strikethrough,removeformat,unlink').split(','), function(i, name) {
     if (shortcutKeys[name]) {
-      self.afterCreate(function (){
-        _ctrl(this.edit.doc, shortcutKeys[name], function (){
+      self.afterCreate(function() {
+        _ctrl(this.edit.doc, shortcutKeys[name], function() {
           self.cmd.selection();
           self.clickToolbar(name);
         });
       });
     }
-    self.clickToolbar(name, function (){
+    self.clickToolbar(name, function() {
       self.focus().exec(name, null);
     });
   });
-  self.afterCreate(function (){
-    var doc = self.edit.doc, cmd, bookmark, div,
-      cls = '__kindeditor_paste__', pasting = false;
+  self.afterCreate(function() {
+    var doc = self.edit.doc,
+      cmd, bookmark, div,
+      cls = '__kindeditor_paste__',
+      pasting = false;
 
-    function movePastedData(){
+    function movePastedData() {
       cmd.range.moveToBookmark(bookmark);
       cmd.select();
       if (_WEBKIT) {
-        K('div.' + cls, div).each(function (){
+        K('div.' + cls, div).each(function() {
           K(this).after('<br />').remove(true);
         });
         K('span.Apple-style-span', div).remove(true);
         K('span.Apple-tab-span', div).remove(true);
-        K('span[style]', div).each(function (){
+        K('span[style]', div).each(function() {
           if (K(this).css('white-space') == 'nowrap') {
             K(this).remove(true);
           }
@@ -6045,7 +6220,7 @@ _plugin('core', function (K){
       self.insertHtml(html, true);
     }
 
-    K(doc.body).bind('paste', function (e){
+    K(doc.body).bind('paste', function(e) {
       if (self.pasteType === 0) {
         e.stop();
         return;
@@ -6077,28 +6252,28 @@ _plugin('core', function (K){
         cmd.range.selectNodeContents(div[0]);
         cmd.select();
       }
-      setTimeout(function (){
+      setTimeout(function() {
         movePastedData();
         pasting = false;
       }, 0);
     });
   });
-  self.beforeGetHtml(function (html){
+  self.beforeGetHtml(function(html) {
     if (_IE && _V <= 8) {
-      html = html.replace(/<div\s+[^>]*data-ke-input-tag="([^"]*)"[^>]*>([\s\S]*?)<\/div>/ig, function (full, tag){
+      html = html.replace(/<div\s+[^>]*data-ke-input-tag="([^"]*)"[^>]*>([\s\S]*?)<\/div>/ig, function(full, tag) {
         return unescape(tag);
       });
-      html = html.replace(/(<input)((?:\s+[^>]*)?>)/ig, function ($0, $1, $2){
+      html = html.replace(/(<input)((?:\s+[^>]*)?>)/ig, function($0, $1, $2) {
         if (!/\s+type="[^"]+"/i.test($0)) {
           return $1 + ' type="text"' + $2;
         }
         return $0;
       });
     }
-    return html.replace(/(<(?:noscript|noscript\s[^>]*)>)([\s\S]*?)(<\/noscript>)/ig, function ($0, $1, $2, $3){
-      return $1 + _unescape($2).replace(/\s+/g, ' ') + $3;
-    })
-      .replace(/<img[^>]*class="?ke-(flash|rm|media)"?[^>]*>/ig, function (full){
+    return html.replace(/(<(?:noscript|noscript\s[^>]*)>)([\s\S]*?)(<\/noscript>)/ig, function($0, $1, $2, $3) {
+        return $1 + _unescape($2).replace(/\s+/g, ' ') + $3;
+      })
+      .replace(/<img[^>]*class="?ke-(flash|rm|media)"?[^>]*>/ig, function(full) {
         var imgAttrs = _getAttrList(full);
         var styles = _getCssList(imgAttrs.style || '');
         var attrs = _mediaAttrs(imgAttrs['data-ke-tag']);
@@ -6114,30 +6289,30 @@ _plugin('core', function (K){
         attrs.height = _undef(imgAttrs.height, height);
         return _mediaEmbed(attrs);
       })
-      .replace(/<img[^>]*class="?ke-anchor"?[^>]*>/ig, function (full){
+      .replace(/<img[^>]*class="?ke-anchor"?[^>]*>/ig, function(full) {
         var imgAttrs = _getAttrList(full);
         return '<a name="' + unescape(imgAttrs['data-ke-name']) + '"></a>';
       })
-      .replace(/<div\s+[^>]*data-ke-script-attr="([^"]*)"[^>]*>([\s\S]*?)<\/div>/ig, function (full, attr, code){
+      .replace(/<div\s+[^>]*data-ke-script-attr="([^"]*)"[^>]*>([\s\S]*?)<\/div>/ig, function(full, attr, code) {
         return '<script' + unescape(attr) + '>' + unescape(code) + '</script>';
       })
-      .replace(/<div\s+[^>]*data-ke-noscript-attr="([^"]*)"[^>]*>([\s\S]*?)<\/div>/ig, function (full, attr, code){
+      .replace(/<div\s+[^>]*data-ke-noscript-attr="([^"]*)"[^>]*>([\s\S]*?)<\/div>/ig, function(full, attr, code) {
         return '<noscript' + unescape(attr) + '>' + unescape(code) + '</noscript>';
       })
-      .replace(/(<[^>]*)data-ke-src="([^"]*)"([^>]*>)/ig, function (full, start, src, end){
-        full = full.replace(/(\s+(?:href|src)=")[^"]*(")/i, function ($0, $1, $2){
+      .replace(/(<[^>]*)data-ke-src="([^"]*)"([^>]*>)/ig, function(full, start, src, end) {
+        full = full.replace(/(\s+(?:href|src)=")[^"]*(")/i, function($0, $1, $2) {
           return $1 + _unescape(src) + $2;
         });
         full = full.replace(/\s+data-ke-src="[^"]*"/i, '');
         return full;
       })
-      .replace(/(<[^>]+\s)data-ke-(on\w+="[^"]*"[^>]*>)/ig, function (full, start, end){
+      .replace(/(<[^>]+\s)data-ke-(on\w+="[^"]*"[^>]*>)/ig, function(full, start, end) {
         return start + end;
       });
   });
-  self.beforeSetHtml(function (html){
+  self.beforeSetHtml(function(html) {
     if (_IE && _V <= 8) {
-      html = html.replace(/<input[^>]*>|<(select|button)[^>]*>[\s\S]*?<\/\1>/ig, function (full){
+      html = html.replace(/<input[^>]*>|<(select|button)[^>]*>[\s\S]*?<\/\1>/ig, function(full) {
         var attrs = _getAttrList(full);
         var styles = _getCssList(attrs.style || '');
         if (styles.display == 'none') {
@@ -6146,37 +6321,37 @@ _plugin('core', function (K){
         return full;
       });
     }
-    return html.replace(/<embed[^>]*type="([^"]+)"[^>]*>(?:<\/embed>)?/ig, function (full){
-      var attrs = _getAttrList(full);
-      attrs.src = _undef(attrs.src, '');
-      attrs.width = _undef(attrs.width, 0);
-      attrs.height = _undef(attrs.height, 0);
-      return _mediaImg(self.themesPath + 'common/blank.gif', attrs);
-    })
-      .replace(/<a[^>]*name="([^"]+)"[^>]*>(?:<\/a>)?/ig, function (full){
+    return html.replace(/<embed[^>]*type="([^"]+)"[^>]*>(?:<\/embed>)?/ig, function(full) {
+        var attrs = _getAttrList(full);
+        attrs.src = _undef(attrs.src, '');
+        attrs.width = _undef(attrs.width, 0);
+        attrs.height = _undef(attrs.height, 0);
+        return _mediaImg(self.themesPath + 'common/blank.gif', attrs);
+      })
+      .replace(/<a[^>]*name="([^"]+)"[^>]*>(?:<\/a>)?/ig, function(full) {
         var attrs = _getAttrList(full);
         if (attrs.href !== undefined) {
           return full;
         }
         return '<img class="ke-anchor" src="' + self.themesPath + 'common/anchor.gif" data-ke-name="' + escape(attrs.name) + '" />';
       })
-      .replace(/<script([^>]*)>([\s\S]*?)<\/script>/ig, function (full, attr, code){
+      .replace(/<script([^>]*)>([\s\S]*?)<\/script>/ig, function(full, attr, code) {
         return '<div class="ke-script" data-ke-script-attr="' + escape(attr) + '">' + escape(code) + '</div>';
       })
-      .replace(/<noscript([^>]*)>([\s\S]*?)<\/noscript>/ig, function (full, attr, code){
+      .replace(/<noscript([^>]*)>([\s\S]*?)<\/noscript>/ig, function(full, attr, code) {
         return '<div class="ke-noscript" data-ke-noscript-attr="' + escape(attr) + '">' + escape(code) + '</div>';
       })
-      .replace(/(<[^>]*)(href|src)="([^"]*)"([^>]*>)/ig, function (full, start, key, src, end){
+      .replace(/(<[^>]*)(href|src)="([^"]*)"([^>]*>)/ig, function(full, start, key, src, end) {
         if (full.match(/\sdata-ke-src="[^"]*"/i)) {
           return full;
         }
         full = start + key + '="' + src + '"' + ' data-ke-src="' + _escape(src) + '"' + end;
         return full;
       })
-      .replace(/(<[^>]+\s)(on\w+="[^"]*"[^>]*>)/ig, function (full, start, end){
+      .replace(/(<[^>]+\s)(on\w+="[^"]*"[^>]*>)/ig, function(full, start, end) {
         return start + 'data-ke-' + end;
       })
-      .replace(/<table[^>]*\s+border="0"[^>]*>/ig, function (full){
+      .replace(/<table[^>]*\s+border="0"[^>]*>/ig, function(full) {
         if (full.indexOf('ke-zeroborder') >= 0) {
           return full;
         }

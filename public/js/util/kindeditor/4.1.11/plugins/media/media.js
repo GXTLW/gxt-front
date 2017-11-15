@@ -7,8 +7,10 @@
  * @licence http://www.kindsoft.net/license.php
  *******************************************************************************/
 
-KindEditor.plugin('media', function (K){
-  var self = this, name = 'media', lang = self.lang(name + '.'),
+KindEditor.plugin('media', function(K) {
+  var self = this,
+    name = 'media',
+    lang = self.lang(name + '.'),
     allowMediaUpload = K.undef(self.allowMediaUpload, true),
     allowFileManager = K.undef(self.allowFileManager, false),
     formatUploadUrl = K.undef(self.formatUploadUrl, true),
@@ -16,7 +18,7 @@ KindEditor.plugin('media', function (K){
     filePostName = K.undef(self.filePostName, 'imgFile'),
     uploadJson = K.undef(self.uploadJson, self.basePath + 'php/upload_json.php');
   self.plugin.media = {
-    edit: function (){
+    edit: function() {
       var html = [
         '<div style="padding:20px;">',
         //url
@@ -53,7 +55,7 @@ KindEditor.plugin('media', function (K){
           body: html,
           yesBtn: {
             name: self.lang('yes'),
-            click: function (e){
+            click: function(e) {
               var url = K.trim(urlBox.val()),
                 width = widthBox.val(),
                 height = heightBox.val();
@@ -98,7 +100,7 @@ KindEditor.plugin('media', function (K){
           fieldName: filePostName,
           extraParams: extraParams,
           url: K.addParam(uploadJson, 'dir=media'),
-          afterUpload: function (data){
+          afterUpload: function(data) {
             dialog.hideLoading();
             if (data.error === 0) {
               var url = data.url;
@@ -114,12 +116,12 @@ KindEditor.plugin('media', function (K){
               alert(data.message);
             }
           },
-          afterError: function (html){
+          afterError: function(html) {
             dialog.hideLoading();
             self.errorDialog(html);
           }
         });
-        uploadbutton.fileBox.change(function (e){
+        uploadbutton.fileBox.change(function(e) {
           dialog.showLoading(self.lang('uploadLoading'));
           uploadbutton.submit();
         });
@@ -128,12 +130,12 @@ KindEditor.plugin('media', function (K){
       }
 
       if (allowFileManager) {
-        viewServerBtn.click(function (e){
-          self.loadPlugin('filemanager', function (){
+        viewServerBtn.click(function(e) {
+          self.loadPlugin('filemanager', function() {
             self.plugin.filemanagerDialog({
               viewType: 'LIST',
               dirName: 'media',
-              clickFn: function (url, title){
+              clickFn: function(url, title) {
                 if (self.dialogs.length > 1) {
                   K('[name="url"]', div).val(url);
                   if (self.afterSelectFile) {
@@ -160,7 +162,7 @@ KindEditor.plugin('media', function (K){
       urlBox[0].focus();
       urlBox[0].select();
     },
-    'delete': function (){
+    'delete': function() {
       self.plugin.getSelectedMedia().remove();
       // [IE] 删除图片后立即点击图片按钮出错
       self.addBookmark();

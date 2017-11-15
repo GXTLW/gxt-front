@@ -26,18 +26,20 @@
   "devDependencies": {
     "del": "^3.0.0",
     "gulp": "^3.9.1",
-    "pedding": "^1.1.0",
-    "chokidar": "^1.7.0",
-    "cssnano": "^3.10.0",
+    "holding": "^1.0.6",
     "cmd-deps": "^2.2.0",
-    "uglify-js": "^3.1.9",
+    "cssnano": "^3.10.0",
+    "chokidar": "^1.7.0",
+    "uglify-es": "^3.1.9",
     "gulp-concat": "^2.6.1",
     "gulp-plumber": "^1.1.0",
-    "superagent": "^3.8.1",
-    "gulp-cmd": "https://github.com/nuintun/gulp-cmd/archive/master.tar.gz",
-    "gulp-css": "https://github.com/nuintun/gulp-css/archive/master.tar.gz",
-    "switch-stream": "https://github.com/nuintun/switch-stream/archive/master.tar.gz",
+    "@nuintun/gulp-cmd": "https://github.com/nuintun/gulp-cmd/archive/master.tar.gz",
+    "@nuintun/gulp-css": "https://github.com/nuintun/gulp-css/archive/master.tar.gz",
+    "@nuintun/switch-stream": "https://github.com/nuintun/switch-stream/archive/master.tar.gz",
+    "@nuintun/gulp-cmd-plugins": "https://github.com/nuintun/gulp-cmd-plugins/archive/master.tar.gz",
+    "@nuintun/gulp-css-plugins": "https://github.com/nuintun/gulp-css-plugins/archive/master.tar.gz",
     "safe-write-stream": "^1.0.5",
-    "koa-onerror": "^4.0.0"
+    "koa-onerror": "^4.0.0",
+    "superagent": "^3.8.1"
   }
 }

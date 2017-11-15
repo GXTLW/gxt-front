@@ -27,43 +27,43 @@ var Calendar = BaseCalendar.extend({
   },
 
   events: {
-    'click [data-role=current-month]': function (ev){
+    'click [data-role=current-month]': function(ev) {
       if (this.get('mode') === 'months') {
         this.renderContainer('dates');
       } else {
         this.renderContainer('months');
       }
     },
-    'click [data-role=current-year]': function (ev){
+    'click [data-role=current-year]': function(ev) {
       if (this.get('mode') === 'years') {
         this.renderContainer('dates');
       } else {
         this.renderContainer('years');
       }
     },
-    'click [data-role=prev-year]': function (ev){
+    'click [data-role=prev-year]': function(ev) {
       var focus = this.years.prev();
       this.dates.select(focus);
       this.months.select(focus);
     },
-    'click [data-role=next-year]': function (ev){
+    'click [data-role=next-year]': function(ev) {
       var focus = this.years.next();
       this.dates.select(focus);
       this.months.select(focus);
     },
-    'click [data-role=prev-month]': function (ev){
+    'click [data-role=prev-month]': function(ev) {
       var focus = this.months.prev();
       this.dates.select(focus);
       this.years.select(focus);
     },
-    'click [data-role=next-month]': function (ev){
+    'click [data-role=next-month]': function(ev) {
       var focus = this.months.next();
       this.dates.select(focus);
       this.years.select(focus);
     }
   },
 
-  setup: function (){
+  setup: function() {
     Calendar.superclass.setup.call(this);
     this.renderPannel();
 
@@ -81,7 +81,7 @@ var Calendar = BaseCalendar.extend({
     this.years = new YearColumn(attrs);
 
     var self = this;
-    this.dates.on('select', function (value, el){
+    this.dates.on('select', function(value, el) {
       self.set('focus', value);
       var focus = self.get('focus');
       self.months.select(focus);
@@ -94,7 +94,7 @@ var Calendar = BaseCalendar.extend({
         self.output(value);
       }
     });
-    this.months.on('select', function (value, el){
+    this.months.on('select', function(value, el) {
       var focus = self.get('focus');
       focus.month(value);
       self.set('focus', focus);
@@ -104,7 +104,7 @@ var Calendar = BaseCalendar.extend({
         self.trigger('selectMonth', focus);
       }
     });
-    this.years.on('select', function (value, el){
+    this.years.on('select', function(value, el) {
       var focus = self.get('focus');
       focus.year(value);
       self.set('focus', focus);
@@ -122,7 +122,7 @@ var Calendar = BaseCalendar.extend({
     this.renderContainer('dates');
   },
 
-  renderContainer: function (mode, focus){
+  renderContainer: function(mode, focus) {
     this.set('mode', mode);
 
     focus = focus || this.get('focus');
@@ -145,7 +145,7 @@ var Calendar = BaseCalendar.extend({
 
   },
 
-  renderPannel: function (){
+  renderPannel: function() {
     var focus = this.get('focus');
     var monthPannel = this.element.find('[data-role=current-month]');
     var yearPannel = this.element.find('[data-role=current-year]');
@@ -162,14 +162,14 @@ var Calendar = BaseCalendar.extend({
     yearPannel.text(focus.year());
   },
 
-  focus: function (date){
+  focus: function(date) {
     date = moment(date, this.get('format'));
     this.dates.focus(date);
     this.months.focus(date);
     this.years.focus(date);
   },
 
-  range: function (range){
+  range: function(range) {
     // change range dynamically
     this.set('range', range);
     this.dates.set('range', range);
@@ -179,7 +179,7 @@ var Calendar = BaseCalendar.extend({
     this.renderPannel();
   },
 
-  show: function (){
+  show: function() {
     var value = this._outputTime();
     if (value) {
       this.dates.select(value);
@@ -187,7 +187,7 @@ var Calendar = BaseCalendar.extend({
     Calendar.superclass.show.call(this);
   },
 
-  destroy: function (){
+  destroy: function() {
     this.dates.destroy();
     this.months.destroy();
     this.years.destroy();

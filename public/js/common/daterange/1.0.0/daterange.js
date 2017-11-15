@@ -9,7 +9,7 @@ var util = require('util');
 var Calendar = require('calendar');
 var today = util.dateFormat(new Date(), 'yyyy-MM-dd');
 
-function dateRange(start, end, startRange, endRange){
+function dateRange(start, end, startRange, endRange) {
   start = $(start);
   end = $(end);
 
@@ -48,12 +48,12 @@ function dateRange(start, end, startRange, endRange){
   });
 
   // 查询开始日期
-  start.on('selectDate', function (date){
+  start.on('selectDate', function(date) {
     end.range([date, endRange[1]]);
   });
 
   // 查询结束日期
-  end.on('selectDate', function (date){
+  end.on('selectDate', function(date) {
     start.range([startRange[0], date]);
   });
 

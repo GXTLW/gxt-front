@@ -19,7 +19,7 @@ var Tip = BasicTip.extend({
     arrowPosition: 7,
 
     align: {
-      setter: function (val){
+      setter: function(val) {
         // 用户初始化时主动设置了 align
         // 且并非来自 arrowPosition 的设置
         if (val && !val.comeFromArrowPosition) {
@@ -36,16 +36,16 @@ var Tip = BasicTip.extend({
     inViewport: false
   },
 
-  setup: function (){
+  setup: function() {
     BasicTip.superclass.setup.call(this);
     this._originArrowPosition = this.get('arrowPosition');
 
-    this.after('show', function (){
+    this.after('show', function() {
       this._makesureInViewport();
     });
   },
 
-  _makesureInViewport: function (){
+  _makesureInViewport: function() {
     if (!this.get('inViewport')) {
       return;
     }
@@ -75,7 +75,7 @@ var Tip = BasicTip.extend({
   },
 
   // 用于 set 属性后的界面更新
-  _onRenderArrowPosition: function (val, prev){
+  _onRenderArrowPosition: function(val, prev) {
     val = parseInt(val, 10);
     var arrow = this.$('.ui-poptip-arrow');
     arrow.removeClass('ui-poptip-arrow-' + prev).addClass('ui-poptip-arrow-' + val);
@@ -91,24 +91,19 @@ var Tip = BasicTip.extend({
     if (val === 10) {
       direction = 'right';
       arrowShift = 20;
-    }
-    else if (val === 11) {
+    } else if (val === 11) {
       direction = 'down';
       arrowShift = 22;
-    }
-    else if (val === 1) {
+    } else if (val === 1) {
       direction = 'down';
       arrowShift = -22;
-    }
-    else if (val === 2) {
+    } else if (val === 2) {
       direction = 'left';
       arrowShift = 20;
-    }
-    else if (val === 5) {
+    } else if (val === 5) {
       direction = 'up';
       arrowShift = -22;
-    }
-    else if (val === 7) {
+    } else if (val === 7) {
       direction = 'up';
       arrowShift = 22;
     }
@@ -117,15 +112,15 @@ var Tip = BasicTip.extend({
     this._setAlign();
   },
 
-  _onRenderWidth: function (val){
+  _onRenderWidth: function(val) {
     this.$('[data-role="content"]').css('width', val);
   },
 
-  _onRenderHeight: function (val){
+  _onRenderHeight: function(val) {
     this.$('[data-role="content"]').css('height', val);
   },
 
-  _onRenderTheme: function (val, prev){
+  _onRenderTheme: function(val, prev) {
     this.element.removeClass('ui-poptip-' + prev);
     this.element.addClass('ui-poptip-' + val);
   }

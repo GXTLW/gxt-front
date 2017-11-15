@@ -17,7 +17,7 @@ var ConfirmBox = Dialog.extend({
     message: '默认内容'
   },
 
-  setup: function (){
+  setup: function() {
     ConfirmBox.superclass.setup.call(this);
 
     var model = {
@@ -32,48 +32,48 @@ var ConfirmBox = Dialog.extend({
     this.set('content', this.compile(template, model));
   },
   events: {
-    'click [data-role=confirm]': function (e){
+    'click [data-role=confirm]': function(e) {
       e.preventDefault();
       this.trigger('confirm');
     },
-    'click [data-role=cancel]': function (e){
+    'click [data-role=cancel]': function(e) {
       e.preventDefault();
       this.trigger('cancel');
       this.hide();
     }
   },
-  _onChangeMessage: function (val){
+  _onChangeMessage: function(val) {
     this.$('[data-role=message]').html(val);
   },
-  _onChangeTitle: function (val){
+  _onChangeTitle: function(val) {
     this.$('[data-role=title]').html(val);
   },
-  _onChangeConfirmTpl: function (val){
+  _onChangeConfirmTpl: function(val) {
     this.$('[data-role=confirm]').html(val);
   },
-  _onChangeCancelTpl: function (val){
+  _onChangeCancelTpl: function(val) {
     this.$('[data-role=cancel]').html(val);
   }
 });
 
-ConfirmBox.alert = function (message, callback, options){
+ConfirmBox.alert = function(message, callback, options) {
   var defaults = {
     message: message,
     title: '',
     cancelTpl: '',
     closeTpl: '',
-    onConfirm: function (){
+    onConfirm: function() {
       callback && callback.apply(this, arguments);
       this.hide();
     }
   };
 
-  return new ConfirmBox($.extend(null, defaults, options)).show().after('hide', function (){
+  return new ConfirmBox($.extend(null, defaults, options)).show().after('hide', function() {
     this.destroy();
   });
 };
 
-ConfirmBox.confirm = function (message, title, onConfirm, onCancel, options){
+ConfirmBox.confirm = function(message, title, onConfirm, onCancel, options) {
   // support confirm(message, title, onConfirm, options)
   if (typeof onCancel === 'object' && !options) {
     options = onCancel;
@@ -84,23 +84,23 @@ ConfirmBox.confirm = function (message, title, onConfirm, onCancel, options){
     message: message,
     title: title || '确认框',
     closeTpl: '',
-    onConfirm: function (){
+    onConfirm: function() {
       if ($.isFunction(onConfirm) && onConfirm.apply(this, arguments) !== false) {
         this.hide();
       }
     },
-    onCancel: function (){
+    onCancel: function() {
       $.isFunction(onCancel) && onCancel.apply(this, arguments);
       this.hide();
     }
   };
 
-  return new ConfirmBox($.extend(null, defaults, options)).show().after('hide', function (){
+  return new ConfirmBox($.extend(null, defaults, options)).show().after('hide', function() {
     this.destroy();
   });
 };
 
-ConfirmBox.show = function (message, callback, options){
+ConfirmBox.show = function(message, callback, options) {
   var defaults = {
     message: message,
     title: '',
@@ -108,9 +108,9 @@ ConfirmBox.show = function (message, callback, options){
     cancelTpl: false
   };
 
-  return new ConfirmBox($.extend(null, defaults, options)).show().before('hide', function (){
+  return new ConfirmBox($.extend(null, defaults, options)).show().before('hide', function() {
     callback && callback.apply(this, arguments);
-  }).after('hide', function (){
+  }).after('hide', function() {
     this.destroy();
   });
 };

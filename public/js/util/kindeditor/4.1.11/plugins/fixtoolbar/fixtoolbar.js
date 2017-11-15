@@ -2,17 +2,17 @@
  * Created by chenyihong on 14/12/4.
  */
 
-KindEditor.plugin('fixtoolbar', function (K){
+KindEditor.plugin('fixtoolbar', function(K) {
   var self = this;
 
   if (!self.fixToolBar) {
     return;
   }
 
-  function init(){
+  function init() {
     var toolbar = K('.ke-toolbar');
     var originY = toolbar.pos().y;
-    K(window).bind('scroll', function (){
+    K(window).bind('scroll', function() {
       if (toolbar.css('position') == 'fixed') {
         if (document.body.scrollTop - originY < 0) {
           toolbar.css('position', 'static');

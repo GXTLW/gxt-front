@@ -151,7 +151,7 @@
  redistribute.
  */
 
-/*jslint 
+/*jslint
  eval, for, this
  */
 
@@ -162,7 +162,6 @@
  test, toJSON, toString, valueOf
  */
 
-
 // Create a JSON object only if one does not already exist. We create the
 // methods in a closure to avoid creating global variables.
 
@@ -170,7 +169,7 @@ if (typeof JSON !== 'object') {
   JSON = {};
 }
 
-(function (){
+(function() {
   'use strict';
 
   var rx_one = /^[\],:{}\s]*$/,
@@ -180,28 +179,28 @@ if (typeof JSON !== 'object') {
     rx_escapable = /[\\\"\u0000-\u001f\u007f-\u009f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
     rx_dangerous = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g;
 
-  function f(n){
+  function f(n) {
     // Format integers to have at least two digits.
     return n < 10
       ? '0' + n
       : n;
   }
 
-  function this_value(){
+  function this_value() {
     return this.valueOf();
   }
 
   if (typeof Date.prototype.toJSON !== 'function') {
 
-    Date.prototype.toJSON = function (){
+    Date.prototype.toJSON = function() {
 
       return isFinite(this.valueOf())
-        ? this.getUTCFullYear() + '-' +
-      f(this.getUTCMonth() + 1) + '-' +
-      f(this.getUTCDate()) + 'T' +
-      f(this.getUTCHours()) + ':' +
-      f(this.getUTCMinutes()) + ':' +
-      f(this.getUTCSeconds()) + 'Z'
+        ? this.getUTCFullYear() + '-'
+        + f(this.getUTCMonth() + 1) + '-'
+        + f(this.getUTCDate()) + 'T'
+        + f(this.getUTCHours()) + ':'
+        + f(this.getUTCMinutes()) + ':'
+        + f(this.getUTCSeconds()) + 'Z'
         : null;
     };
 
@@ -215,7 +214,7 @@ if (typeof JSON !== 'object') {
     meta,
     rep;
 
-  function quote(string){
+  function quote(string) {
 
     // If the string contains no control characters, no quote characters, and no
     // backslash characters, then we can safely slap some quotes around it.
@@ -224,22 +223,22 @@ if (typeof JSON !== 'object') {
 
     rx_escapable.lastIndex = 0;
     return rx_escapable.test(string)
-      ? '"' + string.replace(rx_escapable, function (a){
-      var c = meta[a];
-      return typeof c === 'string'
-        ? c
-        : '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
-    }) + '"'
+      ? '"' + string.replace(rx_escapable, function(a) {
+        var c = meta[a];
+        return typeof c === 'string'
+          ? c
+          : '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
+      }) + '"'
       : '"' + string + '"';
   }
 
-  function str(key, holder){
+  function str(key, holder) {
 
     // Produce a string from holder[key].
 
-    var i,          // The loop counter.
-      k,          // The member key.
-      v,          // The member value.
+    var i, // The loop counter.
+      k, // The member key.
+      v, // The member value.
       length,
       mind = gap,
       partial,
@@ -247,8 +246,8 @@ if (typeof JSON !== 'object') {
 
     // If the value has a toJSON method, call it to obtain a replacement value.
 
-    if (value && typeof value === 'object' &&
-      typeof value.toJSON === 'function') {
+    if (value && typeof value === 'object'
+      && typeof value.toJSON === 'function') {
       value = value.toJSON(key);
     }
 
@@ -282,8 +281,8 @@ if (typeof JSON !== 'object') {
 
         return String(value);
 
-      // If the type is 'object', we might be dealing with an object or an array or
-      // null.
+        // If the type is 'object', we might be dealing with an object or an array or
+        // null.
 
       case 'object':
 
@@ -333,10 +332,10 @@ if (typeof JSON !== 'object') {
               v = str(k, value);
               if (v) {
                 partial.push(quote(k) + (
-                    gap
-                      ? ': '
-                      : ':'
-                  ) + v);
+                  gap
+                  ? ': '
+                  : ':'
+                ) + v);
               }
             }
           }
@@ -349,10 +348,10 @@ if (typeof JSON !== 'object') {
               v = str(k, value);
               if (v) {
                 partial.push(quote(k) + (
-                    gap
-                      ? ': '
-                      : ':'
-                  ) + v);
+                  gap
+                  ? ': '
+                  : ':'
+                ) + v);
               }
             }
           }
@@ -374,7 +373,7 @@ if (typeof JSON !== 'object') {
   // If the JSON object does not yet have a stringify method, give it one.
 
   if (typeof JSON.stringify !== 'function') {
-    meta = {    // table of character substitutions
+    meta = { // table of character substitutions
       '\b': '\\b',
       '\t': '\\t',
       '\n': '\\n',
@@ -383,7 +382,7 @@ if (typeof JSON !== 'object') {
       '"': '\\"',
       '\\': '\\\\'
     };
-    JSON.stringify = function (value, replacer, space){
+    JSON.stringify = function(value, replacer, space) {
 
       // The stringify method takes a value and an optional replacer, and an optional
       // space parameter, and returns a JSON text. The replacer can be a function
@@ -413,9 +412,9 @@ if (typeof JSON !== 'object') {
       // Otherwise, throw an error.
 
       rep = replacer;
-      if (replacer && typeof replacer !== 'function' &&
-        (typeof replacer !== 'object' ||
-        typeof replacer.length !== 'number')) {
+      if (replacer && typeof replacer !== 'function'
+        && (typeof replacer !== 'object'
+          || typeof replacer.length !== 'number')) {
         throw new Error('JSON.stringify');
       }
 
@@ -429,14 +428,14 @@ if (typeof JSON !== 'object') {
   // If the JSON object does not yet have a parse method, give it one.
 
   if (typeof JSON.parse !== 'function') {
-    JSON.parse = function (text, reviver){
+    JSON.parse = function(text, reviver) {
 
       // The parse method takes a text and an optional reviver function, and returns
       // a JavaScript value if the text is a valid JSON text.
 
       var j;
 
-      function walk(holder, key){
+      function walk(holder, key) {
 
         // The walk method is used to recursively walk the resulting structure so
         // that modifications can be made.
@@ -464,9 +463,9 @@ if (typeof JSON !== 'object') {
       text = String(text);
       rx_dangerous.lastIndex = 0;
       if (rx_dangerous.test(text)) {
-        text = text.replace(rx_dangerous, function (a){
-          return '\\u' +
-            ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
+        text = text.replace(rx_dangerous, function(a) {
+          return '\\u'
+            + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
         });
       }
 
@@ -486,9 +485,9 @@ if (typeof JSON !== 'object') {
       if (
         rx_one.test(
           text
-            .replace(rx_two, '@')
-            .replace(rx_three, ']')
-            .replace(rx_four, '')
+          .replace(rx_two, '@')
+          .replace(rx_three, ']')
+          .replace(rx_four, '')
         )
       ) {
 

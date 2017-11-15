@@ -5,7 +5,7 @@
 'use strict';
 
 module.exports = {
-  index: ctx=>{
+  index: ctx => {
     ctx.state.title = '加盟合作';
 
     ctx.body = ctx.render('apps/cooperation/index');

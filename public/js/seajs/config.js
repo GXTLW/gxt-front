@@ -1,14 +1,14 @@
 /**
  * The Sea.js plugin to provide log function
  */
-(function (seajs, global){
+(function(seajs, global) {
   var slice = [].slice;
   var data = seajs.data;
 
   // The safe wrapper for `console.xxx` functions
   // log('message') ==> console.log('message')
   // log('message', 'warn') ==> console.warn('message')
-  seajs.log = function (){
+  seajs.log = function() {
     var msg;
     var type;
 
@@ -42,7 +42,7 @@
 /**
  * seajs config
  */
-(function (seajs, window, undefined){
+(function(seajs, window, undefined) {
   // init config
   seajs.config({
     debug: GXT.DEBUG,
